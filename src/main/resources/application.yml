@@ -3,9 +3,11 @@ server:
   servlet:
     context-path: /
 spring:
+  profiles:
+    active: dev
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/crowdfunding?characterEncoding=UTF-8&useUnicode=true&useSSL=false&serverTimezone=Asia/Shanghai
+    url: jdbc:mysql://localhost:3306/yeeee_crowdfunding?characterEncoding=UTF-8&useUnicode=true&useSSL=false&serverTimezone=Asia/Shanghai
     username: root
     password: root
     druid:
@@ -17,3 +19,38 @@ spring:
       max-pool-prepared-statement-per-connection-size: 20
       validation-query: SELECT 1 FROM DUAL
       validation-query-timeout: 60000
+  main:
+    allow-bean-definition-overriding: true
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  mapper-locations: classpath:mapper/*.xml
+
+# 授权配置
+user:
+  auth:
+    client-Id: yeeee_crowdfunding-web
+    client-secret: 111111
+    grant-type: password
+secure:
+  ignore:
+    urls:
+      - "/doc.html"
+      - "/swagger-resources/**"
+      - "/swagger/**"
+      - "/**/v2/api-docs"
+      - "/**/*.js"
+      - "/**/*.css"
+      - "/**/*.png"
+      - "/**/*.ico"
+      - "/webjars/springfox-swagger-ui/**"
+      - "/actuator/**"
+      - "/auth/oauth/**"
+      - "/auth/rsa/publicKey"
+      - "/user/login"
+      - "/user/webSocket/**"
+
+# swagger文档增强功能
+knife4j:
+  enable: true
