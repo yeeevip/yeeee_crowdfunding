@@ -1,16 +1,12 @@
 package com.yeeee.crowdfunding.model.dto.auth;
 
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Builder;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 
 /**
  * Oauth2获取Token返回信息封装
  */
 @Data
-@EqualsAndHashCode(callSuper = false)
-@Builder
 public class Oauth2TokenDTO {
 
     @ApiModelProperty("访问令牌")

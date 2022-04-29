@@ -14,6 +14,8 @@ import org.springframework.context.annotation.Configuration;
 @ConfigurationProperties(prefix = "user.auth")
 public class AuthProperties {
 
+    private String uri;
+
     private String clientId;
 
     private String clientSecret;

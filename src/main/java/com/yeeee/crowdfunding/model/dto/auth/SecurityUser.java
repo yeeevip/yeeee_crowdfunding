@@ -99,7 +99,7 @@ public class SecurityUser implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return !this.enabled;
+        return this.enabled;
     }
 
 }

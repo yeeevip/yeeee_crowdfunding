@@ -4,7 +4,6 @@ import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import com.yeeee.crowdfunding.api.CommonResult;
 import com.yeeee.crowdfunding.model.dto.auth.Oauth2TokenDTO;
 import com.yeeee.crowdfunding.service.CustomUserDetailsService;
-import com.yeeee.crowdfunding.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -24,18 +23,15 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 2022/4/28 22:53
  */
 @Slf4j
-@Api(tags = "前台用户管理", description = "前台用户管理")
+@Api(tags = "系统用户管理", description = "系统用户管理")
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("user")
-public class UserController {
+@RequestMapping("sys-user")
+public class SysUserController {
 
     private final CustomUserDetailsService userDetailsService;
-
-    private final UserService userService;
-
     private final TokenEndpoint tokenEndpoint;
-
+    private final PasswordEncoder passwordEncoder;
 
     @ApiOperation("用户登录")
     @ApiImplicitParams({
@@ -44,13 +40,7 @@ public class UserController {
     })
     @PostMapping(value = "/login")
     public CommonResult<Oauth2TokenDTO> login(String username, String password) {
-        return CommonResult.success(userDetailsService.oauthToken(username, password, null));
-    }
-
-    @ApiOperation("用户注册")
-    @PostMapping(value = "register")
-    public CommonResult<Void> register(String username, String password, String code) {
-        return CommonResult.success(userService.register(username, password, code));
+        return CommonResult.success(userDetailsService.oauthToken(username, password, "SYSTEM"));
     }
 
 }

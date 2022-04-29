@@ -1,12 +1,13 @@
 package com.yeeee.crowdfunding.service;
 
-import org.springframework.security.core.userdetails.UserDetailsService;
-
 /**
  * description......
  *
  * @author yeeee
- * @since 2022/4/28 16:09
+ * @since 2022/4/29 16:18
  */
-public interface UserService extends UserDetailsService {
+public interface UserService {
+
+    Void register(String username, String password, String code);
+
 }

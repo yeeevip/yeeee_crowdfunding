@@ -94,6 +94,11 @@ public class AuthConstant {
     public static final String AUTH_USERNAME = "username";
 
     /**
+     * userType
+     */
+    public static final String AUTH_USER_TYPE = "userType";
+
+    /**
      * password
      */
     public static final String AUTH_PASSWORD = "password";

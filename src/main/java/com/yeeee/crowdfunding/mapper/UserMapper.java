@@ -1,26 +1,20 @@
 package com.yeeee.crowdfunding.mapper;
 
-import com.yeeee.crowdfunding.model.dto.auth.SecurityUser;
-import org.apache.ibatis.annotations.*;
+import com.yeeee.crowdfunding.model.entity.User;
 
 import java.util.List;
 
 /**
- * description......
- *
- * @author yeeee
- * @since 2022/4/28 16:06
+ * create by yeah.一页 2022/04/29 15:33:05
  */
-@Mapper
 public interface UserMapper {
-
-    @Select("select * from sys_user where username=#{username}")
-    @Results({
-            @Result(id = true, property = "id", column = "id"),
-            @Result(property = "enabled", column = "state"),
-            @Result(property = "authorities", column = "id", javaType = List.class,
-                    many = @Many(select = "com.yeeee.crowdfunding.mapper.RoleMapper.findByUid"))
-    })
-    SecurityUser findByUsername(String username);
-
+       List<User> getList(User user);
+       User getOne(User user);
+       int insert(User user);
+       int updateByPrimaryKey(User user);
+       int batchInsert(List<User> userList);
 }
+
+
+
+
