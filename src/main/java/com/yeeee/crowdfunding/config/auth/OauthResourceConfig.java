@@ -1,11 +1,17 @@
 package com.yeeee.crowdfunding.config.auth;
 
 import cn.hutool.core.util.ArrayUtil;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
+import com.yeeee.crowdfunding.annotation.AnonymousAccess;
 import com.yeeee.crowdfunding.handle.AccessDeniedHandlerHandle;
 import com.yeeee.crowdfunding.handle.AuthenticationEntryPointHandle;
+import lombok.extern.slf4j.Slf4j;
+import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.actuate.autoconfigure.security.servlet.EndpointRequest;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -17,8 +23,14 @@ import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JdbcTokenStore;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.access.AccessDeniedHandler;
+import org.springframework.web.method.HandlerMethod;
+import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
+import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
 import javax.sql.DataSource;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * 资源服务器配置
@@ -26,6 +38,7 @@ import javax.sql.DataSource;
  * @author yeeee
  * @since 2022/4/28 17:02
  */
+@Slf4j
 @Configuration
 @EnableResourceServer
 @EnableConfigurationProperties({IgnoreUrlsConfig.class})
@@ -37,7 +50,8 @@ public class OauthResourceConfig extends ResourceServerConfigurerAdapter {
     private TokenStore tokenStore;
     @Autowired
     private IgnoreUrlsConfig ignoreUrlsConfig;
-
+    @Autowired
+    private ApplicationContext applicationContext;
 
     @Bean
     public TokenStore jdbcTokenStore() {
@@ -46,6 +60,16 @@ public class OauthResourceConfig extends ResourceServerConfigurerAdapter {
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
+
+        Set<String> anonymousUrls = Sets.newHashSet();
+        Map<RequestMappingInfo, HandlerMethod> handlerMethods = applicationContext.getBean(RequestMappingHandlerMapping.class).getHandlerMethods();
+        handlerMethods.forEach((k, v) -> {
+            AnonymousAccess anonymousAccess = v.getMethodAnnotation(AnonymousAccess.class);
+            if (k.getPatternsCondition() != null && anonymousAccess != null && anonymousAccess.valid()) {
+                anonymousUrls.addAll(k.getPatternsCondition().getPatterns());
+            }
+        });
+
         http.csrf().disable()
                 .exceptionHandling()
                 // 处理未授权
@@ -60,6 +84,7 @@ public class OauthResourceConfig extends ResourceServerConfigurerAdapter {
                 .authorizeRequests()
                 .requestMatchers(EndpointRequest.toAnyEndpoint()).permitAll()
                 .antMatchers(ArrayUtil.toArray(ignoreUrlsConfig.getUrls(), String.class)).permitAll()
+                .antMatchers(ArrayUtil.toArray(anonymousUrls, String.class)).permitAll()
                 .anyRequest().authenticated();
     }
 

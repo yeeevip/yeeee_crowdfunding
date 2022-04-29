@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yeeee.crowdfunding.mapper.ProjectMapper">
+
+    <sql id="searchBy">
+        <trim prefix="where" prefixOverrides="and|or">
+            <if test="id != '' and id != null">
+                and id = #{id}
+            </if>
+            <if test="title != '' and title != null">
+                and title = #{title}
+            </if>
+            <if test="blurb != '' and blurb != null">
+                and blurb = #{blurb}
+            </if>
+            <if test="coverPath != '' and coverPath != null">
+                and cover_path = #{coverPath}
+            </if>
+            <if test="totalFundRaising != '' and totalFundRaising != null">
+                and total_fund_raising = #{totalFundRaising}
+            </if>
+            <if test="hasFundRaising != '' and hasFundRaising != null">
+                and has_fund_raising = #{hasFundRaising}
+            </if>
+            <if test="userId != '' and userId != null">
+                and user_id = #{userId}
+            </if>
+            <if test="categoryId != '' and categoryId != null">
+                and category_id = #{categoryId}
+            </if>
+            <if test="launchDateRaising != '' and launchDateRaising != null">
+                and launch_date_raising = #{launchDateRaising}
+            </if>
+            <if test="daysRaising != '' and daysRaising != null">
+                and days_raising = #{daysRaising}
+            </if>
+            <if test="hasFinish != '' and hasFinish != null">
+                and has_finish = #{hasFinish}
+            </if>
+            <if test="hasAudits != '' and hasAudits != null">
+                and has_audits = #{hasAudits}
+            </if>
+            <if test="hasIndex != '' and hasIndex != null">
+                and has_index = #{hasIndex}
+            </if>
+            <if test="shenfen != '' and shenfen != null">
+                and shenfen = #{shenfen}
+            </if>
+            <if test="onlineTime != '' and onlineTime != null">
+                and online_time = #{onlineTime}
+            </if>
+            <if test="isSettlement != '' and isSettlement != null">
+                and is_settlement = #{isSettlement}
+            </if>
+        </trim>
+    </sql>
+
+    <select id="getList" resultType="com.yeeee.crowdfunding.model.entity.Project">
+        SELECT
+            id,
+            title,
+            blurb,
+            cover_path,
+            total_fund_raising,
+            has_fund_raising,
+            user_id,
+            category_id,
+            launch_date_raising,
+            days_raising,
+            has_finish,
+            has_audits,
+            has_index,
+            shenfen,
+            online_time,
+            is_settlement
+        FROM
+            t_project
+        <include refid="searchBy"/>
+    </select>
+
+    <select id="getOrderLimitList" resultType="com.yeeee.crowdfunding.model.entity.Project">
+        SELECT
+            id,
+            title,
+            blurb,
+            cover_path,
+            total_fund_raising,
+            has_fund_raising,
+            user_id,
+            category_id,
+            launch_date_raising,
+            days_raising,
+            has_finish,
+            has_audits,
+            has_index,
+            shenfen,
+            online_time,
+            is_settlement
+        FROM
+            t_project
+        where 1 = 1
+        <if test="project.categoryId != '' and project.categoryId != null">
+            and category_id = #{project.categoryId}
+        </if>
+        <if test="params.orderField != null">
+            order by ${params.orderField} ${params.orderSort}
+        </if>
+        <if test="params.limit != null and params.limit != ''">
+            limit #{params.limit}
+        </if>
+</select>
+
+    <select id="getOne" resultType="com.yeeee.crowdfunding.model.entity.Project">
+        SELECT
+            id,
+            title,
+            blurb,
+            cover_path,
+            total_fund_raising,
+            has_fund_raising,
+            user_id,
+            category_id,
+            launch_date_raising,
+            days_raising,
+            has_finish,
+            has_audits,
+            has_index,
+            shenfen,
+            online_time,
+            is_settlement
+        FROM
+            t_project
+        <include refid="searchBy"/>
+        LIMIT 1
+    </select>
+
+    <insert id="insert" parameterType="com.yeeee.crowdfunding.model.entity.Project" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO t_project
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id !='' and id !=null">
+                id,
+            </if>
+            <if test="title !='' and title !=null">
+                title,
+            </if>
+            <if test="blurb !='' and blurb !=null">
+                blurb,
+            </if>
+            <if test="coverPath !='' and coverPath !=null">
+                cover_path,
+            </if>
+            <if test="totalFundRaising !='' and totalFundRaising !=null">
+                total_fund_raising,
+            </if>
+            <if test="hasFundRaising !='' and hasFundRaising !=null">
+                has_fund_raising,
+            </if>
+            <if test="userId !='' and userId !=null">
+                user_id,
+            </if>
+            <if test="categoryId !='' and categoryId !=null">
+                category_id,
+            </if>
+            <if test="launchDateRaising !='' and launchDateRaising !=null">
+                launch_date_raising,
+            </if>
+            <if test="daysRaising !='' and daysRaising !=null">
+                days_raising,
+            </if>
+            <if test="hasFinish !='' and hasFinish !=null">
+                has_finish,
+            </if>
+            <if test="hasAudits !='' and hasAudits !=null">
+                has_audits,
+            </if>
+            <if test="hasIndex !='' and hasIndex !=null">
+                has_index,
+            </if>
+            <if test="shenfen !='' and shenfen !=null">
+                shenfen,
+            </if>
+            <if test="onlineTime !='' and onlineTime !=null">
+                online_time,
+            </if>
+            <if test="isSettlement !='' and isSettlement !=null">
+                is_settlement
+            </if>
+        </trim>
+        VALUE
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != '' and id != null">
+                #{id},
+            </if>
+            <if test="title != '' and title != null">
+                #{title},
+            </if>
+            <if test="blurb != '' and blurb != null">
+                #{blurb},
+            </if>
+            <if test="coverPath != '' and coverPath != null">
+                #{coverPath},
+            </if>
+            <if test="totalFundRaising != '' and totalFundRaising != null">
+                #{totalFundRaising},
+            </if>
+            <if test="hasFundRaising != '' and hasFundRaising != null">
+                #{hasFundRaising},
+            </if>
+            <if test="userId != '' and userId != null">
+                #{userId},
+            </if>
+            <if test="categoryId != '' and categoryId != null">
+                #{categoryId},
+            </if>
+            <if test="launchDateRaising != '' and launchDateRaising != null">
+                #{launchDateRaising},
+            </if>
+            <if test="daysRaising != '' and daysRaising != null">
+                #{daysRaising},
+            </if>
+            <if test="hasFinish != '' and hasFinish != null">
+                #{hasFinish},
+            </if>
+            <if test="hasAudits != '' and hasAudits != null">
+                #{hasAudits},
+            </if>
+            <if test="hasIndex != '' and hasIndex != null">
+                #{hasIndex},
+            </if>
+            <if test="shenfen != '' and shenfen != null">
+                #{shenfen},
+            </if>
+            <if test="onlineTime != '' and onlineTime != null">
+                #{onlineTime},
+            </if>
+            <if test="isSettlement != '' and isSettlement != null">
+                #{isSettlement}
+            </if>
+        </trim>
+        <selectKey resultType="int" order="AFTER" keyProperty="id">
+            SELECT LAST_INSERT_ID() AS id
+        </selectKey>
+    </insert>
+
+    <update id="updateByPrimaryKey" parameterType="com.yeeee.crowdfunding.model.entity.Project">
+        UPDATE t_project
+        <trim prefix="set" suffixOverrides=",">
+            <if test="title != '' and title != null">
+                title = #{title},
+            </if>
+            <if test="blurb != '' and blurb != null">
+                blurb = #{blurb},
+            </if>
+            <if test="coverPath != '' and coverPath != null">
+                cover_path = #{coverPath},
+            </if>
+            <if test="totalFundRaising != '' and totalFundRaising != null">
+                total_fund_raising = #{totalFundRaising},
+            </if>
+            <if test="hasFundRaising != '' and hasFundRaising != null">
+                has_fund_raising = #{hasFundRaising},
+            </if>
+            <if test="userId != '' and userId != null">
+                user_id = #{userId},
+            </if>
+            <if test="categoryId != '' and categoryId != null">
+                category_id = #{categoryId},
+            </if>
+            <if test="launchDateRaising != '' and launchDateRaising != null">
+                launch_date_raising = #{launchDateRaising},
+            </if>
+            <if test="daysRaising != '' and daysRaising != null">
+                days_raising = #{daysRaising},
+            </if>
+            <if test="hasFinish != '' and hasFinish != null">
+                has_finish = #{hasFinish},
+            </if>
+            <if test="hasAudits != '' and hasAudits != null">
+                has_audits = #{hasAudits},
+            </if>
+            <if test="hasIndex != '' and hasIndex != null">
+                has_index = #{hasIndex},
+            </if>
+            <if test="shenfen != '' and shenfen != null">
+                shenfen = #{shenfen},
+            </if>
+            <if test="onlineTime != '' and onlineTime != null">
+                online_time = #{onlineTime},
+            </if>
+            <if test="isSettlement != '' and isSettlement != null">
+                is_settlement = #{isSettlement}
+            </if>
+        </trim>
+        WHERE id=#{id}
+    </update>
+
+    <insert id="batchInsert" parameterType="java.util.List">
+        INSERT INTO t_project
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            id,title,blurb,cover_path,total_fund_raising,has_fund_raising,user_id,category_id,launch_date_raising,days_raising,has_finish,has_audits,has_index,shenfen,online_time,is_settlement,
+        </trim>
+        VALUES
+        <foreach collection="list" item="item" index="index" separator=",">
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                #{item.id},#{item.title},#{item.blurb},#{item.coverPath},#{item.totalFundRaising},#{item.hasFundRaising},#{item.userId},#{item.categoryId},#{item.launchDateRaising},#{item.daysRaising},#{item.hasFinish},#{item.hasAudits},#{item.hasIndex},#{item.shenfen},#{item.onlineTime},#{item.isSettlement},
+            </trim>
+        </foreach>
+    </insert >
+
+</mapper>

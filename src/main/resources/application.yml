@@ -21,6 +21,9 @@ spring:
       validation-query-timeout: 60000
   main:
     allow-bean-definition-overriding: true
+  web:
+    resources:
+      static-locations: classpath:/static/
 mybatis:
   configuration:
     map-underscore-to-camel-case: true
@@ -37,6 +40,7 @@ user:
 secure:
   ignore:
     urls:
+      - "/"
       - "/doc.html"
       - "/swagger-resources/**"
       - "/swagger/**"
@@ -44,7 +48,9 @@ secure:
       - "/**/*.js"
       - "/**/*.css"
       - "/**/*.png"
+      - "/**/*.jpg"
       - "/**/*.ico"
+      - "/**/*.html"
       - "/webjars/springfox-swagger-ui/**"
       - "/actuator/**"
       - "/auth/oauth/**"
