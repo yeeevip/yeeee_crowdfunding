@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yeeee.crowdfunding.mapper.OrderMapper">
+
+    <sql id="searchBy">
+        <trim prefix="where" prefixOverrides="and|or">
+            <if test="id != '' and id != null">
+                and id = #{id}
+            </if>
+            <if test="code != '' and code != null">
+                and code = #{code}
+            </if>
+            <if test="projectId != '' and projectId != null">
+                and project_id = #{projectId}
+            </if>
+            <if test="userId != '' and userId != null">
+                and user_id = #{userId}
+            </if>
+            <if test="projectRepayId != '' and projectRepayId != null">
+                and project_repay_id = #{projectRepayId}
+            </if>
+            <if test="count != '' and count != null">
+                and count = #{count}
+            </if>
+            <if test="hasPay != '' and hasPay != null">
+                and has_pay = #{hasPay}
+            </if>
+            <if test="hasSend != '' and hasSend != null">
+                and has_send = #{hasSend}
+            </if>
+            <if test="orderDate != '' and orderDate != null">
+                and order_date = #{orderDate}
+            </if>
+            <if test="receiveInformation != '' and receiveInformation != null">
+                and receive_information = #{receiveInformation}
+            </if>
+            <if test="userSeller != '' and userSeller != null">
+                and user_seller = #{userSeller}
+            </if>
+            <if test="payTime != '' and payTime != null">
+                and pay_time = #{payTime}
+            </if>
+            <if test="payPrice != '' and payPrice != null">
+                and pay_price = #{payPrice}
+            </if>
+            <if test="status != '' and status != null">
+                and status = #{status}
+            </if>
+        </trim>
+    </sql>
+
+    <select id="getList" resultType="com.yeeee.crowdfunding.model.entity.Order">
+        SELECT
+            id,
+            code,
+            project_id,
+            user_id,
+            project_repay_id,
+            count,
+            has_pay,
+            has_send,
+            order_date,
+            receive_information,
+            user_seller,
+            pay_time,
+            pay_price,
+            status
+        FROM
+            t_order
+        <include refid="searchBy"/>
+        order by id desc
+    </select>
+
+    <select id="getOne" resultType="com.yeeee.crowdfunding.model.entity.Order">
+        SELECT
+            id,
+            code,
+            project_id,
+            user_id,
+            project_repay_id,
+            count,
+            has_pay,
+            has_send,
+            order_date,
+            receive_information,
+            user_seller,
+            pay_time,
+            pay_price,
+            status
+        FROM
+            t_order
+        <include refid="searchBy"/>
+        LIMIT 1
+    </select>
+
+    <insert id="insert" parameterType="com.yeeee.crowdfunding.model.entity.Order" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO t_order
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id !='' and id !=null">
+                id,
+            </if>
+            <if test="code !='' and code !=null">
+                code,
+            </if>
+            <if test="projectId !='' and projectId !=null">
+                project_id,
+            </if>
+            <if test="userId !='' and userId !=null">
+                user_id,
+            </if>
+            <if test="projectRepayId !='' and projectRepayId !=null">
+                project_repay_id,
+            </if>
+            <if test="count !='' and count !=null">
+                count,
+            </if>
+            <if test="hasPay !='' and hasPay !=null">
+                has_pay,
+            </if>
+            <if test="hasSend !='' and hasSend !=null">
+                has_send,
+            </if>
+            <if test="orderDate !='' and orderDate !=null">
+                order_date,
+            </if>
+            <if test="receiveInformation !='' and receiveInformation !=null">
+                receive_information,
+            </if>
+            <if test="userSeller !='' and userSeller !=null">
+                user_seller,
+            </if>
+            <if test="payTime !='' and payTime !=null">
+                pay_time,
+            </if>
+            <if test="payPrice !='' and payPrice !=null">
+                pay_price,
+            </if>
+            <if test="status !='' and status !=null">
+                status
+            </if>
+        </trim>
+        VALUE
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != '' and id != null">
+                #{id},
+            </if>
+            <if test="code != '' and code != null">
+                #{code},
+            </if>
+            <if test="projectId != '' and projectId != null">
+                #{projectId},
+            </if>
+            <if test="userId != '' and userId != null">
+                #{userId},
+            </if>
+            <if test="projectRepayId != '' and projectRepayId != null">
+                #{projectRepayId},
+            </if>
+            <if test="count != '' and count != null">
+                #{count},
+            </if>
+            <if test="hasPay != '' and hasPay != null">
+                #{hasPay},
+            </if>
+            <if test="hasSend != '' and hasSend != null">
+                #{hasSend},
+            </if>
+            <if test="orderDate != '' and orderDate != null">
+                #{orderDate},
+            </if>
+            <if test="receiveInformation != '' and receiveInformation != null">
+                #{receiveInformation},
+            </if>
+            <if test="userSeller != '' and userSeller != null">
+                #{userSeller},
+            </if>
+            <if test="payTime != '' and payTime != null">
+                #{payTime},
+            </if>
+            <if test="payPrice != '' and payPrice != null">
+                #{payPrice},
+            </if>
+            <if test="status != '' and status != null">
+                #{status}
+            </if>
+        </trim>
+        <selectKey resultType="int" order="AFTER" keyProperty="id">
+            SELECT LAST_INSERT_ID() AS id
+        </selectKey>
+    </insert>
+
+    <update id="updateByPrimaryKey" parameterType="com.yeeee.crowdfunding.model.entity.Order">
+        UPDATE t_order
+        <trim prefix="set" suffixOverrides=",">
+            <if test="code != '' and code != null">
+                code = #{code},
+            </if>
+            <if test="projectId != '' and projectId != null">
+                project_id = #{projectId},
+            </if>
+            <if test="userId != '' and userId != null">
+                user_id = #{userId},
+            </if>
+            <if test="projectRepayId != '' and projectRepayId != null">
+                project_repay_id = #{projectRepayId},
+            </if>
+            <if test="count != '' and count != null">
+                count = #{count},
+            </if>
+            <if test="hasPay != '' and hasPay != null">
+                has_pay = #{hasPay},
+            </if>
+            <if test="hasSend != '' and hasSend != null">
+                has_send = #{hasSend},
+            </if>
+            <if test="orderDate != '' and orderDate != null">
+                order_date = #{orderDate},
+            </if>
+            <if test="receiveInformation != '' and receiveInformation != null">
+                receive_information = #{receiveInformation},
+            </if>
+            <if test="userSeller != '' and userSeller != null">
+                user_seller = #{userSeller},
+            </if>
+            <if test="payTime != '' and payTime != null">
+                pay_time = #{payTime},
+            </if>
+            <if test="payPrice != '' and payPrice != null">
+                pay_price = #{payPrice},
+            </if>
+            <if test="status != '' and status != null">
+                status = #{status}
+            </if>
+        </trim>
+        WHERE id=#{id}
+    </update>
+
+    <insert id="batchInsert" parameterType="java.util.List">
+        INSERT INTO t_order
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            id,code,project_id,user_id,project_repay_id,count,has_pay,has_send,order_date,receive_information,user_seller,pay_time,pay_price,status,
+        </trim>
+        VALUES
+        <foreach collection="list" item="item" index="index" separator=",">
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                #{item.id},#{item.code},#{item.projectId},#{item.userId},#{item.projectRepayId},#{item.count},#{item.hasPay},#{item.hasSend},#{item.orderDate},#{item.receiveInformation},#{item.userSeller},#{item.payTime},#{item.payPrice},#{item.status},
+            </trim>
+        </foreach>
+    </insert >
+
+</mapper>

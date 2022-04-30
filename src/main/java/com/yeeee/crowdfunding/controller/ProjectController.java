@@ -22,27 +22,27 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @Api(tags = "众筹项目")
 @RestController
-@RequestMapping("front/project")
+@RequestMapping("project")
 public class ProjectController {
 
     private final ProjectService projectService;
 
     @ApiOperation("首页项目")
     @AnonymousAccess
-    @GetMapping("index")
+    @GetMapping("front/index")
     public CommonResult<IndexProjectListVO> getIndexShowProject() {
         return CommonResult.success(projectService.getIndexShowProject());
     }
 
     @ApiOperation("项目分页")
     @AnonymousAccess
-    @PostMapping("list")
+    @PostMapping("front/list")
     public CommonResult<PageVO<ProjectVO>> getProjectList(@RequestBody ProjectPageReqVO reqVO) {
         return CommonResult.success(projectService.getProjectPageList(reqVO));
     }
 
     @ApiOperation("我发起的项目")
-    @PostMapping("myself")
+    @PostMapping("front/myself")
     public CommonResult<PageVO<ProjectVO>> getMyselfProjectList(@RequestBody ProjectPageReqVO reqVO) {
         return CommonResult.success(projectService.getMyselfProjectList(reqVO));
     }
