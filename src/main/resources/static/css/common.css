@@ -1,4 +1,68 @@
 @CHARSET "UTF-8";
+
+body, div, dl, dt, dd, ul, ol, li, pre, code, form, input, fieldset, legend, textarea, p, blockquote, th, td {
+    margin: 0px;
+    padding: 0px;
+    list-style: none;
+    font: 12px/1.5 "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+table{
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+h3{
+    word-break: break-all;
+    font-size: 100%;
+    font-weight: normal;
+}
+div,b,p{
+    word-wrap: break-word;
+    word-break: break-all;
+    font-style: normal;
+    font-weight: normal;
+
+}
+a,li,input {
+    font-family: 微软雅黑;
+
+    list-style-type:none;
+    text-decoration:none;
+
+    cursor: pointer;
+
+
+    color: inherit;
+
+}
+
+}
+
+.bg_white {
+    background: #fff;
+    overflow: hidden;
+    width: 100%;
+}
+
+.l {
+    float: left;
+}
+.r {
+    float: right;
+    display: block;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+@CHARSET "UTF-8";
 body, div, dl, dt, dd, ul, ol, li, pre, code, form,input, fieldset, legend,textarea, p, blockquote, th, td {
     margin: 0px;
     padding: 0px;
@@ -22,7 +86,7 @@ div {
     right: -56px;
     width: 46px;
     height: 43px;
-    background: url(/img/v3/goTop.png?) no-repeat 0px 0px;
+    background: url(../../img/v3/goTop.png?) no-repeat 0px 0px;
 }
 .btn_ALink {
     text-decoration: none;
@@ -42,7 +106,7 @@ a {
     color: #50abf2;
 }
 .siteHLoginBox a:hover{
-	text-decoration: underline;
+    text-decoration: underline;
 }
 
 
@@ -68,7 +132,7 @@ a {
     line-height: 35px;
     margin-right: 3px;
     padding-left: 15px;
-    background: url(/img/v3/siteHTopBg.png?v=1476329743) 0px -274px no-repeat;
+    background: url(../../img/v3/siteHTopBg.png?v=1476329743) 0px -274px no-repeat;
 }
 
 
@@ -116,7 +180,7 @@ a {
 
 
 .siteHCodeImgBox span {
-    background: url(/img/v3/siteHTopBg.png?v=1476329743) no-repeat -7px 0px;
+    background: url(../../img/v3/siteHTopBg.png?v=1476329743) no-repeat -7px 0px;
     width: 14px;
     height: 18px;
     float: left;
@@ -133,7 +197,7 @@ a {
     width: 7px;
     height: 4px;
     display: inline-block;
-    background: url(/img/v3/siteHTopBg.png?v=1476329743) no-repeat -7px 0px;
+    background: url(../../img/v3/siteHTopBg.png?v=1476329743) no-repeat -7px 0px;
     vertical-align: top;
     margin: 16px 0px 0px 3px;
     -webkit-transition: -webkit-transform 100ms;
@@ -188,7 +252,7 @@ span.wx {
     background-position: 0 -365px;
 }
 .siteHCodeImgBox span {
-    background: url(/img/v3/siteHTopBg.png?v=1476329743) no-repeat -7px 0px;
+    background: url(../../img/v3/siteHTopBg.png?v=1476329743) no-repeat -7px 0px;
     width: 14px;
     height: 18px;
     float: left;
@@ -199,7 +263,7 @@ span.wx {
     width: 7px;
     height: 4px;
     display: inline-block;
-    background: url(/img/v3/siteHTopBg.png?v=1476329743) no-repeat -7px 0px;
+    background: url(../../img/v3/siteHTopBg.png?v=1476329743) no-repeat -7px 0px;
     vertical-align: top;
     margin: 16px 0px 0px 3px;
     -webkit-transition: -webkit-transform 100ms;
@@ -363,7 +427,7 @@ fieldset, img {
     border-radius: 3px;
     position: absolute;
     right: 130px;
-    
+
     transition: width .5s ease 0s;
     overflow: hidden;
 }
@@ -376,10 +440,10 @@ fieldset, img {
 
 
 .itemSearch-focus{
-	width:348px;
-	background:#fff;
-	border-color:#55acef;
-	box-shadow:0 0 3px rgba(85,172,239,75);	
+    width:348px;
+    background:#fff;
+    border-color:#55acef;
+    box-shadow:0 0 3px rgba(85,172,239,75);
 }
 
 .siteIlB_box>*, .siteIlB_item {
@@ -390,7 +454,7 @@ fieldset, img {
 
 .search-input {
     margin: 0px 3px 0 3px;
-   width:88%;
+    width:88%;
     height: 28px;
     line-height: 20px;
     border:none;
@@ -401,15 +465,15 @@ fieldset, img {
     width: 100%;
     height: 100%;
     line-height: 20px;
-    
+
     /*********/
     border: none;
-    
-    
+
+
 }
 .search-input input:focus{
-	
-	outline:none;
+
+    outline:none;
 }
 
 .siteIlB_item {
@@ -430,7 +494,7 @@ fieldset, img {
     top: 0;
 }
 .itemSearch-focus.siteMSearchA{
-	background-position:8px -534px;
+    background-position:8px -534px;
 }
 
 .sitePHTip {

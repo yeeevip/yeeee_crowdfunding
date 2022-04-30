@@ -57,6 +57,57 @@ window.onscroll = function () {
 }
 
 
+$(document).ready(function(){
+	var token = localStorage.getItem('token')
+	if (token) {
+		$("#headerRightShow").append(
+			`
+			<div class="siteHLoginBox clearfix">
+                <a href="/pages/showPerson.html" class="sitehH_login Js_showlogin">个人中心</a>
+                <span class="line"></span>
+                <a href="" id="logoutBtn" class="siteH_register Js_showRegister">注销</a>
+            </div>
+			`
+		)
+	} else {
+		$("#headerRightShow").append(
+			`
+			<div class="siteHLoginBox clearfix">
+                <a href="/pages/front/login.html" class="sitehH_login Js_showlogin">登录</a>
+                <span class="line"></span>
+                <a href="/pages/front/register.html" class="siteH_register Js_showRegister">注册</a>
+            </div>
+			`
+		)
+	}
+
+	$("#logoutBtn").on('click', function () {
+		$.ajax({
+			type: 'GET',
+			url: '/user/logout' ,
+			//contentType: "application/json",
+			data:  {
+				'username': $("#Account").val(),
+				'password': $("#Password").val(),
+				'code': $("#ImgCode").val()
+			},
+			dataType: 'json',
+			success: function (res) {
+				if (res.code != 200) {
+					layer.alert(res.message)
+				} else {
+					// 将token存储到本地
+					localStorage.removeItem('token')
+					// 请求成功后跳转到首页
+					location.href = '/'
+				}
+			}
+		});
+	})
+
+})
+
+
 
 
 

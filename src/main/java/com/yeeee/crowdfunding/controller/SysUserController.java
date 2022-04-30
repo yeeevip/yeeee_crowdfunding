@@ -4,6 +4,7 @@ import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import com.yeeee.crowdfunding.api.CommonResult;
 import com.yeeee.crowdfunding.model.dto.auth.Oauth2TokenDTO;
 import com.yeeee.crowdfunding.service.CustomUserDetailsService;
+import com.yeeee.crowdfunding.service.SysUserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -29,9 +30,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("sys-user")
 public class SysUserController {
 
-    private final CustomUserDetailsService userDetailsService;
-    private final TokenEndpoint tokenEndpoint;
-    private final PasswordEncoder passwordEncoder;
+    private final SysUserService sysUserService;
 
     @ApiOperation("用户登录")
     @ApiImplicitParams({
@@ -40,7 +39,7 @@ public class SysUserController {
     })
     @PostMapping(value = "/login")
     public CommonResult<Oauth2TokenDTO> login(String username, String password) {
-        return CommonResult.success(userDetailsService.oauthToken(username, password, "SYSTEM"));
+        return CommonResult.success(sysUserService.login(username, password));
     }
 
 }

@@ -107,6 +107,8 @@ public class CustomUserServiceImpl implements CustomUserDetailsService {
         return null;
     }
 
+
+    @Override
     public Oauth2TokenDTO oauthToken(String username, String password, String userType) {
 
         Assert.isTrue(CharSequenceUtil.isAllNotBlank(username, password), UserBizErrorCode.NAME_PASSWORD_NOT_EMPTY.getMessage());
