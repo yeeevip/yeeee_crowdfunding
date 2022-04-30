@@ -132,7 +132,7 @@ $(document).ready(function(){
 						+'</tr>'
 						+'<tr class="inforTr" project_id="">'
 						+'<td>'
-						+'<div class="ddImgBox"><a href="/pages/front/project.html?id=' + Ojson[i].id + '" target="_blank"><img style="width:80px;height:60px;" src="/'+Ojson[i].coverPath+'"></a></div>'
+						+'<div class="ddImgBox"><a href="/pages/front/project.html?id=' + Ojson[i].id + '" target="_blank"><img style="width:80px;height:60px;" src="'+Ojson[i].coverPath+'"></a></div>'
 						+'<div class="ddImgText"><a href="/pages/front/project.html?id=' + Ojson[i].id + '" target="_blank">'+Ojson[i].title+'</a></div>'
 						+'</td>'
 						+'<td>'
@@ -302,7 +302,7 @@ $(document).ready(function(){
 							'</tr>'+
 							'<tr class="inforTr">'+
 							'<td>'+
-							'<div class="ddImgBox"><a href="/pages/front/project.html?id=' + Ojson[i].projectVO.id + '" target="_blank"><img style="width:80px;height:60px;" src="/'+Ojson[i].projectVO.coverPath+'"></a></div>'+
+							'<div class="ddImgBox"><a href="/pages/front/project.html?id=' + Ojson[i].projectVO.id + '" target="_blank"><img style="width:80px;height:60px;" src="'+Ojson[i].projectVO.coverPath+'"></a></div>'+
 							'<div class="ddImgText"><a href="/pages/front/project.html?id=' + Ojson[i].projectVO.id + '" target="_blank">'+Ojson[i].projectVO.title+'</a></div>'+
 							'</td>'+
 							'<td><div><p class="inforText_p gray">'+projectState+'</p></div></td>'+
@@ -388,7 +388,7 @@ $(document).ready(function(){
 											'</tr>'+
 											'<tr class="inforTr">'+
 											'<td>'+
-											'<div class="ddImgBox"><a href="/pages/front/project.html?id=' + Ojson[i].projectVO.id + '" target="_blank"><img style="width:80px;height:60px;" src="/'+Ojson[i].projectVO.coverPath+'"></a></div>'+
+											'<div class="ddImgBox"><a href="/pages/front/project.html?id=' + Ojson[i].projectVO.id + '" target="_blank"><img style="width:80px;height:60px;" src="'+Ojson[i].projectVO.coverPath+'"></a></div>'+
 											'<div class="ddImgText"><a href="/pages/front/project.html?id=' + Ojson[i].projectVO.id + '" target="_blank">'+Ojson[i].projectVO.title+'</a></div>'+
 											'</td>'+
 											'<td><div><p class="inforText_p gray">'+projectState+'</p></div></td>'+
@@ -570,7 +570,7 @@ $(document).ready(function(){
 							+'</tr>'
 							+'<tr class="inforTr" project_id="">'
 							+'<td>'
-							+'<div class="ddImgBox"><a href="/pages/front/project.html?id=' + Ojson[i].id + '" target="_blank"><img style="width:80px;height:60px;" src="/'+Ojson[i].coverPath+'"></a></div>'
+							+'<div class="ddImgBox"><a href="/pages/front/project.html?id=' + Ojson[i].id + '" target="_blank"><img style="width:80px;height:60px;" src="'+Ojson[i].coverPath+'"></a></div>'
 							+'<div class="ddImgText"><a href="/pages/front/project.html?id=' + Ojson[i].id + '" target="_blank">'+Ojson[i].title+'</a></div>'
 							+'</td>'
 							+'<td>'

@@ -858,7 +858,7 @@ a.tjdd_h3{
     float: left;
     width: 34px;
     height: 34px;
-    background: url(../img/v3/zhifuTitleBg.png) no-repeat 0px -174px;
+    background: url(/img/v3/zhifuTitleBg.png) no-repeat 0px -174px;
 }
 .NumInner input[type="text"] {
     width: 70px;
@@ -951,7 +951,7 @@ a.tjdd_h3{
     position: absolute;
     width: 18px;
     height: 18px;
-    background: url(../img/v3/zhifuTitleBg.png) no-repeat -86px -174px;
+    background: url(/img/v3/zhifuTitleBg.png) no-repeat -86px -174px;
     left: 10px;
     top: 14px;
 }
@@ -1146,7 +1146,7 @@ a.tjdd_h3{
     position: absolute;
     top: 0px;
     right: -11px;
-    background: url(../img/v3/jianglixiangqingBg.png) no-repeat;
+    background: url(/img/v3/jianglixiangqingBg.png) no-repeat;
 }
 .colorALink {
     color: #50abf2 !important;

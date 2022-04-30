@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yeeee.crowdfunding.mapper.ProjectDetailMapper">
+
+    <sql id="searchBy">
+        <trim prefix="where" prefixOverrides="and|or">
+            <if test="id != '' and id != null">
+                and id = #{id}
+            </if>
+            <if test="projectId != '' and projectId != null">
+                and project_id = #{projectId}
+            </if>
+            <if test="itemTitle != '' and itemTitle != null">
+                and item_title = #{itemTitle}
+            </if>
+            <if test="itemContent != '' and itemContent != null">
+                and item_content = #{itemContent}
+            </if>
+        </trim>
+    </sql>
+
+    <select id="getList" resultType="com.yeeee.crowdfunding.model.entity.ProjectDetail">
+        SELECT
+            id,
+            project_id,
+            item_title,
+            item_content
+        FROM
+            t_project_detail
+        <include refid="searchBy"/>
+    </select>
+
+    <select id="getOne" resultType="com.yeeee.crowdfunding.model.entity.ProjectDetail">
+        SELECT
+            id,
+            project_id,
+            item_title,
+            item_content
+        FROM
+            t_project_detail
+        <include refid="searchBy"/>
+        LIMIT 1
+    </select>
+
+    <insert id="insert" parameterType="com.yeeee.crowdfunding.model.entity.ProjectDetail" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO t_project_detail
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id !='' and id !=null">
+                id,
+            </if>
+            <if test="projectId !='' and projectId !=null">
+                project_id,
+            </if>
+            <if test="itemTitle !='' and itemTitle !=null">
+                item_title,
+            </if>
+            <if test="itemContent !='' and itemContent !=null">
+                item_content
+            </if>
+        </trim>
+        VALUE
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != '' and id != null">
+                #{id},
+            </if>
+            <if test="projectId != '' and projectId != null">
+                #{projectId},
+            </if>
+            <if test="itemTitle != '' and itemTitle != null">
+                #{itemTitle},
+            </if>
+            <if test="itemContent != '' and itemContent != null">
+                #{itemContent}
+            </if>
+        </trim>
+        <selectKey resultType="int" order="AFTER" keyProperty="id">
+            SELECT LAST_INSERT_ID() AS id
+        </selectKey>
+    </insert>
+
+    <update id="updateByPrimaryKey" parameterType="com.yeeee.crowdfunding.model.entity.ProjectDetail">
+        UPDATE t_project_detail
+        <trim prefix="set" suffixOverrides=",">
+            <if test="projectId != '' and projectId != null">
+                project_id = #{projectId},
+            </if>
+            <if test="itemTitle != '' and itemTitle != null">
+                item_title = #{itemTitle},
+            </if>
+            <if test="itemContent != '' and itemContent != null">
+                item_content = #{itemContent}
+            </if>
+        </trim>
+        WHERE id=#{id}
+    </update>
+
+    <insert id="batchInsert" parameterType="java.util.List">
+        INSERT INTO t_project_detail
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            id,project_id,item_title,item_content,
+        </trim>
+        VALUES
+        <foreach collection="list" item="item" index="index" separator=",">
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                #{item.id},#{item.projectId},#{item.itemTitle},#{item.itemContent},
+            </trim>
+        </foreach>
+    </insert >
+
+</mapper>

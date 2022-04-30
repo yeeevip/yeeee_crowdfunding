@@ -18,4 +18,13 @@ public class ProjectRepayVO {
     @ApiModelProperty("回报内容")
     private String payContent;
 
+    @ApiModelProperty("回报类型")
+    private String type;
+
+    @ApiModelProperty("回报时间")
+    private Integer time;
+
+    @ApiModelProperty("回报金额")
+    private Integer money;
+
 }

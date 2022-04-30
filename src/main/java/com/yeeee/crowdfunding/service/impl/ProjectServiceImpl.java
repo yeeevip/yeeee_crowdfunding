@@ -5,19 +5,19 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
-import com.yeeee.crowdfunding.convert.ProjectConvert;
-import com.yeeee.crowdfunding.mapper.ProjectMapper;
-import com.yeeee.crowdfunding.model.entity.Project;
-import com.yeeee.crowdfunding.model.vo.IndexProjectListVO;
-import com.yeeee.crowdfunding.model.vo.PageVO;
-import com.yeeee.crowdfunding.model.vo.ProjectPageReqVO;
-import com.yeeee.crowdfunding.model.vo.ProjectVO;
+import com.yeeee.crowdfunding.convert.*;
+import com.yeeee.crowdfunding.exception.BizException;
+import com.yeeee.crowdfunding.mapper.*;
+import com.yeeee.crowdfunding.model.entity.*;
+import com.yeeee.crowdfunding.model.vo.*;
 import com.yeeee.crowdfunding.service.ProjectService;
+import com.yeeee.crowdfunding.utils.DateConvertUtil;
 import com.yeeee.crowdfunding.utils.SecurityUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -36,6 +36,28 @@ public class ProjectServiceImpl implements ProjectService {
     private final ProjectMapper projectMapper;
 
     private final ProjectConvert projectConvert;
+
+    private final ProjectDetailConvert projectDetailConvert;
+
+    private final ProjectRepayConvert projectRepayConvert;
+
+    private final CommentConvert commentConvert;
+
+    private final ProjectProgressConvert projectProgressConvert;
+
+    private final UserConvert userConvert;
+
+    private final OrderMapper orderMapper;
+
+    private final ProjectDetailMapper projectDetailMapper;
+
+    private final ProjectProgressMapper projectProgressMapper;
+
+    private final ProjectRepayMapper projectRepayMapper;
+
+    private final CommentMapper commentMapper;
+
+    private final UserMapper userMapper;
 
     @Override
     public IndexProjectListVO getIndexShowProject() {
@@ -123,5 +145,54 @@ public class ProjectServiceImpl implements ProjectService {
                 .map(projectConvert::project2VO)
                 .collect(Collectors.toList());
         return new PageVO<>(page.getPageNum(), page.getPageSize(), page.getPages(), page.getTotal(), result);
+    }
+
+    @Override
+    public ProjectDetailVO getIndexProjectDetail(Integer id) {
+
+        if (id == null) {
+            throw new BizException("项目ID不能为空");
+        }
+
+        Project project = projectMapper.getOne(new Project().setId(id));
+        if (project == null) {
+            throw new BizException("项目不存在");
+        }
+
+        ProjectDetailVO projectDetailVO = projectConvert.project2DetailVO(project);
+
+        List<ProjectItemVO> projectItemVOS = Optional.ofNullable(projectDetailMapper.getList(new ProjectDetail().setProjectId(project.getId()))).orElseGet(Lists::newArrayList)
+                .stream()
+                .map(projectDetailConvert::detail2VO)
+                .collect(Collectors.toList());
+        projectDetailVO.setItemVOList(projectItemVOS);
+
+        List<ProjectRepayVO> repayVOList = Optional.ofNullable(projectRepayMapper.getList(new ProjectRepay().setProjectId(project.getId()))).orElseGet(Lists::newArrayList)
+                .stream()
+                .map(projectRepayConvert::projectRepay2VO)
+                .collect(Collectors.toList());
+        projectDetailVO.setRepayVOList(repayVOList);
+
+        List<CommentVO> commentVOList = Optional.ofNullable(commentMapper.getList(new Comment().setProject(project.getId()))).orElseGet(Lists::newArrayList)
+                .stream()
+                .map(commentConvert::comment2VO)
+                .collect(Collectors.toList());
+        projectDetailVO.setCommentVOList(commentVOList);
+
+        //orderMapper.getList(new Order().setProjectId(project.getId()))
+
+        List<ProjectProgressVO> progressVOList = Optional.ofNullable(projectProgressMapper.getList(new ProjectProgress().setProjectId(project.getId()))).orElseGet(Lists::newArrayList)
+                .stream()
+                .map(projectProgressConvert::progress2VO)
+                .peek(item -> item.setPublishDateStr(DateConvertUtil.timeToNow(item.getPublishDate())))
+                .collect(Collectors.toList());
+        projectDetailVO.setProgressVOList(progressVOList);
+
+        User createUser = userMapper.getOne(new User().setId(project.getUserId()));
+        projectDetailVO.setSellerVO(userConvert.user2VO(createUser));
+
+        projectDetailVO.setLeftDays(DateConvertUtil.getLeftDays(project.getDaysRaising(), project.getLaunchDateRaising(), new Date()));
+
+        return projectDetailVO;
     }
 }

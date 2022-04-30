@@ -52,7 +52,7 @@ dy, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fields
 
 .indexBPage a{
 	opacity: 0.4;
-    background: url(../img/v3/indexBannerBtn.png) no-repeat;
+    background: url(/img/v3/indexBannerBtn.png) no-repeat;
     width: 39px;
     height: 51px;
     position: absolute;
@@ -213,7 +213,7 @@ div {
 }
 
 .siteCardFLabelBox {
-    background: url(../img/v3/indexDatabg.png) 0px -90px no-repeat;
+    background: url(/img/v3/indexDatabg.png) 0px -90px no-repeat;
     padding-left: 20px;
     height: 20px;
     overflow: hidden;
@@ -301,7 +301,7 @@ p{
     right: -56px;
     width: 46px;
     height: 43px;
-    background: url(../img/v3/goTop.png?) no-repeat 0px 0px;
+    background: url(/img/v3/goTop.png?) no-repeat 0px 0px;
 }
 .SiteGoTopBox a:hover {
     background-position: 0px -43px;

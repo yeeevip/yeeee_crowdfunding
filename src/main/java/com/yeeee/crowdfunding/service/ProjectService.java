@@ -1,10 +1,7 @@
 package com.yeeee.crowdfunding.service;
 
 import com.github.pagehelper.Page;
-import com.yeeee.crowdfunding.model.vo.IndexProjectListVO;
-import com.yeeee.crowdfunding.model.vo.PageVO;
-import com.yeeee.crowdfunding.model.vo.ProjectPageReqVO;
-import com.yeeee.crowdfunding.model.vo.ProjectVO;
+import com.yeeee.crowdfunding.model.vo.*;
 
 /**
  * description......
@@ -19,4 +16,6 @@ public interface ProjectService {
     PageVO<ProjectVO> getProjectPageList(ProjectPageReqVO reqVO);
 
     PageVO<ProjectVO> getMyselfProjectList(ProjectPageReqVO reqVO);
+
+    ProjectDetailVO getIndexProjectDetail(Integer id);
 }

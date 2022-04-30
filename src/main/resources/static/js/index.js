@@ -96,10 +96,10 @@ $(document).ready(function(){
 				hotHtml +=
 					`
 							 <div class="indCardItem">
-								<a href="/pages/project.html?id=${item.id}" class="siteCardItemImgA"><img src="/${item.coverPath}" /></a>
+								<a href="/pages/front/project.html?id=${item.id}" class="siteCardItemImgA"><img src="${item.coverPath}" /></a>
 								<div class="indCardICBox">
 									<div class="indCardICText">
-										<a href="/pages/project.html?id=1" class="siteCardICH3">${item.title}</a>
+										<a href="/pages/front/project.html?id=1" class="siteCardICH3">${item.title}</a>
 										<p class="siteCardIC_p ind">${item.blurb}</p>
 									</div>
 									<div class="siteCardFBox">
@@ -153,10 +153,10 @@ $(document).ready(function(){
 				welfareHtml +=
 					`
 							 <div class="indCardItem">
-								<a href="/pages/project.html?id=${item.id}" class="siteCardItemImgA"><img src="/${item.coverPath}" /></a>
+								<a href="/pages/front/project.html?id=${item.id}" class="siteCardItemImgA"><img src="${item.coverPath}" /></a>
 								<div class="indCardICBox">
 									<div class="indCardICText">
-										<a href="/pages/project.html?id=1" class="siteCardICH3">${item.title}</a>
+										<a href="/pages/front/project.html?id=1" class="siteCardICH3">${item.title}</a>
 										<p class="siteCardIC_p ind">${item.blurb}</p>
 									</div>
 									<div class="siteCardFBox">
@@ -210,10 +210,10 @@ $(document).ready(function(){
 				agHtml +=
 					`
 							 <div class="indCardItem">
-								<a href="/pages/project.html?id=${item.id}" class="siteCardItemImgA"><img src="/${item.coverPath}" /></a>
+								<a href="/pages/front/project.html?id=${item.id}" class="siteCardItemImgA"><img src="${item.coverPath}" /></a>
 								<div class="indCardICBox">
 									<div class="indCardICText">
-										<a href="/pages/project.html?id=1" class="siteCardICH3">${item.title}</a>
+										<a href="/pages/front/project.html?id=1" class="siteCardICH3">${item.title}</a>
 										<p class="siteCardIC_p ind">${item.blurb}</p>
 									</div>
 									<div class="siteCardFBox">
@@ -267,10 +267,10 @@ $(document).ready(function(){
 				publishHtml +=
 					`
 							 <div class="indCardItem">
-								<a href="/pages/project.html?id=${item.id}" class="siteCardItemImgA"><img src="/${item.coverPath}" /></a>
+								<a href="/pages/front/project.html?id=${item.id}" class="siteCardItemImgA"><img src="${item.coverPath}" /></a>
 								<div class="indCardICBox">
 									<div class="indCardICText">
-										<a href="/pages/project.html?id=1" class="siteCardICH3">${item.title}</a>
+										<a href="/pages/front/project.html?id=1" class="siteCardICH3">${item.title}</a>
 										<p class="siteCardIC_p ind">${item.blurb}</p>
 									</div>
 									<div class="siteCardFBox">
@@ -324,10 +324,10 @@ $(document).ready(function(){
 				artHtml +=
 					`
 							 <div class="indCardItem">
-								<a href="/pages/project.html?id=${item.id}" class="siteCardItemImgA"><img src="/${item.coverPath}" /></a>
+								<a href="/pages/front/project.html?id=${item.id}" class="siteCardItemImgA"><img src="${item.coverPath}" /></a>
 								<div class="indCardICBox">
 									<div class="indCardICText">
-										<a href="/pages/project.html?id=1" class="siteCardICH3">${item.title}</a>
+										<a href="/pages/front/project.html?id=1" class="siteCardICH3">${item.title}</a>
 										<p class="siteCardIC_p ind">${item.blurb}</p>
 									</div>
 									<div class="siteCardFBox">

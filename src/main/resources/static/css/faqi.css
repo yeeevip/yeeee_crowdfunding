@@ -139,7 +139,7 @@
     text-decoration: none;
 }
 .fq_lxItem a.cur,.fq_lxItem a:hover{
-	background: url(../img/v3/lanuch-sec.png) no-repeat top right;
+	background: url(/img/v3/lanuch-sec.png) no-repeat top right;
     border-color: #50abf2;
 }
 .fq_body_ul{
@@ -168,7 +168,7 @@
 	float: left;
     width: 67px;
     height: 63px;
-    background: url(../img/v3/set-cover.png) no-repeat;
+    background: url(/img/v3/set-cover.png) no-repeat;
     border:none;
 }
 .set-cover-intro{
@@ -293,7 +293,7 @@ height: 132px;
     float: left;
     width: 67px;
     height: 63px;
-    background: url(../img/v3/set-cover.png) no-repeat;
+    background: url(/img/v3/set-cover.png) no-repeat;
 }
 .hb_tips{
 	margin:0 auto;
@@ -376,7 +376,7 @@ text-decoration: underline;
     display: inline-block;
     vertical-align: middle;
     margin-right: 15px;
-    background: url(../img/v3/service-icon.png) no-repeat;
+    background: url(/img/v3/service-icon.png) no-repeat;
 }
 .fq_body_ul .material-list{
 	margin-top: 20px;

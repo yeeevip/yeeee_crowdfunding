@@ -84,7 +84,7 @@
     left: 20px;
     
     font-size: 22px;
-	background:url(../img/v3/icon_1.png) -4px 5px no-repeat;
+	background:url(/img/v3/icon_1.png) -4px 5px no-repeat;
 }
 .tab_login_box li i.icon_i2{
 	height:42px;
@@ -93,7 +93,7 @@
     left: 20px;
     
     font-size: 22px;
-	background:url(../img/v3/icon_2.png) -4px 5px no-repeat;
+	background:url(/img/v3/icon_2.png) -4px 5px no-repeat;
 }
 .tab_login_box li i.icon_i3{
 	height:42px;
@@ -102,7 +102,7 @@
     left: 20px;
     
     font-size: 22px;
-	background:url(../img/v3/icon_3.png) -4px 5px no-repeat;
+	background:url(/img/v3/icon_3.png) -4px 5px no-repeat;
 }
 
 .tab_login_box li input.txt { 
@@ -223,7 +223,7 @@
 	height: 45px;
 	line-height: 45px;
 	border: none;
-	background: url(../img/btn_bg.jpg) 0 0 repeat-x;
+	background: url(/img/btn_bg.jpg) 0 0 repeat-x;
 	text-align: center;
 	width: 305px;
 	border-radius: 5px;
@@ -275,7 +275,7 @@
 	text-align: center; 
 	}
 .icon_qq{
-	background: url(../img/v3/icon_QQ.png) 6px -1px no-repeat;
+	background: url(/img/v3/icon_QQ.png) 6px -1px no-repeat;
 }
 
 	

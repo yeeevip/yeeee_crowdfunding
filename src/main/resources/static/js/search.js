@@ -33,7 +33,7 @@ $(document).ready(function(){
 					`
 	<div class="searchCard">
          <a href="/pages/front/project.html?id=${item.id}" class="siteCardItemImgA">
-         	<img src="/${item.coverPath}" />
+         	<img src="${item.coverPath}" />
          </a>
          <div class="searchCtext">
              <div class="searchCT_p">

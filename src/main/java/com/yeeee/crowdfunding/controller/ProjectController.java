@@ -3,10 +3,7 @@ package com.yeeee.crowdfunding.controller;
 import com.github.pagehelper.Page;
 import com.yeeee.crowdfunding.annotation.AnonymousAccess;
 import com.yeeee.crowdfunding.api.CommonResult;
-import com.yeeee.crowdfunding.model.vo.IndexProjectListVO;
-import com.yeeee.crowdfunding.model.vo.PageVO;
-import com.yeeee.crowdfunding.model.vo.ProjectPageReqVO;
-import com.yeeee.crowdfunding.model.vo.ProjectVO;
+import com.yeeee.crowdfunding.model.vo.*;
 import com.yeeee.crowdfunding.service.ProjectService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -32,6 +29,13 @@ public class ProjectController {
     @GetMapping("front/index")
     public CommonResult<IndexProjectListVO> getIndexShowProject() {
         return CommonResult.success(projectService.getIndexShowProject());
+    }
+
+    @ApiOperation("项目详情")
+    @AnonymousAccess
+    @GetMapping("front/detail")
+    public CommonResult<ProjectDetailVO> getIndexProjectDetail(Integer id) {
+        return CommonResult.success(projectService.getIndexProjectDetail(id));
     }
 
     @ApiOperation("项目分页")
