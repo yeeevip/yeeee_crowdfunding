@@ -13,6 +13,7 @@ import com.yeeee.crowdfunding.model.vo.PageVO;
 import com.yeeee.crowdfunding.model.vo.ProjectPageReqVO;
 import com.yeeee.crowdfunding.model.vo.ProjectVO;
 import com.yeeee.crowdfunding.service.ProjectService;
+import com.yeeee.crowdfunding.utils.SecurityUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -99,6 +100,22 @@ public class ProjectServiceImpl implements ProjectService {
             query.setKeyword(reqVO.getProjectVO().getKeyword())
                 .setCategoryId(reqVO.getProjectVO().getProjectType());
         }
+        query.setHasAudits(1);
+
+        List<Project> projectList = projectMapper.getList(query);
+        List<ProjectVO> result = Optional.ofNullable(projectList).orElseGet(Lists::newArrayList)
+                .stream()
+                .map(projectConvert::project2VO)
+                .collect(Collectors.toList());
+        return new PageVO<>(page.getPageNum(), page.getPageSize(), page.getPages(), page.getTotal(), result);
+    }
+
+    @Override
+    public PageVO<ProjectVO> getMyselfProjectList(ProjectPageReqVO reqVO) {
+        Page<ProjectVO> page = PageHelper.startPage(reqVO.getPageNum(), 5);
+
+        Project query = new Project();
+        query.setUserId(SecurityUtil.currentUserId());
 
         List<Project> projectList = projectMapper.getList(query);
         List<ProjectVO> result = Optional.ofNullable(projectList).orElseGet(Lists::newArrayList)

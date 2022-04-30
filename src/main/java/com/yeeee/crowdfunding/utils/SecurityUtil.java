@@ -9,9 +9,13 @@ import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.yeeee.crowdfunding.model.constant.AuthConstant;
 import com.yeeee.crowdfunding.model.constant.CommonConstant;
+import com.yeeee.crowdfunding.model.dto.auth.SecurityUser;
 import eu.bitwalker.useragentutils.Browser;
 import eu.bitwalker.useragentutils.UserAgent;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.oauth2.common.OAuth2AccessToken;
+import org.springframework.security.oauth2.provider.OAuth2Authentication;
+import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -76,13 +80,25 @@ public class SecurityUtil {
      */
     public static Integer currentUserId(){
         try {
-            HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-            String user = request.getHeader(AuthConstant.USER_TOKEN_HEADER);
-            return Integer.valueOf(JSON.parseObject(user).getString(AuthConstant.USER_ID_KEY));
+            return currentSecurityUser().getId();
         } catch (Exception e) {
             //log.warn("currentUserId error");
         }
         return null;
+    }
+
+    public static SecurityUser currentSecurityUser() {
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+        String token = request.getHeader(AuthConstant.JWT_TOKEN_HEADER);
+        String t = token.replace(AuthConstant.JWT_TOKEN_PREFIX, "");
+        return (SecurityUser) ((TokenStore)SpringContextUtils.getBean(TokenStore.class)).readAuthentication(t).getPrincipal();
+    }
+
+    public static OAuth2AccessToken getOAuth2AccessToken() {
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+        String token = request.getHeader(AuthConstant.JWT_TOKEN_HEADER);
+        String t = token.replace(AuthConstant.JWT_TOKEN_PREFIX, "");
+        return ((TokenStore)SpringContextUtils.getBean(TokenStore.class)).readAccessToken(t);
     }
 
 /*    *//**

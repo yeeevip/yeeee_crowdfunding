@@ -63,7 +63,7 @@ $(document).ready(function(){
 		$("#headerRightShow").append(
 			`
 			<div class="siteHLoginBox clearfix">
-                <a href="/pages/showPerson.html" class="sitehH_login Js_showlogin">个人中心</a>
+                <a href="/pages/front/personal_info.html" class="sitehH_login Js_showlogin">个人中心</a>
                 <span class="line"></span>
                 <a href="javascript:;" id="logoutBtn" class="siteH_register Js_showRegister">注销</a>
             </div>

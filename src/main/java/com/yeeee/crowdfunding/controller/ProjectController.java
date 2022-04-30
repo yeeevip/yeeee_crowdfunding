@@ -41,4 +41,10 @@ public class ProjectController {
         return CommonResult.success(projectService.getProjectPageList(reqVO));
     }
 
+    @ApiOperation("我发起的项目")
+    @PostMapping("myself")
+    public CommonResult<PageVO<ProjectVO>> getMyselfProjectList(@RequestBody ProjectPageReqVO reqVO) {
+        return CommonResult.success(projectService.getMyselfProjectList(reqVO));
+    }
+
 }

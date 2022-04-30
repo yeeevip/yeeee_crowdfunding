@@ -17,4 +17,6 @@ public interface ProjectService {
     IndexProjectListVO getIndexShowProject();
 
     PageVO<ProjectVO> getProjectPageList(ProjectPageReqVO reqVO);
+
+    PageVO<ProjectVO> getMyselfProjectList(ProjectPageReqVO reqVO);
 }

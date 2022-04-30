@@ -53,11 +53,6 @@ public class OauthResourceConfig extends ResourceServerConfigurerAdapter {
     @Autowired
     private ApplicationContext applicationContext;
 
-    @Bean
-    public TokenStore jdbcTokenStore() {
-        return new JdbcTokenStore(dataSource);
-    }
-
     @Override
     public void configure(HttpSecurity http) throws Exception {
 

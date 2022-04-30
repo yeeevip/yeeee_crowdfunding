@@ -8,6 +8,7 @@ import com.yeeee.crowdfunding.model.entity.User;
 import com.yeeee.crowdfunding.model.vo.UserCheckVO;
 import com.yeeee.crowdfunding.service.CustomUserDetailsService;
 import com.yeeee.crowdfunding.service.UserService;
+import com.yeeee.crowdfunding.utils.SecurityUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -43,9 +44,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Void logout(HttpServletRequest request) {
-        String token = request.getHeader(AuthConstant.JWT_TOKEN_HEADER);
-        String t = token.replace(AuthConstant.JWT_TOKEN_PREFIX, "");
-        OAuth2AccessToken oAuth2AccessToken = tokenStore.readAccessToken(t);
+        OAuth2AccessToken oAuth2AccessToken = SecurityUtil.getOAuth2AccessToken();
         if (oAuth2AccessToken != null) {
             tokenStore.removeAccessToken(oAuth2AccessToken);
         }

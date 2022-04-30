@@ -7,7 +7,7 @@
 var f_display = function(divId){
 	var c_displays =  document.querySelectorAll(".c_display");
 	for(var i=0;i<c_displays.length;i++){
-		
+
 		c_displays[i].style.display="none";
 	}
 	document.querySelector("#"+divId).style.display="block";
@@ -44,14 +44,14 @@ function addReceiveInfo(){
 		success:function(data){
 			//alert(data);
 			data = eval('('+data+')');
-			
+
 			if(data.code=="0"){
 				layer.confirm(data.msg, {
 					  btn: ['确定'], //按钮
 					  closeBtn:0
 					}, function(){
 					  //layer.msg('的确很重要', {icon: 1});
-						var index = parent.layer.getFrameIndex(window.name); 
+						var index = parent.layer.getFrameIndex(window.name);
 				        parent.layer.close(index);
 						//window.location.href='showPerson.jhtml';
 					});
@@ -61,7 +61,7 @@ function addReceiveInfo(){
 					  closeBtn:0
 					}, function(){
 					  //layer.msg('的确很重要', {icon: 1});
-//						var index = parent.layer.getFrameIndex(window.name); 
+//						var index = parent.layer.getFrameIndex(window.name);
 //				        parent.layer.close(index);
 					//	window.location.href='showPerson.jhtml';
 						layer.close(index);
@@ -73,12 +73,110 @@ function addReceiveInfo(){
 }
 
 
-
-/**修改资料***/
-
 $(document).ready(function(){
-	
-	
+
+	let token = localStorage.getItem("token");
+	let pageNum = 1
+	$.ajax({
+		type: 'POST',
+		async: false,
+		url: '/front/project/myself' ,
+		contentType: "application/json;charset=utf-8",
+		headers: {
+			"Authorization": token ? ('Bearer ' + JSON.parse(token).token) : ''
+		},
+		data:  JSON.stringify({
+			'pageNum': pageNum
+		}),
+		dataType: 'json',
+		success: function (res) {
+			if (res.code == 401) {
+				layer.alert("登录过期，请重新登录！！！")
+			} else if (res.code == 200) {
+				var Ojson = res.data.result
+
+				$("#myProject_tbody_ajax").find("tr").remove();
+				for(var i=0;i<Ojson.length;i++){
+					var projectState = "";
+					if(Ojson[i].hasAudits==1&&Ojson[i].hasFinish==0){
+						projectState ="正在集资";
+					}
+					if(Ojson[i].hasAudits==1&&Ojson[i].hasFinish==-1 ){
+						projectState = "集资失败";
+					}
+					if(Ojson[i].hasAudits==1&&Ojson[i].hasFinish==1 ){
+						projectState = "集资成功";
+					}
+					if(Ojson[i].hasAudits==0 ){
+						projectState = "未审核";
+					}
+					if(Ojson[i].hasAudits==-1 ){
+						projectState = "未通过审核";
+					}
+
+					var percent=Ojson[i].hasFundRaising/Ojson[i].totalFundRaising*100;
+
+					percent = percent.toFixed(2);
+
+
+
+					$("#myProject_tbody_ajax").append('<tr class="trfirst"><td colspan="4"></td></tr>'
+						+'<tr class="ftTr">'
+						+'<td colspan="4">创建时间：'+Ojson[i].launchDateRaising+'</td>'
+						+'<td><a href="javascript:;" class="ftTr_delA" title="删除"></a></td>'
+						+'</tr>'
+						+'<tr class="inforTr" project_id="">'
+						+'<td>'
+						+'<div class="ddImgBox"><a href="javascript:;" target="_blank"><img style="width:80px;height:60px;" src="/'+Ojson[i].coverPath+'"></a></div>'
+						+'<div class="ddImgText"><a href="javascript:;" target="_blank">'+Ojson[i].title+'</a></div>'
+						+'</td>'
+						+'<td>'
+						+'<div>'
+						+'<p class="inforText_p gray">'
+						+projectState
+						+'</p>'
+						+'</div></td>'
+						+'<td>'
+						+'<p class="inforText_p ">目标：'+Ojson[i].totalFundRaising +'元</p>'
+
+						+'<div class="inforRatioBox">'
+						+'<div class="inforRatio"><div class="inner" style="width:'+percent+'%"></div></div>'
+						+'<span>'+percent+'%</span> '
+						+'</div>'
+						+'</td>'
+						+'<td><div><p class="inforText_p gray">不可结算</p></div></td>'
+						+'<td class="btnTd">'
+						+'<div class="operations">'
+						+'<a href="javascript:goProjectProcess('+Ojson[i].id +');" target="_blank" class="ddLastbtn_A">更新最新进展</a>'
+
+						+'</td>'
+						+'</tr>');
+				}
+				for (var i = 0; i < res.data.pages; i++) {
+					if (pageNum == (i + 1)) {
+						$("#myprojectFlip").append(
+							`
+							<a href="javascript:;" class="fy_page cur">${i+1 }</a>
+							`
+						)
+					} else {
+						$("#myprojectFlip").append(
+							`
+							<a href="javascript:;" class="fy_page">${i+1 }</a>
+							`
+						)
+					}
+
+				}
+
+				//registerChangePageMyProject();
+
+			} else {
+				layer.alert(res.message)
+			}
+
+		}
+	});
 	
 	//初始化日历
 	
@@ -113,17 +211,6 @@ $(document).ready(function(){
 
 		
 	});
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	$(".ziLiao_box_submit").click(function(){
@@ -167,54 +254,69 @@ $(document).ready(function(){
 	 * 买家订单查询
 	 */
 	$("#myOrderShow").click(function(){
+		let token = localStorage.getItem("token");
+		let pageNum = 1
 		$.ajax({
-			url		:	"buyerOrder.jhtml",
-			async	:	true,
-			cache	:	false,
-			type	:	"POST",
-			dataType:	"json",
-			success :	function(Ojson){
-				$("#myOrderTbody").find("tr").remove();
-				for(var i=0;i<Ojson.length;i++){
-					
-					var payState = "";
-					if(Ojson[i].is_pay==0){
-						payState="未支付"
+			type: 'POST',
+			async: false,
+			url: '/front/order/myself' ,
+			contentType: "application/json;charset=utf-8",
+			headers: {
+				"Authorization": token ? ('Bearer ' + JSON.parse(token).token) : ''
+			},
+			data:  JSON.stringify({
+				'pageNum': pageNum
+			}),
+			dataType: 'json',
+			success: function (res) {
+				if (res.code == 401) {
+					layer.alert("登录过期，请重新登录！！！")
+				} else if (res.code == 200) {
+					var Ojson = res.data.result
+					$("#myOrderTbody").find("tr").remove();
+					for(var i=0;i<Ojson.length;i++){
+
+						var payState = "";
+						if(Ojson[i].is_pay==0){
+							payState="未支付"
+						}
+						if(Ojson[i].is_pay==1){
+							payState="支付成功"
+						}
+
+						var html = '<tr class="trfirst"><td colspan="7"></td></tr>'+
+							'<tr class="ftTr">'+
+							'<td colspan="6">创建时间：'+Ojson[i].order_date+
+							'<span class="dingdan">订单号码:'+Ojson[i].id+'</span><span  class="dingdan">发起人:'+Ojson[i].user_seller.user_name+'</span>'+
+							'</td>'+
+							'<td><a href="javascript:;" class="ftTr_delA" title="删除"></a></td>'+
+							'</tr>'+
+							'<tr class="inforTr">'+
+							'<td>'+
+							'<div class="ddImgBox"><a href="javascript:;" target="_blank"><img style="width:80px;height:60px;" src="'+Ojson[i].project.img_name+'"></a></div>'+
+							'<div class="ddImgText"><a href="javascript:;" target="_blank">'+Ojson[i].project.title+'</a></div>'+
+							'</td>'+
+							'<td><div><p class="inforText_p gray">'+Ojson[i].project.is_audits+'</p></div></td>'+
+							'	<td>'+
+							'<div class="ddImgText"><a href="javascript:;" target="_blank" title="'+Ojson[i].projectrepay.title+'----'+Ojson[i].projectrepay.content+'">'+Ojson[i].projectrepay.title+'----'+Ojson[i].projectrepay.content+'</a></div>'+
+							'</td>'+
+							'<td><div><p class="inforText_p gray">'+Ojson[i].payPrice+'元</p></div></td>'+
+							'<td><div><p class="inforText_p gray">'+Ojson[i].count+'</p></div></td>'+
+							'<td><div><p class="inforText_p gray">'+payState+'</p></div></td>'+
+							'<td class="btnTd">'+
+							'<div class="operations">';
+
+						if(Ojson[i].is_pay==1){
+							html = html+'<a href="javascript:;" class="ddLastbtn_A">确认收货</a><a href="javascript:;" class="ddLastbtn_A">我要投诉</a></td></tr>';
+						}else{
+							html = html+'<a href="javascript:toPay('+Ojson[i].id+');" class="ddLastbtn_A">去支付</a></td></tr>';
+						}
+
+
+						$("#myOrderTbody").append(html);
 					}
-					if(Ojson[i].is_pay==1){
-						payState="支付成功"
-					}
-					
-					var html = '<tr class="trfirst"><td colspan="7"></td></tr>'+
-                        	'<tr class="ftTr">'+
-                        		'<td colspan="6">创建时间：'+Ojson[i].order_date+
-                        			'<span class="dingdan">订单号码:'+Ojson[i].id+'</span><span  class="dingdan">发起人:'+Ojson[i].user_seller.user_name+'</span>'+
-                        		'</td>'+
-                        		'<td><a href="javascript:;" class="ftTr_delA" title="删除"></a></td>'+
-                        	'</tr>'+
-                        	'<tr class="inforTr">'+
-                        		'<td>'+
-                        			'<div class="ddImgBox"><a href="javascript:;" target="_blank"><img style="width:80px;height:60px;" src="'+Ojson[i].project.img_name+'"></a></div>'+
-                        			'<div class="ddImgText"><a href="javascript:;" target="_blank">'+Ojson[i].project.title+'</a></div>'+
-                        		'</td>'+
-                        		'<td><div><p class="inforText_p gray">'+Ojson[i].project.is_audits+'</p></div></td>'+
-                        	'	<td>'+
-                        			'<div class="ddImgText"><a href="javascript:;" target="_blank" title="'+Ojson[i].projectrepay.title+'----'+Ojson[i].projectrepay.content+'">'+Ojson[i].projectrepay.title+'----'+Ojson[i].projectrepay.content+'</a></div>'+
-                        		'</td>'+
-                        		'<td><div><p class="inforText_p gray">'+Ojson[i].payPrice+'元</p></div></td>'+
-                        		'<td><div><p class="inforText_p gray">'+Ojson[i].count+'</p></div></td>'+
-                        		'<td><div><p class="inforText_p gray">'+payState+'</p></div></td>'+
-                        		'<td class="btnTd">'+
-                        			'<div class="operations">';
-                        		
-                        		if(Ojson[i].is_pay==1){
-                        			html = html+'<a href="javascript:;" class="ddLastbtn_A">确认收货</a><a href="javascript:;" class="ddLastbtn_A">我要投诉</a></td></tr>';
-                        		}else{
-                        			html = html+'<a href="javascript:toPay('+Ojson[i].id+');" class="ddLastbtn_A">去支付</a></td></tr>';
-                        		}
-                        		
-                        		
-                        $("#myOrderTbody").append(html);
+				} else {
+					layer.alert(res.message)
 				}
 			}
 		});
@@ -302,94 +404,102 @@ $(document).ready(function(){
 			}
 		});
 	});
-	
-	
-	
-	
-	
-	
-	
-	
+
 	
 	$("#myprojectFlip .fy_page").click(function(){
-		
-		//alert($(this).html());
+
 		var $this = $(this);
-		
+		let token = localStorage.getItem("token");
+		let pageNum = $this.html()
 		$.ajax({
-			url			:		"getMyProjectPageShow",
-			data		: {currentPage:$this.html()},
-			async		:		true,
-			cache		:   	false,
-			type		:		"POST",
-			dataType	:		"json",
-			success		:		function(Ojson){
-				
-				$("#myprojectFlip .fy_page").removeClass("cur");
-				
-				$("#myProject_tbody_ajax").find("tr").remove();
-				for(var i=0;i<Ojson.length;i++){
-					var projectState = "";
-					if(Ojson[i].is_audits==1&&Ojson[i].is_finish==0){
-						projectState ="正在集资";
+			type: 'POST',
+			async: false,
+			url: '/front/project/myself' ,
+			contentType: "application/json;charset=utf-8",
+			headers: {
+				"Authorization": token ? ('Bearer ' + JSON.parse(token).token) : ''
+			},
+			data:  JSON.stringify({
+				'pageNum': pageNum
+			}),
+			dataType: 'json',
+			success: function (res) {
+				if (res.code == 401) {
+					layer.alert("登录过期，请重新登录！！！")
+				} else if (res.code == 200) {
+
+					$("#myprojectFlip .fy_page").removeClass("cur");
+
+					$("#myProject_tbody_ajax").find("tr").remove();
+
+					var Ojson = res.data.result
+
+					$("#myProject_tbody_ajax").find("tr").remove();
+					for(var i=0;i<Ojson.length;i++){
+						var projectState = "";
+						if(Ojson[i].hasAudits==1&&Ojson[i].hasFinish==0){
+							projectState ="正在集资";
+						}
+						if(Ojson[i].hasAudits==1&&Ojson[i].hasFinish==-1 ){
+							projectState = "集资失败";
+						}
+						if(Ojson[i].hasAudits==1&&Ojson[i].hasFinish==1 ){
+							projectState = "集资成功";
+						}
+						if(Ojson[i].hasAudits==0 ){
+							projectState = "未审核";
+						}
+						if(Ojson[i].hasAudits==-1 ){
+							projectState = "未通过审核";
+						}
+
+						var percent=Ojson[i].hasFundRaising/Ojson[i].totalFundRaising*100;
+
+						percent = percent.toFixed(2);
+
+
+
+						$("#myProject_tbody_ajax").append('<tr class="trfirst"><td colspan="4"></td></tr>'
+							+'<tr class="ftTr">'
+							+'<td colspan="4">创建时间：'+Ojson[i].launchDateRaising+'</td>'
+							+'<td><a href="javascript:;" class="ftTr_delA" title="删除"></a></td>'
+							+'</tr>'
+							+'<tr class="inforTr" project_id="">'
+							+'<td>'
+							+'<div class="ddImgBox"><a href="javascript:;" target="_blank"><img style="width:80px;height:60px;" src="/'+Ojson[i].coverPath+'"></a></div>'
+							+'<div class="ddImgText"><a href="javascript:;" target="_blank">'+Ojson[i].title+'</a></div>'
+							+'</td>'
+							+'<td>'
+							+'<div>'
+							+'<p class="inforText_p gray">'
+							+projectState
+							+'</p>'
+							+'</div></td>'
+							+'<td>'
+							+'<p class="inforText_p ">目标：'+Ojson[i].totalFundRaising +'元</p>'
+
+							+'<div class="inforRatioBox">'
+							+'<div class="inforRatio"><div class="inner" style="width:'+percent+'%"></div></div>'
+							+'<span>'+percent+'%</span> '
+							+'</div>'
+							+'</td>'
+							+'<td><div><p class="inforText_p gray">不可结算</p></div></td>'
+							+'<td class="btnTd">'
+							+'<div class="operations">'
+							+'<a href="javascript:goProjectProcess('+Ojson[i].id +');" target="_blank" class="ddLastbtn_A">更新最新进展</a>'
+
+							+'</td>'
+							+'</tr>');
 					}
-					if(Ojson[i].is_audits==1&&Ojson[i].is_finish==-1 ){
-						projectState = "集资失败";
-					}
-					if(Ojson[i].is_audits==1&&Ojson[i].is_finish==1 ){
-						projectState = "集资成功";
-					}
-					if(Ojson[i].is_audits==0 ){
-						projectState = "未审核";
-					}
-					if(Ojson[i].is_audits==-1 ){
-						projectState = "未通过审核";
-					}
-					
-					var percent=Ojson[i].has_fund_raising/Ojson[i].total_fund_raising*100;
-					
-					percent = percent.toFixed(2);
-					
-					
-					
-					$("#myProject_tbody_ajax").append('<tr class="trfirst"><td colspan="4"></td></tr>'
-                        	+'<tr class="ftTr">'
-                        	+'<td colspan="4">创建时间：'+Ojson[i].launch_date+'</td>'
-                        	+'<td><a href="javascript:;" class="ftTr_delA" title="删除"></a></td>'
-                        	+'</tr>'
-                        	+'<tr class="inforTr" project_id="">'
-                        	+'<td>'
-                        	+'<div class="ddImgBox"><a href="javascript:;" target="_blank"><img style="width:80px;height:60px;" src="'+Ojson[i].img_name+'"></a></div>'
-                        	+'<div class="ddImgText"><a href="javascript:;" target="_blank">'+Ojson[i].title+'</a></div>'
-                        	+'</td>'
-                        	+'<td>'
-                        	+'<div>'
-                        	+'<p class="inforText_p gray">'
-                        	+projectState
-                        	+'</p>'
-                        	+'</div></td>'
-                        	+'<td>'
-                        	+'<p class="inforText_p ">目标：'+Ojson[i].total_fund_raising +'元</p>'
-                        	
-                        	+'<div class="inforRatioBox">'
-                        	+'<div class="inforRatio"><div class="inner" style="width:'+percent+'%"></div></div>'
-                        	+'<span>'+percent+'%</span> '
-                        	+'</div>'
-                        	+'</td>'
-                        	+'<td><div><p class="inforText_p gray">不可结算</p></div></td>'
-                        	+'<td class="btnTd">'
-                        	+'<div class="operations">'
-                        	+'<a href="javascript:goProjectProcess('+Ojson[i].project_id +');" target="_blank" class="ddLastbtn_A">更新最新进展</a>'
-                        	
-                        	+'</td>'
-                        	+'</tr>');
+					$this.addClass("cur");
+
+				} else {
+					layer.alert(res.message)
 				}
-				$this.addClass("cur");
-				
+
 			}
 		});
-		
-		
+
 	});
 		
 	

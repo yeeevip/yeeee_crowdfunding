@@ -19,7 +19,7 @@ $(document).ready(function(){
 	$.ajax({
 		type: 'POST',
 		url: '/front/project/list' ,
-		contentType: "application/json",
+		contentType: "application/json;charset=utf-8",
 		data:  JSON.stringify(params),
 		dataType: 'json',
 		success: function (res) {

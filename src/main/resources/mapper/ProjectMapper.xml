@@ -108,7 +108,7 @@
             is_settlement
         FROM
             t_project
-        where 1 = 1
+        where has_audits = 1
         <if test="project.categoryId != '' and project.categoryId != null">
             and category_id = #{project.categoryId}
         </if>
