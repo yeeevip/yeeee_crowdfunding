@@ -5,6 +5,7 @@ import com.yeeee.crowdfunding.mapper.UserMapper;
 import com.yeeee.crowdfunding.model.constant.AuthConstant;
 import com.yeeee.crowdfunding.model.dto.auth.Oauth2TokenDTO;
 import com.yeeee.crowdfunding.model.entity.User;
+import com.yeeee.crowdfunding.model.vo.UserCheckVO;
 import com.yeeee.crowdfunding.service.CustomUserDetailsService;
 import com.yeeee.crowdfunding.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -36,8 +37,8 @@ public class UserServiceImpl implements UserService {
     private final CustomUserDetailsService userDetailsService;
 
     @Override
-    public Oauth2TokenDTO login(String username, String password, String userType) {
-        return userDetailsService.oauthToken(username, password, null);
+    public Oauth2TokenDTO login(UserCheckVO userCheckVO) {
+        return userDetailsService.oauthToken(userCheckVO.getUsername(), userCheckVO.getPassword(), null);
     }
 
     @Override
@@ -52,14 +53,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Void register(String username, String password, String code) {
-        User user = userMapper.getOne(new User().setUsername(username));
+    public Void register(UserCheckVO userCheckVO) {
+        User user = userMapper.getOne(new User().setUsername(userCheckVO.getUsername()));
         if (user != null) {
             throw new BizException("用户名已经存在！！！");
         }
         User saveUser = new User();
-        saveUser.setUsername(username);
-        saveUser.setPassword(passwordEncoder.encode(password));
+        saveUser.setUsername(userCheckVO.getUsername());
+        saveUser.setPassword(passwordEncoder.encode(userCheckVO.getPassword()));
         userMapper.insert(saveUser);
         return null;
     }

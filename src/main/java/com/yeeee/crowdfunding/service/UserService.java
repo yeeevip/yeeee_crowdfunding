@@ -1,6 +1,7 @@
 package com.yeeee.crowdfunding.service;
 
 import com.yeeee.crowdfunding.model.dto.auth.Oauth2TokenDTO;
+import com.yeeee.crowdfunding.model.vo.UserCheckVO;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -12,10 +13,10 @@ import javax.servlet.http.HttpServletRequest;
  */
 public interface UserService {
 
-    Oauth2TokenDTO login(String username, String password, String userType);
+    Oauth2TokenDTO login(UserCheckVO userCheckVO);
 
     Void logout(HttpServletRequest request);
 
-    Void register(String username, String password, String code);
+    Void register(UserCheckVO userCheckVO);
 
 }

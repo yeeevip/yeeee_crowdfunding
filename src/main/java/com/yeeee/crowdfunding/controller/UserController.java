@@ -2,6 +2,7 @@ package com.yeeee.crowdfunding.controller;
 
 import com.yeeee.crowdfunding.api.CommonResult;
 import com.yeeee.crowdfunding.model.dto.auth.Oauth2TokenDTO;
+import com.yeeee.crowdfunding.model.vo.UserCheckVO;
 import com.yeeee.crowdfunding.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -9,6 +10,7 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,8 +40,8 @@ public class UserController {
             @ApiImplicitParam(value = "密码", name = "password")
     })
     @PostMapping(value = "/login")
-    public CommonResult<Oauth2TokenDTO> login(String username, String password, String code) {
-        return CommonResult.success(userService.login(username, password, null));
+    public CommonResult<Oauth2TokenDTO> login(UserCheckVO userCheckVO) {
+        return CommonResult.success(userService.login(userCheckVO));
     }
 
     @ApiOperation("退出登录")
@@ -50,8 +52,8 @@ public class UserController {
 
     @ApiOperation("用户注册")
     @PostMapping(value = "register")
-    public CommonResult<Void> register(String username, String password, String code) {
-        return CommonResult.success(userService.register(username, password, code));
+    public CommonResult<Void> register(@Validated UserCheckVO userCheckVO) {
+        return CommonResult.success(userService.register(userCheckVO));
     }
 
 }

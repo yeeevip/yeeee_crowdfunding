@@ -3,22 +3,25 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>注册页面</title>
 <link type="text/css" rel="stylesheet" href="/css/common.css">
-<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath }/css/login.css">
+<link type="text/css" rel="stylesheet" href="/css/login.css">
+<script type="text/javascript" src="/js/jquery-3.1.1.min.js"></script>
+	<script type="text/javascript" src="/js/layer/layer.js"></script>
+	<script type="text/javascript" src="/js/register.js"></script>
 </head>
 <body>
 <!-- 引入公共header -->
-<%@ include file="/common/header.jsp"%>
+<header id="indexHeader"></header>
 
 
-<div class="bg_white bg_login" style="background-image: url(${pageContext.request.contextPath }/img/login_bg.jpg)">
+<div class="bg_white bg_login" style="background-image: url(/img/login_bg.jpg)">
 	<div class="page_warp">
 		<div class="login_form">
 			<div class="login_main l">
 				<div class="login_t">注册</div>
 				<div class="login_con">
-					<form action="${pageContext.request.contextPath }/register.jhtml" method="post" id="regForm" class="zj_form" novalidate="novalidate">
+					<form id="regForm" class="zj_form" novalidate="novalidate">
 						<ul class="reg_box">
-							<li><i style="font-size:20px;font-weight:bold;line-height:55px;color:#fff;">${err_msg }${both_error }${code_error }</i></li>
+							<li><i style="font-size:20px;font-weight:bold;line-height:55px;color:#fff;" id="resMsgID"></i></li>
 						
 							<li>
 								<span class="login_name">手机</span>
@@ -42,7 +45,7 @@
 							<span class="login_name">验证码</span>
 							<div class="login_val imgcode">
 							<input type="text" name="code" id="code" class="txt sort_txt" placeholder="输入图形验证码">
-							<img class="getCodeBtn" style="cursor: pointer; background:#fff; vertical-align:middle" src="${pageContext.request.contextPath }/code.jhtml" id="VerifyImage2" title="看不清？点击换一个" onclick="javascript:this.src='${pageContext.request.contextPath }/code.jhtml;'+new Date().getMilliseconds()">
+							<img class="getCodeBtn" style="cursor: pointer; background:#fff; vertical-align:middle" src="/code.jhtml" id="VerifyImage2" title="看不清？点击换一个" onclick="javascript:this.src='/code.jhtml;'+new Date().getMilliseconds()">
 							</div>
 							</li>
 							<!--
@@ -65,12 +68,12 @@
 							<li class="btn">
 							<span class="login_name"></span>
 							<div class="login_val">
-							<input type="submit" value="注册" style="font-size: 20px;" class="login_btn zx_btn">
+							<input type="button" id="login_btn" value="注册" style="font-size: 20px;" class="login_btn zx_btn">
 							</div> 
 							</li>
 							<li class="login_tips">
 							<span class="login_name"></span>
-							<div class="login_val">已注册账号，<a href="login.jsp">直接登录</a></div>
+							<div class="login_val">已注册账号，<a href="/pages/front/login.html">直接登录</a></div>
 							</li>
 						</ul>
 					</form>
@@ -93,6 +96,11 @@
 
 
 <!-- 引入公共footer -->
-<%@ include file="/common/footer.jsp"%>
+<footer id="indexFooter"></footer>
+
 </body>
+<script type="text/javascript">
+	$("#indexHeader").load("/pages/common/header.html");
+	$("#indexFooter").load("/pages/common/footer.html");
+</script>
 </html>

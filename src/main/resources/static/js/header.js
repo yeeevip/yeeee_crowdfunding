@@ -65,7 +65,7 @@ $(document).ready(function(){
 			<div class="siteHLoginBox clearfix">
                 <a href="/pages/showPerson.html" class="sitehH_login Js_showlogin">个人中心</a>
                 <span class="line"></span>
-                <a href="" id="logoutBtn" class="siteH_register Js_showRegister">注销</a>
+                <a href="javascript:;" id="logoutBtn" class="siteH_register Js_showRegister">注销</a>
             </div>
 			`
 		)
@@ -82,24 +82,29 @@ $(document).ready(function(){
 	}
 
 	$("#logoutBtn").on('click', function () {
+		let token = localStorage.getItem("token");
 		$.ajax({
 			type: 'GET',
+			async: false,
 			url: '/user/logout' ,
 			//contentType: "application/json",
-			data:  {
-				'username': $("#Account").val(),
-				'password': $("#Password").val(),
-				'code': $("#ImgCode").val()
+			data:  {},
+			headers: {
+				"Authorization": token ? ('Bearer ' + JSON.parse(token).token) : ''
 			},
 			dataType: 'json',
 			success: function (res) {
-				if (res.code != 200) {
-					layer.alert(res.message)
-				} else {
+				if (res.code == 200 || res.code == 401) {
 					// 将token存储到本地
 					localStorage.removeItem('token')
 					// 请求成功后跳转到首页
-					location.href = '/'
+					if (res.code == 200) {
+						location.href = '/'
+					} else {
+						location.href = '/pages/front/login.html'
+					}
+				} else {
+					layer.alert(res.message)
 				}
 			}
 		});

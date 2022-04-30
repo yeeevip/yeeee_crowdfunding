@@ -1,14 +1,20 @@
 $(document).ready(function(){
     $(".login_btn").on('click', function () {
         $("#resMsgID").html('')
+        var password = $("#Password").val()
+        var confirmPassword = $("#ConfirmPassword").val()
+        if (password != confirmPassword) {
+            $("#resMsgID").html("前后密码不一致")
+            return
+        }
         $.ajax({
             type: 'POST',
             async: false,
-            url: '/user/login' ,
+            url: '/user/register' ,
             //contentType: "application/json",
             data:  {
                 'username': $("#Account").val(),
-                'password': $("#Password").val(),
+                'password': password,
                 'code': $("#ImgCode").val()
             },
             dataType: 'json',
@@ -16,10 +22,12 @@ $(document).ready(function(){
                 if (res.code != 200) {
                     $("#resMsgID").html(res.message)
                 } else {
-                    // 将token存储到本地
-                    localStorage.setItem('token', JSON.stringify(res.data))
-                    // 请求成功后跳转到首页
-                    location.href = '/'
+                    layer.confirm('注册成功，去登录？', {
+                        btn: ['确定'], //按钮
+                        closeBtn: 0
+                    }, function(){
+                        location.href = '/pages/front/login.html'
+                    });
                 }
             }
         });
