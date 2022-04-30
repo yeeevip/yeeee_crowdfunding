@@ -15,6 +15,9 @@ public class ProjectVO {
     @ApiModelProperty("主键id")
     private Integer id;
 
+    @ApiModelProperty("项目类型")
+    private Integer projectType;
+
     @ApiModelProperty("标题")
     private String title;
 
@@ -29,5 +32,8 @@ public class ProjectVO {
 
     @ApiModelProperty("已经集资")
     private Integer hasFundRaising;
+
+    @ApiModelProperty("搜索关键字")
+    private String keyword;
 
 }

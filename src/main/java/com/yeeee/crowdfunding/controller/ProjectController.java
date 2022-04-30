@@ -1,15 +1,17 @@
 package com.yeeee.crowdfunding.controller;
 
+import com.github.pagehelper.Page;
 import com.yeeee.crowdfunding.annotation.AnonymousAccess;
 import com.yeeee.crowdfunding.api.CommonResult;
 import com.yeeee.crowdfunding.model.vo.IndexProjectListVO;
+import com.yeeee.crowdfunding.model.vo.PageVO;
+import com.yeeee.crowdfunding.model.vo.ProjectPageReqVO;
+import com.yeeee.crowdfunding.model.vo.ProjectVO;
 import com.yeeee.crowdfunding.service.ProjectService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * description......
@@ -30,6 +32,13 @@ public class ProjectController {
     @GetMapping("index")
     public CommonResult<IndexProjectListVO> getIndexShowProject() {
         return CommonResult.success(projectService.getIndexShowProject());
+    }
+
+    @ApiOperation("项目分页")
+    @AnonymousAccess
+    @PostMapping("list")
+    public CommonResult<PageVO<ProjectVO>> getProjectList(@RequestBody ProjectPageReqVO reqVO) {
+        return CommonResult.success(projectService.getProjectPageList(reqVO));
     }
 
 }

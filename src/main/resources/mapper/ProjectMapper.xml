@@ -27,9 +27,14 @@
             <if test="userId != '' and userId != null">
                 and user_id = #{userId}
             </if>
-            <if test="categoryId != '' and categoryId != null">
-                and category_id = #{categoryId}
-            </if>
+            <choose>
+                <when test="categoryId != null and categoryId != -1">
+                    and category_id = #{categoryId}
+                </when>
+                <when test="categoryId != null and categoryId == -1">
+                    and category_id not in (1)
+                </when>
+            </choose>
             <if test="launchDateRaising != '' and launchDateRaising != null">
                 and launch_date_raising = #{launchDateRaising}
             </if>
@@ -53,6 +58,9 @@
             </if>
             <if test="isSettlement != '' and isSettlement != null">
                 and is_settlement = #{isSettlement}
+            </if>
+            <if test="keyword != null and keyword != ''">
+                and (title like concat('%', #{keyword}, '%') or blurb like concat('%', #{keyword}, '%'))
             </if>
         </trim>
     </sql>

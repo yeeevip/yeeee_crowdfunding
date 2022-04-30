@@ -1,0 +1,85 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>众筹平台</title>
+<link type="text/css" rel="stylesheet" href="/css/common.css">
+<link type="text/css" rel="stylesheet" href="/css/search.css">
+<script type="text/javascript" src="/js/jquery-3.1.1.min.js"></script>
+<script type="text/javascript" src="/js/common.js"></script>
+<script type="text/javascript" src="/js/search.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+	
+	$(".searchB_lib a").click(function(){
+		$(".searchB_lib a").each(function(){
+			$(this).removeClass("cur");
+		});
+		$(this).addClass("cur");
+	});
+	
+	
+})
+</script>
+
+</head>
+<body>
+<header id="indexHeader"></header>
+
+<!--搜索结果显示页面begin-->
+<div class="cf_searchTop">
+	<div class="searchTBox">
+    	<div class="searchTMainBox">
+        	<div class="searchB_lib" id="projectTypeDiv">
+            	<label>行业筛选：</label>
+                <a href="/pages/front/search.html" class="">全部</a>
+                <a href="/pages/front/search.html?projectType=1" class="">公益</a>
+                <a href="/pages/front/search.html?projectType=2" class="">农业</a>
+                <a href="/pages/front/search.html?projectType=3" class="">出版</a>
+                <a href="/pages/front/search.html?projectType=4" class="">娱乐</a>
+                <a href="/pages/front/search.html?projectType=5" class="">艺术</a>
+                <a href="/pages/front/search.html?projectType=6" class="">其他</a>
+            </div>
+            <div class="searchB_lib">
+            	<label>项目进程：</label>
+                <a href="javascript:;" class="cur">全部</a>
+                <a href="javascript:;" class="">众筹中</a>
+                
+                <a href="javascript:;" class="">成功结束</a>
+            </div>
+            <div class="searchB_lib">
+            	<label>项目排序：</label>
+                <a href="javascript:;" class="cur">默认</a>
+                <a href="javascript:;" class="">最新上线<b></b></a>
+                <a href="javascript:;" class="">目标金额<b></b></a>
+                <a href="javascript:;" class="">支持人数<b></b></a>
+                <a href="javascript:;" class="">筹资额<b></b></a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="searchItem">
+	<div id="searchIMainBox" class="searchIMainBox">
+
+    
+    </div>
+</div>
+
+<div class="searchPage">
+	<div class="searchPBox">
+    	<div class="searchPMainBox" id="searchPMainBox">
+            <!-- <span class="dianhaoSpan">...</span> -->
+            <a href="javascript:;" class="nextPage"></a>
+        </div>
+    </div>
+</div>
+<!--搜索结果显示页面end-->
+<footer id="indexFooter"></footer>
+</body>
+<script type="text/javascript">
+    $("#indexHeader").load("/pages/common/header.html");
+    $("#indexFooter").load("/pages/common/footer.html");
+</script>
+</html>

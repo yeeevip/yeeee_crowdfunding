@@ -1,0 +1,48 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<title>首页</title>
+<link type="text/css" rel="stylesheet" href="css/index.css">
+<script language="JavaScript" src="js/jquery-3.1.1.min.js"></script>
+<script language="JavaScript" src="js/index.js"></script>
+</head>
+<body>
+
+<header id="indexHeader"></header>
+
+	<!--bannner-begin-->
+<div class="indexBanner" id="indexBanner">
+	<div class="indexBannerView">
+		<ul >
+	    	<li><img src="/img/banner/banner1.jpg" /></li>
+	        <li><img src="/img/banner/banner2.jpg" /></li>
+	        <li><img src="/img/banner/banner3.jpg" /></li>
+	        <li><img src="/img/banner/banner4.jpg" /></li>
+	        <li><img src="/img/banner/banner5.jpg" /></li>
+	        <li><img src="/img/banner/banner6.jpg" /></li>
+	    </ul>
+	    <div class="indexBPage" id="indexBPage">
+	    	<a href="javascript:;" class="pre"></a>
+	        <a href="javascript:;" class="next"></a>
+	    </div>
+	</div>	
+</div>
+<!--banner-end-->
+
+<div id="indexContentBox" class="indexZCWrap">
+
+
+</div>
+
+<footer id="indexFooter"></footer>
+
+</body>
+<script type="text/javascript">
+lunbo();//轮播滚动
+$("#indexHeader").load("/pages/common/header.html");
+$("#indexFooter").load("/pages/common/footer.html");
+</script>
+
+</html>

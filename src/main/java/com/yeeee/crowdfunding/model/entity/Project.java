@@ -89,4 +89,6 @@ public class Project {
      */
     private Integer isSettlement;
 
+    private String keyword;
+
 }

@@ -1,15 +1,20 @@
 package com.yeeee.crowdfunding.service.impl;
 
 import cn.hutool.core.collection.CollectionUtil;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
 import com.yeeee.crowdfunding.convert.ProjectConvert;
 import com.yeeee.crowdfunding.mapper.ProjectMapper;
 import com.yeeee.crowdfunding.model.entity.Project;
 import com.yeeee.crowdfunding.model.vo.IndexProjectListVO;
+import com.yeeee.crowdfunding.model.vo.PageVO;
+import com.yeeee.crowdfunding.model.vo.ProjectPageReqVO;
 import com.yeeee.crowdfunding.model.vo.ProjectVO;
 import com.yeeee.crowdfunding.service.ProjectService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,6 +27,7 @@ import java.util.stream.Collectors;
  * @author yeeee
  * @since 2022/4/29 21:38
  */
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class ProjectServiceImpl implements ProjectService {
@@ -82,5 +88,23 @@ public class ProjectServiceImpl implements ProjectService {
         indexProjectListVO.setArtList(artVOList);
 
         return indexProjectListVO;
+    }
+
+    @Override
+    public PageVO<ProjectVO> getProjectPageList(ProjectPageReqVO reqVO) {
+        Page<ProjectVO> page = PageHelper.startPage(reqVO.getPageNum(), reqVO.getPageSize());
+
+        Project query = new Project();
+        if (reqVO.getProjectVO() != null) {
+            query.setKeyword(reqVO.getProjectVO().getKeyword())
+                .setCategoryId(reqVO.getProjectVO().getProjectType());
+        }
+
+        List<Project> projectList = projectMapper.getList(query);
+        List<ProjectVO> result = Optional.ofNullable(projectList).orElseGet(Lists::newArrayList)
+                .stream()
+                .map(projectConvert::project2VO)
+                .collect(Collectors.toList());
+        return new PageVO<>(page.getPageNum(), page.getPageSize(), page.getPages(), page.getTotal(), result);
     }
 }
