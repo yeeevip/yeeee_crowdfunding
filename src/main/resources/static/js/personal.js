@@ -152,7 +152,7 @@ $(document).ready(function(){
 						+'<td><div><p class="inforText_p gray">不可结算</p></div></td>'
 						+'<td class="btnTd">'
 						+'<div class="operations">'
-						+'<a href="javascript:goProjectProcess('+Ojson[i].id +');" target="_blank" class="ddLastbtn_A">更新最新进展</a>'
+						+'<a href="javascript:goProjectProcess('+Ojson[i].id +');" class="ddLastbtn_A">更新最新进展</a>'
 
 						+'</td>'
 						+'</tr>');
@@ -604,7 +604,7 @@ $(document).ready(function(){
 							+'<td><div><p class="inforText_p gray">不可结算</p></div></td>'
 							+'<td class="btnTd">'
 							+'<div class="operations">'
-							+'<a href="javascript:goProjectProcess('+Ojson[i].id +');" target="_blank" class="ddLastbtn_A">更新最新进展</a>'
+							+'<a href="javascript:goProjectProcess('+Ojson[i].id +');" class="ddLastbtn_A">更新最新进展</a>'
 
 							+'</td>'
 							+'</tr>');
@@ -627,16 +627,15 @@ $(document).ready(function(){
 //更新项目最新状态
 function goProjectProcess(project_id){
 
-	debugger
-
 	layer.open({
 	      type: 2,
 	      title: '发布项目最新动态',
 	      shadeClose: true,
+		scrollbar: true,
 	      shade: false,
-	      maxmin: false, //开启最大化最小化按钮
+	      maxmin: true, //开启最大化最小化按钮
 	      area: ['893px', '600px'],
-	      content: ['projectProcessPage?project_id='+project_id,'no']
+	      content: ['/pages/front/private/project_process.html?project_id='+project_id,'yes']
 	    });
 
 	

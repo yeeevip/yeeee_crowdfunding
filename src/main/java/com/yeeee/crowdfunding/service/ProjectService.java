@@ -28,4 +28,6 @@ public interface ProjectService {
     Void adminProjectAudits(AuditProjectVO auditProjectVO);
 
     OrderPageVO frontProjectOrderPageDetail(Integer id);
+
+    Void updateProjectProgress(ProjectProgressVO projectProgressVO);
 }

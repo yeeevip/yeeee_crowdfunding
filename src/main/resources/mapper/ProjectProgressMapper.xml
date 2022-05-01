@@ -15,7 +15,7 @@
             <if test="content != '' and content != null">
                 and content = #{content}
             </if>
-            <if test="publishDate != '' and publishDate != null">
+            <if test="publishDate != null">
                 and publish_date = #{publishDate}
             </if>
             <if test="pubUser != '' and pubUser != null">
@@ -62,7 +62,7 @@
             <if test="content !='' and content !=null">
                 content,
             </if>
-            <if test="publishDate !='' and publishDate !=null">
+            <if test="publishDate !=null">
                 publish_date,
             </if>
             <if test="pubUser !='' and pubUser !=null">
@@ -80,7 +80,7 @@
             <if test="content != '' and content != null">
                 #{content},
             </if>
-            <if test="publishDate != '' and publishDate != null">
+            <if test="publishDate != null">
                 #{publishDate},
             </if>
             <if test="pubUser != '' and pubUser != null">
@@ -101,7 +101,7 @@
             <if test="content != '' and content != null">
                 content = #{content},
             </if>
-            <if test="publishDate != '' and publishDate != null">
+            <if test="publishDate != null">
                 publish_date = #{publishDate},
             </if>
             <if test="pubUser != '' and pubUser != null">

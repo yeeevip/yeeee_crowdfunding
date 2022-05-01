@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 /**
@@ -26,5 +27,8 @@ public class ProjectProgressVO {
 
     @ApiModelProperty("发布人")
     private String pubUser;
+
+    @NotNull
+    private Integer projectId;
 
 }

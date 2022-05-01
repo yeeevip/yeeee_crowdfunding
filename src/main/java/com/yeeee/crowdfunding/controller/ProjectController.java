@@ -63,6 +63,12 @@ public class ProjectController {
         return CommonResult.success(projectService.lunchProject(reqVO));
     }
 
+    @ApiOperation("发起项目")
+    @PostMapping("front/updateProgress")
+    public CommonResult<Void> updateProjectProgress(@Validated @RequestBody ProjectProgressVO projectProgressVO) {
+        return CommonResult.success(projectService.updateProjectProgress(projectProgressVO));
+    }
+
     @ApiOperation("项目下单预览页")
     @GetMapping("front/orderPage")
     public CommonResult<OrderPageVO> frontProjectOrderPageDetail(@RequestParam Integer id) {

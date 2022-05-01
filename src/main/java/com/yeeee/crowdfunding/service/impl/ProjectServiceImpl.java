@@ -351,4 +351,22 @@ public class ProjectServiceImpl implements ProjectService {
 
         return orderPageVO;
     }
+
+    @Override
+    public Void updateProjectProgress(ProjectProgressVO projectProgressVO) {
+
+        Project project = projectMapper.getOne(new Project().setId(projectProgressVO.getProjectId()));
+        if (project == null) {
+            throw new BizException("项目不存在");
+        }
+
+        ProjectProgress add = new ProjectProgress();
+        add.setProjectId(project.getId());
+        add.setPublishDate(new Date());
+        add.setPubUser(SecurityUtil.currentSecurityUser().getUsername());
+        add.setContent(projectProgressVO.getContent());
+        projectProgressMapper.insert(add);
+
+        return null;
+    }
 }
