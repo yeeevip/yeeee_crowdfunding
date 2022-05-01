@@ -1,10 +1,7 @@
 package com.yeeee.crowdfunding.controller;
 
 import com.yeeee.crowdfunding.api.CommonResult;
-import com.yeeee.crowdfunding.model.vo.BuyOrderPageReqVO;
-import com.yeeee.crowdfunding.model.vo.BuyOrderVO;
-import com.yeeee.crowdfunding.model.vo.CreateOrderVO;
-import com.yeeee.crowdfunding.model.vo.PageVO;
+import com.yeeee.crowdfunding.model.vo.*;
 import com.yeeee.crowdfunding.service.OrderService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -39,6 +36,12 @@ public class OrderController {
     @PostMapping("front/create")
     public CommonResult<Void> frontCreateOrder(@Validated @RequestBody CreateOrderVO createOrderVO) {
         return CommonResult.success(orderService.frontCreateOrder(createOrderVO));
+    }
+
+    @ApiOperation("支付订单")
+    @PostMapping("front/pay")
+    public CommonResult<Void> frontPayOrder(@Validated @RequestBody PayVO payVO) {
+        return CommonResult.success(orderService.frontPayOrder(payVO));
     }
 
     @ApiOperation("已卖出的订单")

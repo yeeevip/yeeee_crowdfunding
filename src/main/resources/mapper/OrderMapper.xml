@@ -215,7 +215,7 @@
             <if test="hasSend != null">
                 has_send = #{hasSend},
             </if>
-            <if test="orderDate != '' and orderDate != null">
+            <if test="orderDate != null">
                 order_date = #{orderDate},
             </if>
             <if test="receiveInformation != '' and receiveInformation != null">
@@ -224,7 +224,7 @@
             <if test="userSeller != '' and userSeller != null">
                 user_seller = #{userSeller},
             </if>
-            <if test="payTime != '' and payTime != null">
+            <if test="payTime != null">
                 pay_time = #{payTime},
             </if>
             <if test="payPrice != '' and payPrice != null">

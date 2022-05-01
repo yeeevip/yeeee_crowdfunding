@@ -116,10 +116,28 @@ public class OrderServiceImpl implements OrderService {
 
         orderMapper.insert(order);
 
-        Project updProject = new Project().setId(project.getId());
-        updProject.setHasFundRaising(BigDecimal.valueOf(Optional.ofNullable(project.getHasFundRaising()).orElse(0)).add(costBig).intValue());
-        projectMapper.updateByPrimaryKey(updProject);
+        return null;
+    }
 
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public Void frontPayOrder(PayVO payVO) {
+
+        Order order = orderMapper.getOne(new Order().setId(payVO.getSubjectId()));
+        if (order == null) {
+            throw new BizException("订单不存在");
+        }
+
+        Project project = projectMapper.getOne(new Project().setId(order.getProjectId()));
+        if (project == null) {
+            throw new BizException("项目不存在");
+        }
+
+        orderMapper.updateByPrimaryKey(new Order().setId(order.getId()).setHasPay(1).setPayTime(new Date()));
+
+        Project updProject = new Project().setId(project.getId());
+        updProject.setHasFundRaising(BigDecimal.valueOf(Optional.ofNullable(project.getHasFundRaising()).orElse(0)).add(BigDecimal.valueOf(order.getPayPrice())).intValue());
+        projectMapper.updateByPrimaryKey(updProject);
 
         return null;
     }

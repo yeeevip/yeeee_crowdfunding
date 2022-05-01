@@ -315,7 +315,7 @@ $(document).ready(function(){
 							'<td class="btnTd">'+
 							'<div class="operations">';
 
-						if(Ojson[i].is_pay==1){
+						if(Ojson[i].hasPay==1){
 							html = html+'<a href="javascript:;" class="ddLastbtn_A">确认收货</a><a href="javascript:;" class="ddLastbtn_A">我要投诉</a></td></tr>';
 						}else{
 							html = html+'<a href="javascript:toPay('+Ojson[i].id+');" class="ddLastbtn_A">去支付</a></td></tr>';
@@ -670,31 +670,31 @@ function toPay(order_id){
 		  btn: ['确定','取消'], //按钮
 		 // closeBtn:0
 		}, function(){
+		let token = localStorage.getItem("token");
 		$.ajax({
-			url			:		"toPay",
-			data		:		{order_id:order_id},
-			async		:		true,
-			cache		:		false,
+			url			:		"/order/front/pay",
+			data		:		JSON.stringify({
+				'subjectId': order_id
+			}),
+			headers: {
+				"Authorization": token ? ('Bearer ' + JSON.parse(token).token) : ''
+			},
+			async		:		false,
 			type		:		"POST",
 			dataType	:		"json",
-			success		:		function(data){
+			contentType: "application/json;charset=utf-8",
+			success		:		function(res){
 				//data = eval('('+data+')');
 				//alert(data);
-				if(data.code=="0"){
-					layer.confirm(data.msg, {
+				if(res.code==200){
+					layer.confirm(res.message, {
 						  btn: ['确定'], //按钮
 						  closeBtn:0
 						}, function(){
-						  //layer.msg('的确很重要', {icon: 1});
-							//var index = layer.getFrameIndex(window.name); 
-							//var index = layer.alert();
-							//layer.close(index);
-							
-					        //parent.layer.close(index);
-							window.location.href='showPerson.jhtml';
+						window.location.href='/pages/front/private/personal_info.html';
 						});
 				}else{
-					var index =layer.confirm(data.msg, {
+					var index =layer.confirm(res.message, {
 						  btn: ['确定'], //按钮
 						  closeBtn:0
 						}, function(){
