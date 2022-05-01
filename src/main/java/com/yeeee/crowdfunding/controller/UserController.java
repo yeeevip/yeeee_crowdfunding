@@ -60,7 +60,7 @@ public class UserController {
     }
 
     @ApiOperation("用户分页")
-    @PostMapping(value = "page/list")
+    @PostMapping(value = "admin/page/list")
     public CommonResult<PageVO<UserVO>> userPageList(UserPageReqVO userPageReqVO) {
         return CommonResult.success(userService.userPageList(userPageReqVO));
     }

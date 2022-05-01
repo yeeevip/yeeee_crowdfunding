@@ -1,6 +1,7 @@
 package com.yeeee.crowdfunding.service.impl;
 
 import cn.hutool.core.collection.CollectionUtil;
+import cn.hutool.core.util.IdUtil;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.google.common.collect.Lists;
@@ -8,23 +9,18 @@ import com.yeeee.crowdfunding.convert.OrderConvert;
 import com.yeeee.crowdfunding.convert.ProjectConvert;
 import com.yeeee.crowdfunding.convert.ProjectRepayConvert;
 import com.yeeee.crowdfunding.convert.UserConvert;
-import com.yeeee.crowdfunding.mapper.OrderMapper;
-import com.yeeee.crowdfunding.mapper.ProjectMapper;
-import com.yeeee.crowdfunding.mapper.ProjectRepayMapper;
-import com.yeeee.crowdfunding.mapper.UserMapper;
-import com.yeeee.crowdfunding.model.entity.Order;
-import com.yeeee.crowdfunding.model.entity.Project;
-import com.yeeee.crowdfunding.model.entity.ProjectRepay;
-import com.yeeee.crowdfunding.model.entity.User;
-import com.yeeee.crowdfunding.model.vo.BuyOrderPageReqVO;
-import com.yeeee.crowdfunding.model.vo.BuyOrderVO;
-import com.yeeee.crowdfunding.model.vo.PageVO;
-import com.yeeee.crowdfunding.model.vo.UserVO;
+import com.yeeee.crowdfunding.exception.BizException;
+import com.yeeee.crowdfunding.mapper.*;
+import com.yeeee.crowdfunding.model.entity.*;
+import com.yeeee.crowdfunding.model.vo.*;
 import com.yeeee.crowdfunding.service.OrderService;
 import com.yeeee.crowdfunding.utils.SecurityUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -55,6 +51,8 @@ public class OrderServiceImpl implements OrderService {
 
     private final UserConvert userConvert;
 
+    private final ReceiveInformationMapper receiveInformationMapper;
+
     @Override
     public PageVO<BuyOrderVO> getMyselfBuyOrderList(BuyOrderPageReqVO buyOrderPageReqVO) {
 
@@ -75,5 +73,54 @@ public class OrderServiceImpl implements OrderService {
                 .collect(Collectors.toList());
 
         return new PageVO<>(page.getPageNum(), page.getPageSize(), page.getPages(), page.getTotal(), buyOrderVOS);
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public Void frontCreateOrder(CreateOrderVO createOrderVO) {
+
+        ProjectRepay projectRepay = projectRepayMapper.getOne(new ProjectRepay().setId(createOrderVO.getRepayId()));
+        if (projectRepay == null) {
+            throw new BizException("购买的项目不存在");
+        }
+
+        Integer currentUserId = SecurityUtil.currentUserId();
+        Project project = projectMapper.getOne(new Project().setId(projectRepay.getProjectId()));
+
+        Order order = new Order();
+
+        ReceiveInfoVO receiveInfoVO = createOrderVO.getReceiveInfoVO();
+        if (receiveInfoVO.getId() != null) {
+            order.setReceiveInformation(receiveInfoVO.getId());
+        } else {
+            ReceiveInformation receiveInformation = new ReceiveInformation();
+            receiveInformation.setUserId(currentUserId);
+            receiveInformation.setReceiver(receiveInfoVO.getReceiver());
+            receiveInformation.setPhone(receiveInfoVO.getPhone());
+            receiveInformation.setAddress(receiveInfoVO.getAddress());
+            receiveInformationMapper.insert(receiveInformation);
+            order.setReceiveInformation(receiveInformation.getId());
+        }
+
+        BigDecimal costBig = BigDecimal.valueOf(projectRepay.getMoney()).multiply(BigDecimal.valueOf(createOrderVO.getPayCount()));
+
+        order.setCode(IdUtil.simpleUUID());
+        order.setProjectId(projectRepay.getProjectId());
+        order.setProjectRepayId(projectRepay.getId());
+        order.setUserId(currentUserId);
+        order.setCount(createOrderVO.getPayCount());
+        order.setOrderDate(new Date());
+
+        order.setUserSeller(project.getUserId());
+        order.setPayPrice(costBig.floatValue());
+
+        orderMapper.insert(order);
+
+        Project updProject = new Project().setId(project.getId());
+        updProject.setHasFundRaising(BigDecimal.valueOf(Optional.ofNullable(project.getHasFundRaising()).orElse(0)).add(costBig).intValue());
+        projectMapper.updateByPrimaryKey(updProject);
+
+
+        return null;
     }
 }

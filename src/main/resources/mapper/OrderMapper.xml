@@ -24,10 +24,10 @@
             <if test="count != '' and count != null">
                 and count = #{count}
             </if>
-            <if test="hasPay != '' and hasPay != null">
+            <if test="hasPay != null">
                 and has_pay = #{hasPay}
             </if>
-            <if test="hasSend != '' and hasSend != null">
+            <if test="hasSend != null">
                 and has_send = #{hasSend}
             </if>
             <if test="orderDate != '' and orderDate != null">
@@ -45,7 +45,7 @@
             <if test="payPrice != '' and payPrice != null">
                 and pay_price = #{payPrice}
             </if>
-            <if test="status != '' and status != null">
+            <if test="status != null">
                 and status = #{status}
             </if>
         </trim>
@@ -116,13 +116,13 @@
             <if test="count !='' and count !=null">
                 count,
             </if>
-            <if test="hasPay !='' and hasPay !=null">
+            <if test="hasPay !=null">
                 has_pay,
             </if>
-            <if test="hasSend !='' and hasSend !=null">
+            <if test="hasSend !=null">
                 has_send,
             </if>
-            <if test="orderDate !='' and orderDate !=null">
+            <if test="orderDate !=null">
                 order_date,
             </if>
             <if test="receiveInformation !='' and receiveInformation !=null">
@@ -131,13 +131,13 @@
             <if test="userSeller !='' and userSeller !=null">
                 user_seller,
             </if>
-            <if test="payTime !='' and payTime !=null">
+            <if test="payTime !=null">
                 pay_time,
             </if>
             <if test="payPrice !='' and payPrice !=null">
                 pay_price,
             </if>
-            <if test="status !='' and status !=null">
+            <if test="status !=null">
                 status
             </if>
         </trim>
@@ -161,13 +161,13 @@
             <if test="count != '' and count != null">
                 #{count},
             </if>
-            <if test="hasPay != '' and hasPay != null">
+            <if test="hasPay != null">
                 #{hasPay},
             </if>
-            <if test="hasSend != '' and hasSend != null">
+            <if test="hasSend != null">
                 #{hasSend},
             </if>
-            <if test="orderDate != '' and orderDate != null">
+            <if test="orderDate != null">
                 #{orderDate},
             </if>
             <if test="receiveInformation != '' and receiveInformation != null">
@@ -176,13 +176,13 @@
             <if test="userSeller != '' and userSeller != null">
                 #{userSeller},
             </if>
-            <if test="payTime != '' and payTime != null">
+            <if test="payTime != null">
                 #{payTime},
             </if>
             <if test="payPrice != '' and payPrice != null">
                 #{payPrice},
             </if>
-            <if test="status != '' and status != null">
+            <if test="status != null">
                 #{status}
             </if>
         </trim>
@@ -209,10 +209,10 @@
             <if test="count != '' and count != null">
                 count = #{count},
             </if>
-            <if test="hasPay != '' and hasPay != null">
+            <if test="hasPay != null">
                 has_pay = #{hasPay},
             </if>
-            <if test="hasSend != '' and hasSend != null">
+            <if test="hasSend != null">
                 has_send = #{hasSend},
             </if>
             <if test="orderDate != '' and orderDate != null">
@@ -230,7 +230,7 @@
             <if test="payPrice != '' and payPrice != null">
                 pay_price = #{payPrice},
             </if>
-            <if test="status != '' and status != null">
+            <if test="status != null">
                 status = #{status}
             </if>
         </trim>

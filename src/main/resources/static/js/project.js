@@ -82,29 +82,8 @@ $(document).ready(function(){
     	
 		
 	});
-	
-	
-	
-	var vv ;
-	var dd = $(".NumInner input");
-	/*	$("a.det_btn1").click(function(){
-		var url = window.location.href;
-// 		window.open(url);
-		$(".xqPageBox").hide();
-		$(".zhifuInnerBox").show();
-	})
-    */
-	$(".NumInner a:eq(0)").click(function(){
-		
-		
-		dd.val(parseInt($(".NumInner input").val()) - 1) ;
-		$(".shdzForm_xnBox .ng-binding").text(dd.val()*vv);
-	})
-	$(".NumInner a:eq(1)").click(function(){
-		
-		$(".NumInner input").val(parseInt($(".NumInner input").val()) + 1) ;
-		$(".shdzForm_xnBox .ng-binding").text(dd.val()*vv);
-	})
+
+
 	
 	
 })

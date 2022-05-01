@@ -54,7 +54,7 @@ public class SysUserController {
     }
 
     @ApiOperation("用户分页")
-    @PostMapping(value = "sys-user/page/list")
+    @PostMapping(value = "sys-user/admin/page/list")
     public CommonResult<PageVO<UserVO>> sysUserPageList(SysUserPageReqVO sysUserPageReqVO) {
         return CommonResult.success(sysUserService.sysUserPageList(sysUserPageReqVO));
     }

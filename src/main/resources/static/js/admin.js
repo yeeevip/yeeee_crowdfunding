@@ -45,7 +45,7 @@ $(document).ready(function(){
 	$("#user_menu").click(function(){
 		let token = localStorage.getItem("sys-token");
 		$.ajax({	
-			url:"/user/page/list",
+			url:"/user/admin/page/list",
 			async: false,   //是否为异步请求
 			type: "POST", //请求方式为POST);
 			contentType: "application/json;charset=utf-8",
@@ -290,7 +290,7 @@ function systemUser(){
 	$("#systemUser").show();
 	let token = localStorage.getItem("sys-token");
 	$.ajax({
-		url:"/sys-user/page/list",
+		url:"/sys-user/admin/page/list",
 		async: false,   //是否为异步请求
 		type: "POST", //请求方式为POST);
 		contentType: "application/json;charset=utf-8",

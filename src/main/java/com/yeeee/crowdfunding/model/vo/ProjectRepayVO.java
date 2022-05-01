@@ -12,6 +12,8 @@ import lombok.Data;
 @Data
 public class ProjectRepayVO {
 
+    private Integer id;
+
     @ApiModelProperty("回报标题")
     private String payTitle;
 

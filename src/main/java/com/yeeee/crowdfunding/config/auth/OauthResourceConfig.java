@@ -45,8 +45,6 @@ import java.util.Set;
 public class OauthResourceConfig extends ResourceServerConfigurerAdapter {
 
     @Autowired
-    private DataSource dataSource;
-    @Autowired
     private TokenStore tokenStore;
     @Autowired
     private IgnoreUrlsConfig ignoreUrlsConfig;
@@ -80,6 +78,8 @@ public class OauthResourceConfig extends ResourceServerConfigurerAdapter {
                 .requestMatchers(EndpointRequest.toAnyEndpoint()).permitAll()
                 .antMatchers(ArrayUtil.toArray(ignoreUrlsConfig.getUrls(), String.class)).permitAll()
                 .antMatchers(ArrayUtil.toArray(anonymousUrls, String.class)).permitAll()
+                .antMatchers("/**/front/**").hasAnyAuthority("MEMBER")
+                .antMatchers("/**/admin/**").hasAnyAuthority("ADMIN")
 //                .antMatchers("/**/front/private/*.html").hasAnyAuthority("MEMBER")
                 .anyRequest().authenticated();
     }

@@ -3,11 +3,13 @@ package com.yeeee.crowdfunding.controller;
 import com.yeeee.crowdfunding.api.CommonResult;
 import com.yeeee.crowdfunding.model.vo.BuyOrderPageReqVO;
 import com.yeeee.crowdfunding.model.vo.BuyOrderVO;
+import com.yeeee.crowdfunding.model.vo.CreateOrderVO;
 import com.yeeee.crowdfunding.model.vo.PageVO;
 import com.yeeee.crowdfunding.service.OrderService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,6 +33,12 @@ public class OrderController {
     @PostMapping("front/buyer")
     public CommonResult<PageVO<BuyOrderVO>> getMyselfBuyOrderList(@RequestBody BuyOrderPageReqVO buyOrderPageReqVO) {
         return CommonResult.success(orderService.getMyselfBuyOrderList(buyOrderPageReqVO));
+    }
+
+    @ApiOperation("下单-支持项目")
+    @PostMapping("front/create")
+    public CommonResult<Void> frontCreateOrder(@Validated @RequestBody CreateOrderVO createOrderVO) {
+        return CommonResult.success(orderService.frontCreateOrder(createOrderVO));
     }
 
     @ApiOperation("已卖出的订单")

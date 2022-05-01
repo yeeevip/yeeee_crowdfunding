@@ -2,6 +2,7 @@ package com.yeeee.crowdfunding.service;
 
 import com.yeeee.crowdfunding.model.vo.BuyOrderPageReqVO;
 import com.yeeee.crowdfunding.model.vo.BuyOrderVO;
+import com.yeeee.crowdfunding.model.vo.CreateOrderVO;
 import com.yeeee.crowdfunding.model.vo.PageVO;
 
 /**
@@ -14,4 +15,5 @@ public interface OrderService {
 
     PageVO<BuyOrderVO> getMyselfBuyOrderList(BuyOrderPageReqVO buyOrderPageReqVO);
 
+    Void frontCreateOrder(CreateOrderVO createOrderVO);
 }

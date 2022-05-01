@@ -57,6 +57,7 @@ $(document).ready(function(){
             if (order.receiveInfoVO && order.receiveInfoVO.id) {
                 $("#defultReceiveBOX").append(
                     `
+                <input type="hidden" value="${order.receiveInfoVO.id}" id="receiveInfoVOID" />
   \t\t\t\t\t\t<div id="defultReceive" class="shdzForm_swBox">
   \t\t\t\t\t\t\t<div class="tjdd_formItem">
   \t\t\t\t\t\t\t\t<div class="tjddQHFGBox left">
@@ -131,6 +132,7 @@ $(document).ready(function(){
         $(".tjddCont a.tjdd_h3").show();
         $(".tjddCont").slideDown();
         vv = $(this).parent().parent().find("input[name='repay_money']").val();
+        repayId = $(this).parent().parent().find("input[name='repay_id']").val();
 
     })
     $(".tjddCont a.tjdd_h3").click(function(){
@@ -140,12 +142,36 @@ $(document).ready(function(){
         $(".tjddCont:last").slideUp();
     })
 
-    //提交订单 ajax
+    var vv ;
+    var dd = $(".NumInner input");
+    /*	$("a.det_btn1").click(function(){
+        var url = window.location.href;
+// 		window.open(url);
+        $(".xqPageBox").hide();
+        $(".zhifuInnerBox").show();
+    })
+    */
+    $(".NumInner a:eq(0)").click(function(){
+
+
+        dd.val(parseInt($(".NumInner input").val()) - 1) ;
+        $(".shdzForm_xnBox .ng-binding").text(dd.val()*vv);
+    })
+    $(".NumInner a:eq(1)").click(function(){
+
+        $(".NumInner input").val(parseInt($(".NumInner input").val()) + 1) ;
+        $(".shdzForm_xnBox .ng-binding").text(dd.val()*vv);
+    })
+
+    bindSubmitOrder()
+
+})
+
+var repayId
+//提交订单 ajax
+function bindSubmitOrder() {
     $(".tjdd_submitBtn").click(function(){
-        if(userSession){
-            alert("请登录!!!");
-            return;
-        }
+        let token = localStorage.getItem("token");
         var address = $("select[name='province'] option:selected").text()+"|"+$("select[name='city'] option:selected").text()+"|"
             +$("select[name='district'] option:selected").text()+"|"+$("input[name='address']").val();
 
@@ -154,38 +180,39 @@ $(document).ready(function(){
             // closeBtn:0
         }, function(){
             $.ajax({
-                url			:		"saveOrder.jhtml",
-                data		:		{
-                    projectRepay_id	: $("input[name='repay_id']").val(),
-                    pay_count		: $("input[name='pay_count']").val(),
-                    receiver		: $("input[name='receiver']").val(),
-                    address			: address,
-                    phone			: $("input[name='phone']").val(),
-                    is_defaultReceive:$("input[name='is_defaultReceive']").val()
+                url			:		"/order/front/create",
+                data		:		JSON.stringify(
+                    {
+                        'repayId'	: repayId,
+                        'payCount'		: $("input[name='pay_count']").val(),
+                        'receiveInfoVO': {
+                            'receiver'		: $("input[name='receiver']").val(),
+                            'address'			: address,
+                            'phone'			: $("input[name='phone']").val(),
+                            'id': $("#receiveInfoVOID").val()
+                        }
 
+                    }),
+                headers: {
+                    "Authorization": token ? ('Bearer ' + JSON.parse(token).token) : ''
                 },
-                async		:		true,
-                cache		:		false,
+                async		:		false,
                 type		:		"POST",
                 dataType	:		"json",
-                success		:		function(data){
-                    //data = eval('('+data+')');
+                contentType: "application/json;charset=utf-8",
+                success		:		function(res){
 
-                    if(data.code=="0"){
-                        layer.confirm(data.msg, {
+                    if(res.code==200){
+                        layer.confirm(res.message, {
                             btn: ['确定'], //按钮
                             closeBtn:0
                         }, function(){
-                            //layer.msg('的确很重要', {icon: 1});
-                            //var index = layer.getFrameIndex(window.name);
-                            //var index = layer.alert();
-                            //layer.close(index);
-
-                            //parent.layer.close(index);
-                            window.location.href='showPerson.jhtml';
+                            window.location.href='/pages/front/private/personal_info.html';
                         });
-                    }else{
-                        var index =layer.confirm(data.msg, {
+                    } else if (res.code==401) {
+                        layer.alert("登录失效，请重新登录！！！")
+                    } else{
+                        var index =layer.confirm(res.message, {
                             btn: ['确定'], //按钮
                             closeBtn:0
                         }, function(){
@@ -197,9 +224,7 @@ $(document).ready(function(){
             });
         });
     });
-
-
-})
+}
 
 //使用新地址
 function newAddressForm(){
