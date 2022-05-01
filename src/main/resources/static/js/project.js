@@ -258,7 +258,7 @@ function initProjectDetail() {
                         </div>
                     </div>
                     <div class="det_Btn_box">
-                    \t<a href="/pages/front/orderPage?project=${data.id}" class="det_btn1" >立即支持</a>
+                    \t<a href="/pages/front/public/orderPage?project=${data.id}" class="det_btn1" >立即支持</a>
                         <div class="det_btn2Box">
                         \t<a href="javascript:;" class="det_btn2">分享</a>
                         </div>

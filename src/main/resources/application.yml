@@ -24,6 +24,11 @@ spring:
   web:
     resources:
       static-locations: classpath:/static/
+
+# 本地上传文件保存路径
+local:
+  upload:
+    location: C:\
 mybatis:
   configuration:
     map-underscore-to-camel-case: true

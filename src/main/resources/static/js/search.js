@@ -32,12 +32,12 @@ $(document).ready(function(){
 				itemHtml +=
 					`
 	<div class="searchCard">
-         <a href="/pages/front/project.html?id=${item.id}" class="siteCardItemImgA">
+         <a href="/pages/front/public/project.html?id=${item.id}" class="siteCardItemImgA">
          	<img src="${item.coverPath}" />
          </a>
          <div class="searchCtext">
              <div class="searchCT_p">
-                 <h3><a href="project.jhtml?id=${item.id}" class="siteCTH3">${item.title}</a></h3>
+                 <h3><a href="/pages/front/public/project.html?id=${item.id}" class="siteCTH3">${item.title}</a></h3>
                   <p class="siteCardIC_p">${item.blurb}</p>
              </div>
              <div class="searchCFooter">
@@ -75,7 +75,7 @@ $(document).ready(function(){
 			var pageFooterHtml = ``
 			for (var i = 0; i < data.pages; i++) {
 				pageFooterHtml +=
-					`<a href = "/pages/front/search.html?projectType=${getQueryVariable('projectType')}&&pageNum=${i+1}" class = "normalPage cu" >${i+1}</a>`
+					`<a href = "/pages/front/public/search.html?projectType=${getQueryVariable('projectType')}&&pageNum=${i+1}" class = "normalPage cu" >${i+1}</a>`
 			}
 			$("#searchPMainBox").prepend(pageFooterHtml)
 

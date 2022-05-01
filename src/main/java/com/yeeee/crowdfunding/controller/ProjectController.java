@@ -10,6 +10,11 @@ import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+
 /**
  * description......
  *
@@ -50,5 +55,12 @@ public class ProjectController {
     public CommonResult<PageVO<ProjectVO>> getMyselfProjectList(@RequestBody ProjectPageReqVO reqVO) {
         return CommonResult.success(projectService.getMyselfProjectList(reqVO));
     }
+
+/*    @ApiOperation("项目发起页")
+    @AnonymousAccess
+    @GetMapping("front/page/private/lunch")
+    public void goProjectLunchPage(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        request.getRequestDispatcher("/pages/front/private/faqi.html").forward(request, response);
+    }*/
 
 }

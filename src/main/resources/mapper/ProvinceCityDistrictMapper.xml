@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yeeee.crowdfunding.mapper.ProvinceCityDistrictMapper">
+
+    <sql id="searchBy">
+        <trim prefix="where" prefixOverrides="and|or">
+            <if test="id != '' and id != null">
+                and id = #{id}
+            </if>
+            <if test="pid != null">
+                and pid = #{pid}
+            </if>
+            <if test="name != '' and name != null">
+                and name = #{name}
+            </if>
+        </trim>
+    </sql>
+
+    <select id="getList" resultType="com.yeeee.crowdfunding.model.entity.ProvinceCityDistrict">
+        SELECT
+            id,
+            pid,
+            name
+        FROM
+            t_province_city_district
+        <include refid="searchBy"/>
+    </select>
+
+    <select id="getOne" resultType="com.yeeee.crowdfunding.model.entity.ProvinceCityDistrict">
+        SELECT
+            id,
+            pid,
+            name
+        FROM
+            t_province_city_district
+        <include refid="searchBy"/>
+        LIMIT 1
+    </select>
+
+    <insert id="insert" parameterType="com.yeeee.crowdfunding.model.entity.ProvinceCityDistrict" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO t_province_city_district
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id !='' and id !=null">
+                id,
+            </if>
+            <if test="pid !='' and pid !=null">
+                pid,
+            </if>
+            <if test="name !='' and name !=null">
+                name
+            </if>
+        </trim>
+        VALUE
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != '' and id != null">
+                #{id},
+            </if>
+            <if test="pid != '' and pid != null">
+                #{pid},
+            </if>
+            <if test="name != '' and name != null">
+                #{name}
+            </if>
+        </trim>
+        <selectKey resultType="int" order="AFTER" keyProperty="id">
+            SELECT LAST_INSERT_ID() AS id
+        </selectKey>
+    </insert>
+
+    <update id="updateByPrimaryKey" parameterType="com.yeeee.crowdfunding.model.entity.ProvinceCityDistrict">
+        UPDATE t_province_city_district
+        <trim prefix="set" suffixOverrides=",">
+            <if test="pid != '' and pid != null">
+                pid = #{pid},
+            </if>
+            <if test="name != '' and name != null">
+                name = #{name}
+            </if>
+        </trim>
+        WHERE id=#{id}
+    </update>
+
+    <insert id="batchInsert" parameterType="java.util.List">
+        INSERT INTO t_province_city_district
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            id,pid,name,
+        </trim>
+        VALUES
+        <foreach collection="list" item="item" index="index" separator=",">
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                #{item.id},#{item.pid},#{item.name},
+            </trim>
+        </foreach>
+    </insert >
+
+</mapper>

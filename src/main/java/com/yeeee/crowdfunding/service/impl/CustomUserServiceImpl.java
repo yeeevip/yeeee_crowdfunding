@@ -85,7 +85,7 @@ public class CustomUserServiceImpl implements CustomUserDetailsService {
                 throw new BizException(MessageConstant.USER_NOT_EXIST);
             }
             // build security-user
-            securityUser = new SecurityUser(user.getId(), user.getUsername(), user.getPassword(), 0, Collections.emptySet());
+            securityUser = new SecurityUser(user.getId(), user.getUsername(), user.getPassword(), 0, Sets.newHashSet("MEMBER"));
         }
 
         // check

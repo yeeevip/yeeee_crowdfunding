@@ -80,6 +80,7 @@ public class OauthResourceConfig extends ResourceServerConfigurerAdapter {
                 .requestMatchers(EndpointRequest.toAnyEndpoint()).permitAll()
                 .antMatchers(ArrayUtil.toArray(ignoreUrlsConfig.getUrls(), String.class)).permitAll()
                 .antMatchers(ArrayUtil.toArray(anonymousUrls, String.class)).permitAll()
+//                .antMatchers("/**/front/private/*.html").hasAnyAuthority("MEMBER")
                 .anyRequest().authenticated();
     }
 

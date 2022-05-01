@@ -26,7 +26,7 @@ $(document).ready(function(){
                         btn: ['确定'], //按钮
                         closeBtn: 0
                     }, function(){
-                        location.href = '/pages/front/login.html'
+                        location.href = '/pages/front/public/login.html'
                     });
                 }
             }

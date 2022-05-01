@@ -63,7 +63,7 @@ $(document).ready(function(){
 		$("#headerRightShow").append(
 			`
 			<div class="siteHLoginBox clearfix">
-                <a href="/pages/front/personal_info.html" class="sitehH_login Js_showlogin">个人中心</a>
+                <a href="/pages/front/private/personal_info.html" class="sitehH_login Js_showlogin">个人中心</a>
                 <span class="line"></span>
                 <a href="javascript:;" id="logoutBtn" class="siteH_register Js_showRegister">注销</a>
             </div>
@@ -73,9 +73,9 @@ $(document).ready(function(){
 		$("#headerRightShow").append(
 			`
 			<div class="siteHLoginBox clearfix">
-                <a href="/pages/front/login.html" class="sitehH_login Js_showlogin">登录</a>
+                <a href="/pages/front/public/login.html" class="sitehH_login Js_showlogin">登录</a>
                 <span class="line"></span>
-                <a href="/pages/front/register.html" class="siteH_register Js_showRegister">注册</a>
+                <a href="/pages/front/public/register.html" class="siteH_register Js_showRegister">注册</a>
             </div>
 			`
 		)
@@ -101,13 +101,22 @@ $(document).ready(function(){
 					if (res.code == 200) {
 						location.href = '/'
 					} else {
-						location.href = '/pages/front/login.html'
+						location.href = '/pages/front/public/login.html'
 					}
 				} else {
 					layer.alert(res.message)
 				}
 			}
 		});
+	})
+
+	$("#lunchProjectBtn").click(function () {
+		let token = localStorage.getItem("token");
+		if (token) {
+			window.location.href = '/pages/front/private/faqi.html'
+		} else {
+			layer.alert("请先登录！！！")
+		}
 	})
 
 })

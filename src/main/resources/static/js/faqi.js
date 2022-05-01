@@ -7,9 +7,9 @@ $(document).ready(function(){
 
 	var coverUploader = new WebUploader.Uploader({
 		auto: true,
-		fileVal: 'cover_img',
+		fileVal: 'file',
 		swf: 'js/webuploader-0.1.5/Uploader.swf',
-		server: 'upload_cover.jhtml',
+		server: '/general/upload?path=',
 		pick: '#set_cover',
 		accept: {
 			title: 'Images',
@@ -27,17 +27,16 @@ $(document).ready(function(){
     /**
      * 详情图片
      */
-
-	 $(".uploadPic").each(function(){
+	$(".uploadPic").each(function(){
 
 		 var div = $(this).parent().parent().parent().parent().parent().parent().find(".upload_detital_pic");
 		 var $this = $(this);
 
 		 var detailUploader = new WebUploader.Uploader({
 			 auto: true,
-			 fileVal: 'cover_img',
+			 fileVal: 'file',
 			 swf: 'js/webuploader-0.1.5/Uploader.swf',
-			 server: 'upload_detail.jhtml',
+			 server: '/general/upload',
 			 pick: $this,
 			 accept: {
 				 title: 'Images',
@@ -52,14 +51,11 @@ $(document).ready(function(){
 		 })
 
 	 });
-	 
-	 
-	 
-	    /**
-	     * 身份证 公司 图片
-	     */
 
-		 $(".uplodify_in_repeat_0person").each(function(){
+	/**
+	 * 身份证 公司 图片
+	 */
+	$(".uplodify_in_repeat_0person").each(function(){
 
 			 var div = $(this).parent().parent().find(".material-list-pic");
 
@@ -67,9 +63,9 @@ $(document).ready(function(){
 
 			 var personIdentityUploader = new WebUploader.Uploader({
 				 auto: true,
-				 fileVal: 'cover_img',
+				 fileVal: 'file',
 				 swf: 'js/webuploader-0.1.5/Uploader.swf',
-				 server: 'upload_IDphoto.jhtml',
+				 server: '/general/upload?path=project/IDphoto',
 				 pick: $this,
 				 accept: {
 					 title: 'Images',
@@ -78,10 +74,10 @@ $(document).ready(function(){
 				 }
 			 });
 
-			 personIdentityUploader.on("uploadSuccess", function (file, response){
-				 console.log(response);
+			 personIdentityUploader.on("uploadSuccess", function (file, res){
+				 console.log(res);
 				 div.empty();
-				 div.append('<img id="shenfenxinxi" src=' + response._raw + ' />');
+				 div.append('<img id="shenfenxinxi" src=' + res.data+ ' />');
 			 })
 		 });
 	
@@ -182,9 +178,7 @@ $(document).ready(function(){
 			});
 		
 	})
-	
-	
-	
+
 })
 
 			/**

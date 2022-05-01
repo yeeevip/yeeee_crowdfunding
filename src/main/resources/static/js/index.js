@@ -96,10 +96,10 @@ $(document).ready(function(){
 				hotHtml +=
 					`
 							 <div class="indCardItem">
-								<a href="/pages/front/project.html?id=${item.id}" class="siteCardItemImgA"><img src="${item.coverPath}" /></a>
+								<a href="/pages/front/public/project.html?id=${item.id}" class="siteCardItemImgA"><img src="${item.coverPath}" /></a>
 								<div class="indCardICBox">
 									<div class="indCardICText">
-										<a href="/pages/front/project.html?id=${item.id}" class="siteCardICH3">${item.title}</a>
+										<a href="/pages/front/public/project.html?id=${item.id}" class="siteCardICH3">${item.title}</a>
 										<p class="siteCardIC_p ind">${item.blurb}</p>
 									</div>
 									<div class="siteCardFBox">
@@ -132,7 +132,7 @@ $(document).ready(function(){
 			hotHtml +=
 				`			 </div>
         					 <!--卡片列表end-->
-							 <a href="/pages/front/search.html" class="indCardListMoreA btn_Alink">浏览更多项目</a>
+							 <a href="/pages/front/public/search.html" class="indCardListMoreA btn_Alink">浏览更多项目</a>
 						 </div>
 					 </div>
 					 <!--热门推荐end-->`
@@ -153,10 +153,10 @@ $(document).ready(function(){
 				welfareHtml +=
 					`
 							 <div class="indCardItem">
-								<a href="/pages/front/project.html?id=${item.id}" class="siteCardItemImgA"><img src="${item.coverPath}" /></a>
+								<a href="/pages/front/public/project.html?id=${item.id}" class="siteCardItemImgA"><img src="${item.coverPath}" /></a>
 								<div class="indCardICBox">
 									<div class="indCardICText">
-										<a href="/pages/front/project.html?id=${item.id}" class="siteCardICH3">${item.title}</a>
+										<a href="/pages/front/public/project.html?id=${item.id}" class="siteCardICH3">${item.title}</a>
 										<p class="siteCardIC_p ind">${item.blurb}</p>
 									</div>
 									<div class="siteCardFBox">
@@ -189,7 +189,7 @@ $(document).ready(function(){
 			welfareHtml +=
 				`			 </div>
         					 <!--卡片列表end-->
-							 <a href="/pages/front/search.html" class="indCardListMoreA btn_Alink">浏览更多项目</a>
+							 <a href="/pages/front/public/search.html" class="indCardListMoreA btn_Alink">浏览更多项目</a>
 						 </div>
 					 </div>
 					 <!-- 公益众筹end-->`
@@ -210,10 +210,10 @@ $(document).ready(function(){
 				agHtml +=
 					`
 							 <div class="indCardItem">
-								<a href="/pages/front/project.html?id=${item.id}" class="siteCardItemImgA"><img src="${item.coverPath}" /></a>
+								<a href="/pages/front/public/project.html?id=${item.id}" class="siteCardItemImgA"><img src="${item.coverPath}" /></a>
 								<div class="indCardICBox">
 									<div class="indCardICText">
-										<a href="/pages/front/project.html?id=${item.id}" class="siteCardICH3">${item.title}</a>
+										<a href="/pages/front/public/project.html?id=${item.id}" class="siteCardICH3">${item.title}</a>
 										<p class="siteCardIC_p ind">${item.blurb}</p>
 									</div>
 									<div class="siteCardFBox">
@@ -246,7 +246,7 @@ $(document).ready(function(){
 			agHtml +=
 				`			 </div>
         					 <!--卡片列表end-->
-							 <a href="/pages/front/search.html" class="indCardListMoreA btn_Alink">浏览更多项目</a>
+							 <a href="/pages/front/public/search.html" class="indCardListMoreA btn_Alink">浏览更多项目</a>
 						 </div>
 					 </div>
 					 <!--农业众筹end-->`
@@ -267,10 +267,10 @@ $(document).ready(function(){
 				publishHtml +=
 					`
 							 <div class="indCardItem">
-								<a href="/pages/front/project.html?id=${item.id}" class="siteCardItemImgA"><img src="${item.coverPath}" /></a>
+								<a href="/pages/front/public/project.html?id=${item.id}" class="siteCardItemImgA"><img src="${item.coverPath}" /></a>
 								<div class="indCardICBox">
 									<div class="indCardICText">
-										<a href="/pages/front/project.html?id=${item.id}" class="siteCardICH3">${item.title}</a>
+										<a href="/pages/front/public/project.html?id=${item.id}" class="siteCardICH3">${item.title}</a>
 										<p class="siteCardIC_p ind">${item.blurb}</p>
 									</div>
 									<div class="siteCardFBox">
@@ -303,7 +303,7 @@ $(document).ready(function(){
 			publishHtml +=
 				`			 </div>
         					 <!--卡片列表end-->
-							 <a href="/pages/front/search.html" class="indCardListMoreA btn_Alink">浏览更多项目</a>
+							 <a href="/pages/front/public/search.html" class="indCardListMoreA btn_Alink">浏览更多项目</a>
 						 </div>
 					 </div>
 					 <!--出版众筹end-->`
@@ -324,10 +324,10 @@ $(document).ready(function(){
 				artHtml +=
 					`
 							 <div class="indCardItem">
-								<a href="/pages/front/project.html?id=${item.id}" class="siteCardItemImgA"><img src="${item.coverPath}" /></a>
+								<a href="/pages/front/public/project.html?id=${item.id}" class="siteCardItemImgA"><img src="${item.coverPath}" /></a>
 								<div class="indCardICBox">
 									<div class="indCardICText">
-										<a href="/pages/front/project.html?id=${item.id}" class="siteCardICH3">${item.title}</a>
+										<a href="/pages/front/public/project.html?id=${item.id}" class="siteCardICH3">${item.title}</a>
 										<p class="siteCardIC_p ind">${item.blurb}</p>
 									</div>
 									<div class="siteCardFBox">
@@ -360,7 +360,7 @@ $(document).ready(function(){
 			artHtml +=
 				`			 </div>
         					 <!--卡片列表end-->
-							 <a href="/pages/front/search.html" class="indCardListMoreA btn_Alink">浏览更多项目</a>
+							 <a href="/pages/front/public/search.html" class="indCardListMoreA btn_Alink">浏览更多项目</a>
 						 </div>
 					 </div>
 					 <!--艺术众筹end-->`
