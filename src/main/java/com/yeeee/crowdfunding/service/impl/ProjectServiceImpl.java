@@ -346,8 +346,11 @@ public class ProjectServiceImpl implements ProjectService {
                 .collect(Collectors.toList());
         orderPageVO.setRepayVOList(repayVOList);
 
-        ReceiveInformation receiveInformation = receiveInformationMapper.getOne(new ReceiveInformation().setUserId(SecurityUtil.currentUserId()).setSetDefault(1));
-        orderPageVO.setReceiveInfoVO(receiveInfoConvert.entity2VO(receiveInformation));
+        Integer currentUserId = SecurityUtil.currentUserId();
+        if (currentUserId != null) {
+            ReceiveInformation receiveInformation = receiveInformationMapper.getOne(new ReceiveInformation().setUserId(currentUserId).setSetDefault(1));
+            orderPageVO.setReceiveInfoVO(receiveInfoConvert.entity2VO(receiveInformation));
+        }
 
         return orderPageVO;
     }

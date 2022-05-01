@@ -117,7 +117,7 @@ function initProjectDetail() {
 					</div>
 				`)
 
-				let percent = (data.hasFundRaising/data.totalFundRaising).toFixed(2)
+				let percent = (data.hasFundRaising/data.totalFundRaising*100).toFixed(2)
 				$(".xqDetailBox").append(
 					`
             \t<span></span>

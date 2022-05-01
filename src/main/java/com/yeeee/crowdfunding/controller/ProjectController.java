@@ -70,6 +70,7 @@ public class ProjectController {
     }
 
     @ApiOperation("项目下单预览页")
+    @AnonymousAccess
     @GetMapping("front/orderPage")
     public CommonResult<OrderPageVO> frontProjectOrderPageDetail(@RequestParam Integer id) {
         return CommonResult.success(projectService.frontProjectOrderPageDetail(id));

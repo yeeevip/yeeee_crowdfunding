@@ -92,7 +92,7 @@ $(document).ready(function(){
         					 <div class="indCardListWrap">
 				`
 			data.hotList.forEach(item => {
-				var progress = (item.hasFundRaising / item.totalFundRaising).toFixed(2)
+				var progress = (item.hasFundRaising / item.totalFundRaising*100).toFixed(2)
 				hotHtml +=
 					`
 							 <div class="indCardItem">
@@ -149,7 +149,7 @@ $(document).ready(function(){
         					 <div class="indCardListWrap">
 				`
 			data.welfareList.forEach(item => {
-				var progress = (item.hasFundRaising / item.totalFundRaising).toFixed(2)
+				var progress = (item.hasFundRaising / item.totalFundRaising*100).toFixed(2)
 				welfareHtml +=
 					`
 							 <div class="indCardItem">
@@ -206,7 +206,7 @@ $(document).ready(function(){
         					 <div class="indCardListWrap">
 				`
 			data.agList.forEach(item => {
-				var progress = (item.hasFundRaising / item.totalFundRaising).toFixed(2)
+				var progress = (item.hasFundRaising / item.totalFundRaising*100).toFixed(2)
 				agHtml +=
 					`
 							 <div class="indCardItem">
@@ -263,7 +263,7 @@ $(document).ready(function(){
         					 <div class="indCardListWrap">
 				`
 			data.publishList.forEach(item => {
-				var progress = (item.hasFundRaising / item.totalFundRaising).toFixed(2)
+				var progress = (item.hasFundRaising / item.totalFundRaising*100).toFixed(2)
 				publishHtml +=
 					`
 							 <div class="indCardItem">
@@ -320,7 +320,7 @@ $(document).ready(function(){
         					 <div class="indCardListWrap">
 				`
 			data.artList.forEach(item => {
-				var progress = (item.hasFundRaising / item.totalFundRaising).toFixed(2)
+				var progress = (item.hasFundRaising / item.totalFundRaising*100).toFixed(2)
 				artHtml +=
 					`
 							 <div class="indCardItem">

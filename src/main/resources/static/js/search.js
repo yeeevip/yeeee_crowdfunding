@@ -28,7 +28,7 @@ $(document).ready(function(){
 
 			var itemHtml = ``
 			data.result.forEach(item => {
-				var progress = (item.hasFundRaising / item.totalFundRaising).toFixed(2)
+				var progress = (item.hasFundRaising / item.totalFundRaising*100).toFixed(2)
 				itemHtml +=
 					`
 	<div class="searchCard">
