@@ -64,6 +64,8 @@ public class OauthResourceConfig extends ResourceServerConfigurerAdapter {
         });
 
         http.csrf().disable()
+                .headers().frameOptions().disable()
+                .and()
                 .exceptionHandling()
                 // 处理未授权
                 .accessDeniedHandler(accessDeniedHandlerHandle())
