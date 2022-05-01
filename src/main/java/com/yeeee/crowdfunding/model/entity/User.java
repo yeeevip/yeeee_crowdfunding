@@ -31,7 +31,7 @@ public class User {
     /**
      * 性别（1：男，2：女）
      */
-    private Byte sex;
+    private Integer sex;
 
     /**
      * 身份证号

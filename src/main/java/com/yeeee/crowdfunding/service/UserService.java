@@ -1,7 +1,10 @@
 package com.yeeee.crowdfunding.service;
 
 import com.yeeee.crowdfunding.model.dto.auth.Oauth2TokenDTO;
+import com.yeeee.crowdfunding.model.vo.PageVO;
 import com.yeeee.crowdfunding.model.vo.UserCheckVO;
+import com.yeeee.crowdfunding.model.vo.UserPageReqVO;
+import com.yeeee.crowdfunding.model.vo.UserVO;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -19,4 +22,5 @@ public interface UserService {
 
     Void register(UserCheckVO userCheckVO);
 
+    PageVO<UserVO> userPageList(UserPageReqVO userPageReqVO);
 }

@@ -2,7 +2,10 @@ package com.yeeee.crowdfunding.controller;
 
 import com.yeeee.crowdfunding.api.CommonResult;
 import com.yeeee.crowdfunding.model.dto.auth.Oauth2TokenDTO;
+import com.yeeee.crowdfunding.model.vo.PageVO;
 import com.yeeee.crowdfunding.model.vo.UserCheckVO;
+import com.yeeee.crowdfunding.model.vo.UserPageReqVO;
+import com.yeeee.crowdfunding.model.vo.UserVO;
 import com.yeeee.crowdfunding.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -54,6 +57,12 @@ public class UserController {
     @PostMapping(value = "register")
     public CommonResult<Void> register(@Validated UserCheckVO userCheckVO) {
         return CommonResult.success(userService.register(userCheckVO));
+    }
+
+    @ApiOperation("用户分页")
+    @PostMapping(value = "page/list")
+    public CommonResult<PageVO<UserVO>> userPageList(UserPageReqVO userPageReqVO) {
+        return CommonResult.success(userService.userPageList(userPageReqVO));
     }
 
 }

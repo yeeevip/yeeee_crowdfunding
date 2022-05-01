@@ -87,7 +87,7 @@ $(document).ready(function(){
 			type: 'GET',
 			async: false,
 			url: '/user/logout' ,
-			//contentType: "application/json",
+			//contentType: "application/json;charset=utf-8",
 			data:  {},
 			headers: {
 				"Authorization": token ? ('Bearer ' + JSON.parse(token).token) : ''

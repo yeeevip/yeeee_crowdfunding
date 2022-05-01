@@ -53,7 +53,7 @@ public class CommonController {
         List<String> paths = Lists.newArrayList();
         file.forEach(f -> {
             String dirPath;
-            try (OutputStream out = FileUtil.getOutputStream(FileUtil.file(uploadPath + (dirPath = ("upload/" + path + "/" + RandomUtil.randomNumbers(5) + "/" + f.getOriginalFilename()))))) {
+            try (OutputStream out = FileUtil.getOutputStream(FileUtil.file(uploadPath + (dirPath = ("upload/" + path + "/" + RandomUtil.randomNumbers(5) + f.getOriginalFilename()))))) {
                 IoUtil.copy(f.getInputStream(), out);
                 paths.add("/" + dirPath.replace("\\", "/"));
             } catch (IOException e) {
