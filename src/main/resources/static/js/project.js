@@ -9,62 +9,73 @@ $(document).ready(function(){
 	initProjectDetail();
 
 	$("#fabiao_pl").click(function(){
-// 		int a = ${sessionScope.user.id};
-// 		alert(a);
-		
-		
+
 		var $content = $("#pl_content").val();//评论内容
+		let projectId = getQueryVariable('id')
 		
 		if($content == null || $content ==""){
-			alert("请填写评论内容！");
-			return;
-		}else if(userSession){
-			alert("您还没有登陆呢，请先登陆！！！");
+			layer.alert("请填写评论内容！");
 			return;
 		}
-    
-//     	$.getJSON('newComment.jhtml', function(data){
-//     		alert("11111");
-//     		console.log(data);
-//     	});
-    
-    	
+		let token = localStorage.getItem("token");
     	$.ajax({
-            url: "newComment.jhtml",//要请求的服务器url 
-            //这是一个对象，表示请求的参数，两个参数：method=ajax&val=xxx，服务器可以通过request.getParameter()来获取 
-            //data:{method:"ajaxTest",val:value},  
-            data: {
-                content: $("#pl_content").val(),
-               
-            },
-            async: true,   //是否为异步请求
-            cache: false,  //是否缓存结果
-            type: "POST", //请求方式为POST
-            dataType: "json",   //服务器返回的数据是什么类型 
-            success: function(user){  //这个方法会在服务器执行成功是被调用 ，参数result就是服务器返回的值(现在是json类型) 
-               
-            	console.log(user);
-            
-            //alert($(".pl_contentBox").length);
-            if($(".pl_contentBox").length==5){
-            $(".pl_contentBox:last").remove();}
-            
-            $("#plcontentBox").prepend("<div class='pl_contentBox'>"+"<div class='content_tx'>"+
-                    	"<a href='javascript:;'><img src='' /></a>"+
-                    "</div>"+
-                    "<a href='javascript:;' class='content_nc'>用户ID"+user.id+"</a>"+
-                    "<p class='content_text'>"+$content+"</p>"+
-                    "<div class='content_img'>"+
-                    	"<div class='contentIBox'>"+
-                        	"<img src='' />"+
-                        "</div>"+
-                    "</div>"+
-                    "<div class='pl_days'>"+
-                    	"<span class='timeSpan'>3天前</span>"+
-                        "<a href='javascript:;' class='to_pl'>评论(0)</a>"+
-                    "</div>"+
-               "</div>");
-            
+			type: 'POST',
+			async: false,
+			url: '/comment/front/add' ,
+			contentType: "application/json",
+			headers: {
+				"Authorization": token ? ('Bearer ' + JSON.parse(token).token) : ''
+			},
+			data:  JSON.stringify({
+				'content': $content,
+				'projectId': projectId
+			}),
+			dataType: 'json',
+			success: function (res) {
+				if (res.code == 401) {
+					layer.alert("登录过期，请重新登录！！！")
+				} else if (res.code == 200) {
+					$("#plcontentBox .pl_contentBox").remove()
+					$.ajax({
+						type: 'POST',
+						async: false,
+						url: '/comment/front/list',
+						contentType: "application/json",
+						data: JSON.stringify({
+							'pageSize': 100,
+							'commentVO': {
+								'projectId': projectId
+							}
+						}),
+						dataType: 'json',
+						success: function (res) {
+							res.data.result.forEach(item => {
+								$("#plcontentBox").append(
+									`
+\t\t\t\t\t\t\t<div class="pl_contentBox">
+\t\t\t\t\t\t\t\t\t<div class="content_tx">
+\t\t\t\t\t\t\t\t\t\t<a href="javascript:;"><img src="" /></a>
+\t\t\t\t\t\t\t\t\t</div>
+\t\t\t\t\t\t\t\t\t<a href="javascript:;" class="content_nc">用户：${item.username}</a>
+\t\t\t\t\t\t\t\t\t<p class="content_text">${item.content}</p>
+\t\t\t\t\t\t\t\t\t<!--<div class="content_img">
+\t\t\t\t\t\t\t\t\t\t<div class="contentIBox">
+\t\t\t\t\t\t\t\t\t\t\t<img src="" />
+\t\t\t\t\t\t\t\t\t\t</div>
+\t\t\t\t\t\t\t\t\t</div>-->
+\t\t\t\t\t\t\t\t\t<div class="pl_days">
+\t\t\t\t\t\t\t\t\t\t<span class="timeSpan">${item.time}</span>
+\t\t\t\t\t\t\t\t\t\t<a href="javascript:;" class="to_pl"><!--评论(0)--></a>
+\t\t\t\t\t\t\t\t\t</div>
+\t\t\t\t\t\t\t</div>
+					`
+								)
+							})
+						}
+					})
+				} else {
+					layer.alert(res.message)
+				}
             }
           });
     	
@@ -331,11 +342,11 @@ function initProjectDetail() {
 \t\t\t\t\t\t\t\t\t</div>
 \t\t\t\t\t\t\t\t\t<a href="javascript:;" class="content_nc">用户：${item.username}</a>
 \t\t\t\t\t\t\t\t\t<p class="content_text">${item.content}</p>
-\t\t\t\t\t\t\t\t\t<div class="content_img">
+\t\t\t\t\t\t\t\t\t<!--<div class="content_img">
 \t\t\t\t\t\t\t\t\t\t<div class="contentIBox">
 \t\t\t\t\t\t\t\t\t\t\t<img src="" />
 \t\t\t\t\t\t\t\t\t\t</div>
-\t\t\t\t\t\t\t\t\t</div>
+\t\t\t\t\t\t\t\t\t</div>-->
 \t\t\t\t\t\t\t\t\t<div class="pl_days">
 \t\t\t\t\t\t\t\t\t\t<span class="timeSpan">${item.time}</span>
 \t\t\t\t\t\t\t\t\t\t<a href="javascript:;" class="to_pl"><!--评论(0)--></a>

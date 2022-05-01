@@ -99,7 +99,7 @@ $(document).ready(function(){
 								<a href="/pages/front/project.html?id=${item.id}" class="siteCardItemImgA"><img src="${item.coverPath}" /></a>
 								<div class="indCardICBox">
 									<div class="indCardICText">
-										<a href="/pages/front/project.html?id=1" class="siteCardICH3">${item.title}</a>
+										<a href="/pages/front/project.html?id=${item.id}" class="siteCardICH3">${item.title}</a>
 										<p class="siteCardIC_p ind">${item.blurb}</p>
 									</div>
 									<div class="siteCardFBox">
@@ -156,7 +156,7 @@ $(document).ready(function(){
 								<a href="/pages/front/project.html?id=${item.id}" class="siteCardItemImgA"><img src="${item.coverPath}" /></a>
 								<div class="indCardICBox">
 									<div class="indCardICText">
-										<a href="/pages/front/project.html?id=1" class="siteCardICH3">${item.title}</a>
+										<a href="/pages/front/project.html?id=${item.id}" class="siteCardICH3">${item.title}</a>
 										<p class="siteCardIC_p ind">${item.blurb}</p>
 									</div>
 									<div class="siteCardFBox">
@@ -213,7 +213,7 @@ $(document).ready(function(){
 								<a href="/pages/front/project.html?id=${item.id}" class="siteCardItemImgA"><img src="${item.coverPath}" /></a>
 								<div class="indCardICBox">
 									<div class="indCardICText">
-										<a href="/pages/front/project.html?id=1" class="siteCardICH3">${item.title}</a>
+										<a href="/pages/front/project.html?id=${item.id}" class="siteCardICH3">${item.title}</a>
 										<p class="siteCardIC_p ind">${item.blurb}</p>
 									</div>
 									<div class="siteCardFBox">
@@ -270,7 +270,7 @@ $(document).ready(function(){
 								<a href="/pages/front/project.html?id=${item.id}" class="siteCardItemImgA"><img src="${item.coverPath}" /></a>
 								<div class="indCardICBox">
 									<div class="indCardICText">
-										<a href="/pages/front/project.html?id=1" class="siteCardICH3">${item.title}</a>
+										<a href="/pages/front/project.html?id=${item.id}" class="siteCardICH3">${item.title}</a>
 										<p class="siteCardIC_p ind">${item.blurb}</p>
 									</div>
 									<div class="siteCardFBox">
@@ -327,7 +327,7 @@ $(document).ready(function(){
 								<a href="/pages/front/project.html?id=${item.id}" class="siteCardItemImgA"><img src="${item.coverPath}" /></a>
 								<div class="indCardICBox">
 									<div class="indCardICText">
-										<a href="/pages/front/project.html?id=1" class="siteCardICH3">${item.title}</a>
+										<a href="/pages/front/project.html?id=${item.id}" class="siteCardICH3">${item.title}</a>
 										<p class="siteCardIC_p ind">${item.blurb}</p>
 									</div>
 									<div class="siteCardFBox">

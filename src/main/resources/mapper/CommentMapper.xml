@@ -38,6 +38,7 @@
         FROM
             t_comment
         <include refid="searchBy"/>
+        ORDER BY ID DESC
     </select>
 
     <select id="getOne" resultType="com.yeeee.crowdfunding.model.entity.Comment">
@@ -72,7 +73,7 @@
             <if test="content !='' and content !=null">
                 content,
             </if>
-            <if test="time !='' and time !=null">
+            <if test="time !=null">
                 time
             </if>
         </trim>
@@ -93,7 +94,7 @@
             <if test="content != '' and content != null">
                 #{content},
             </if>
-            <if test="time != '' and time != null">
+            <if test="time != null">
                 #{time}
             </if>
         </trim>

@@ -70,7 +70,7 @@
         FROM
             t_order
         <include refid="searchBy"/>
-        order by id desc
+        ORDER BY ID DESC
     </select>
 
     <select id="getOne" resultType="com.yeeee.crowdfunding.model.entity.Order">

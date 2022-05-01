@@ -86,6 +86,7 @@
         FROM
             t_project
         <include refid="searchBy"/>
+        ORDER BY ID DESC
     </select>
 
     <select id="getOrderLimitList" resultType="com.yeeee.crowdfunding.model.entity.Project">

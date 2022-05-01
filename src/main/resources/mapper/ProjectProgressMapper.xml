@@ -34,6 +34,7 @@
         FROM
             t_project_progress
         <include refid="searchBy"/>
+        ORDER BY ID DESC
     </select>
 
     <select id="getOne" resultType="com.yeeee.crowdfunding.model.entity.ProjectProgress">

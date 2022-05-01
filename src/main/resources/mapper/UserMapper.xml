@@ -62,6 +62,7 @@
         FROM
             t_user
         <include refid="searchBy"/>
+        ORDER BY ID DESC
     </select>
 
     <select id="getOne" resultType="com.yeeee.crowdfunding.model.entity.User">
