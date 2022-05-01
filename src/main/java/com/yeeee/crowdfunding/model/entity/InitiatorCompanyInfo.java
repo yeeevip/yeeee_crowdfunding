@@ -1,8 +1,10 @@
 package com.yeeee.crowdfunding.model.entity;
 
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 @Data
+@Accessors(chain = true)
 public class InitiatorCompanyInfo {
 
     private Integer id;

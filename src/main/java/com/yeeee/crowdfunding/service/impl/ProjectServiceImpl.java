@@ -18,6 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -272,5 +273,57 @@ public class ProjectServiceImpl implements ProjectService {
                 })
                 .collect(Collectors.toList());
         return new PageVO<>(page.getPageNum(), page.getPageSize(), page.getPages(), page.getTotal(), result);
+    }
+
+    @Override
+    public LunchProjectVO getAdminProjectDetail(Integer id) {
+
+        if (id == null) {
+            throw new BizException("项目ID不能为空");
+        }
+
+        Project project = projectMapper.getOne(new Project().setId(id));
+        if (project == null) {
+            throw new BizException("项目不存在");
+        }
+
+        LunchProjectVO lunchProjectVO = projectConvert.project2LunchProjectVO(project);
+
+        List<ProjectItemVO> projectItemVOS = Optional.ofNullable(projectDetailMapper.getList(new ProjectDetail().setProjectId(project.getId()))).orElseGet(Lists::newArrayList)
+                .stream()
+                .map(projectDetailConvert::detail2VO)
+                .collect(Collectors.toList());
+        lunchProjectVO.setItemVOList(projectItemVOS);
+
+        List<ProjectRepayVO> repayVOList = Optional.ofNullable(projectRepayMapper.getList(new ProjectRepay().setProjectId(project.getId()))).orElseGet(Lists::newArrayList)
+                .stream()
+                .map(projectRepayConvert::projectRepay2VO)
+                .collect(Collectors.toList());
+        lunchProjectVO.setRepayVOList(repayVOList);
+
+        InitiatorPersonInfo initiatorPersonInfo = initiatorPersonInfoMapper.getOne(new InitiatorPersonInfo().setProjectId(project.getId()));
+        lunchProjectVO.setInitiatorPersonInfoVO(initiatorInfoVOConvert.entity2PersonInfoVO(initiatorPersonInfo));
+
+        InitiatorCompanyInfo initiatorCompanyInfo = initiatorCompanyInfoMapper.getOne(new InitiatorCompanyInfo().setProjectId(project.getId()));
+        lunchProjectVO.setInitiatorCompanyInfoVO(initiatorInfoVOConvert.entity2CompanyInfoVO(initiatorCompanyInfo));
+
+        return lunchProjectVO;
+    }
+
+    @Override
+    public Void adminProjectAudits(AuditProjectVO auditProjectVO) {
+
+        Project project = projectMapper.getOne(new Project().setId(auditProjectVO.getProjectId()));
+        if (project == null) {
+            throw new BizException("项目不存在");
+        }
+
+        if (Arrays.asList(-1, 1).contains(project.getHasAudits())) {
+            throw new BizException("项目已经审核过了");
+        }
+
+        projectMapper.updateByPrimaryKey(new Project().setId(auditProjectVO.getProjectId()).setHasAudits(auditProjectVO.getHasAudits()));
+
+        return null;
     }
 }

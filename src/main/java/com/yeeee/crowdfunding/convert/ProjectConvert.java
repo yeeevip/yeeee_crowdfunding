@@ -24,4 +24,6 @@ public interface ProjectConvert {
     @Mappings(@Mapping(source = "projectType", target = "categoryId"))
     Project lunchProjectVOProject(LunchProjectVO lunchProjectVO);
 
+    LunchProjectVO project2LunchProjectVO(Project project);
+
 }

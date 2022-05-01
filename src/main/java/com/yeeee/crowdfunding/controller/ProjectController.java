@@ -76,4 +76,16 @@ public class ProjectController {
         return CommonResult.success(projectService.getAdminPageList(reqVO));
     }
 
+    @ApiOperation("审核-项目详情")
+    @GetMapping("admin/detail")
+    public CommonResult<LunchProjectVO> getAdminProjectDetail(Integer id) {
+        return CommonResult.success(projectService.getAdminProjectDetail(id));
+    }
+
+    @ApiOperation("审核项目")
+    @PostMapping("admin/audits")
+    public CommonResult<Void> adminProjectAudits(@RequestBody AuditProjectVO auditProjectVO) {
+        return CommonResult.success(projectService.adminProjectAudits(auditProjectVO));
+    }
+
 }

@@ -57,6 +57,12 @@ $(document).ready(function(){
 			},
 			dataType: "json",   //服务器返回的数据是什么类型
 			success: function(res){
+
+				if (res.code == 401) {
+					layer.alert("登录过期，请重新登录！！！")
+					return
+				}
+
 				var user = res.data.result
 				var a = 0;
 				$("#user_tbody tr").remove()
@@ -218,7 +224,7 @@ function projectNo(){
 					"<td>"+handleNull(project[i].launchDateRaising)+"</td>"+
 					"<td>"+hasFinish+"</td>"+
 					"<td>"+hasAudit+"</td>"+
-					"<td>查看</td>"+
+					"<td><a target='_blank' style='color: gold' href='/pages/admin/shenhe.html?id="+project[i].id+"'>去审核</a></td>"+
 					"</tr>");
 			}
 		}

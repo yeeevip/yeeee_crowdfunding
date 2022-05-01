@@ -17,6 +17,10 @@ public interface InitiatorInfoVOConvert {
 
     InitiatorPersonInfo personInfoVO2Entity(InitiatorPersonInfoVO personInfoVO);
 
+    InitiatorPersonInfoVO entity2PersonInfoVO(InitiatorPersonInfo initiatorPersonInfo);
+
     InitiatorCompanyInfo companyInfoVO2Entity(InitiatorCompanyInfoVO companyInfoVO);
+
+    InitiatorCompanyInfoVO entity2CompanyInfoVO(InitiatorCompanyInfo initiatorCompanyInfo);
 
 }
