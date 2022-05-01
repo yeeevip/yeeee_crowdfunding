@@ -17,4 +17,6 @@ public interface OrderService {
     Void frontPayOrder(PayVO payVO);
 
     PageVO<SellerOrderVO> getSellerOrderList(BuyOrderPageReqVO buyOrderPageReqVO);
+
+    PageVO<SellerOrderVO> getAdminOrderPageList(BuyOrderPageReqVO buyOrderPageReqVO);
 }

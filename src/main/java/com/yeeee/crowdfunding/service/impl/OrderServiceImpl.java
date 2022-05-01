@@ -163,4 +163,24 @@ public class OrderServiceImpl implements OrderService {
 
         return new PageVO<>(page.getPageNum(), page.getPageSize(), page.getPages(), page.getTotal(), orderVOList);
     }
+
+    @Override
+    public PageVO<SellerOrderVO> getAdminOrderPageList(BuyOrderPageReqVO buyOrderPageReqVO) {
+
+        Page<Order> page = PageHelper.startPage(buyOrderPageReqVO.getPageNum(), buyOrderPageReqVO.getPageSize());
+        List<Order> orderList = orderMapper.getList(new Order());
+        List<SellerOrderVO> orderVOList = Optional.ofNullable(orderList).orElseGet(Lists::newArrayList)
+                .stream()
+                .map(orderConvert::order2SellerVO)
+                .peek(item -> {
+                    Project project = projectMapper.getOne(new Project().setId(item.getProjectId()));
+                    item.setProjectVO(projectConvert.project2VO(project));
+                    ReceiveInformation receiveInformation = receiveInformationMapper.getOne(new ReceiveInformation().setId(item.getReceiveInformation()));
+                    item.setReceiveInfoVO(receiveInfoConvert.entity2VO(receiveInformation));
+                })
+                .collect(Collectors.toList());
+
+        return new PageVO<>(page.getPageNum(), page.getPageSize(), page.getPages(), page.getTotal(), orderVOList);
+
+    }
 }

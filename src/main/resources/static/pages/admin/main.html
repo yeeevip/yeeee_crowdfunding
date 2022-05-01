@@ -51,14 +51,14 @@
             <div class="personalBox_left_box">            	
         		<h3>订单</h3>
             	<div class="personalBox_left_m">
-            		<a href="javascript:f_display('a_dingdan')" >订单管理</a>
+            		<a href="javascript:f_display('a_dingdan')" id="dingdan_menu">订单管理</a>
             	</div>       		
             </div>
 
             <div class="personalBox_left_box">            	
         		<h3>项目类别</h3>
             	<div class="personalBox_left_m">
-            		<a href="javascript:f_display('a_leibie')">项目类别管理</a>
+            		<a href="javascript:f_display('a_leibie')" id="category_menu">项目类别管理</a>
             	</div>       		
             </div>
         </div>
@@ -384,36 +384,39 @@
 			        </div>                                    
 			     </div>
 			    <div class="grzx_xiangmu_table">
-						    	<table>
-						    		<colgroup>
-						    			<col widtd="">
-						    			<col width="15%">
-						    			<col width="15%">
-						    			<col width="8%">
-						    			<col width="5%">
-						    			<col width="20%">
-						    			<col width="10%">
-						    			<col width="12%">
-						    			<col width="4%">
-						    			
-						    		</colgroup>
-						        	<thead>
-						            	<tr class="bg_tr">
-						            		<td></td>
-						                    <td>订单编号</td>
-						                    <td>项目名称</td>
-						                    
-						                    
-						                    <td>下单金额</td>
-						                    <td>收货人</td>
-						                    <td>收货地址</td>
-						                    <td>电话</td>
-						                    <td>创建时间</td>
-						                    <td>是否付款</td>
-						                 </tr>
-						            </thead>
-						        </table>
-						    </div>
+					<table>
+						<colgroup>
+							<col widtd="">
+							<col width="15%">
+							<col width="15%">
+							<col width="8%">
+							<col width="5%">
+							<col width="20%">
+							<col width="10%">
+							<col width="12%">
+							<col width="4%">
+
+						</colgroup>
+						<thead>
+							<tr class="bg_tr">
+								<td></td>
+								<td>订单编号</td>
+								<td>项目名称</td>
+
+
+								<td>下单金额</td>
+								<td>收货人</td>
+								<td>收货地址</td>
+								<td>电话</td>
+								<td>创建时间</td>
+								<td>是否付款</td>
+							 </tr>
+						</thead>
+						<tbody id="dingdan_tbody">
+							<tr class="trfirst"><td colspan="9"></td></tr>
+						</tbody>
+					</table>
+				</div>
 			    <div class=""	>
 			    	<div class="m-page">
 			    		<div class=wraper>

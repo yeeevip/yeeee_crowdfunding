@@ -50,4 +50,10 @@ public class OrderController {
         return CommonResult.success(orderService.getSellerOrderList(buyOrderPageReqVO));
     }
 
+    @ApiOperation("管理员订单管理")
+    @PostMapping("admin/page/list")
+    public CommonResult<PageVO<SellerOrderVO>> getAdminOrderPageList(@RequestBody BuyOrderPageReqVO buyOrderPageReqVO) {
+        return CommonResult.success(orderService.getAdminOrderPageList(buyOrderPageReqVO));
+    }
+
 }

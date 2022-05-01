@@ -94,6 +94,115 @@ $(document).ready(function(){
 
 		
 	})
+
+
+	/**
+	 * 订单管理
+	 */
+	$("#dingdan_menu").click(function(){
+		let token = localStorage.getItem("sys-token");
+		$.ajax({
+			url:"/order/admin/page/list",
+			async: false,   //是否为异步请求
+			type: "POST", //请求方式为POST);
+			contentType: "application/json;charset=utf-8",
+			data: JSON.stringify({
+				'pageSize': 1000
+			}),
+			headers: {
+				"Authorization": token ? ('Bearer ' + JSON.parse(token).token) : ''
+			},
+			dataType: "json",   //服务器返回的数据是什么类型
+			success: function(res){
+
+				if (res.code == 401) {
+					layer.alert("登录过期，请重新登录！！！")
+					return
+				}
+
+				var user = res.data.result
+				var a = 0;
+				$("#dingdan_tbody tr").remove()
+				$("#dingdan_tbody").append('<tr class="trfirst"><td colspan="9"></td></tr>')
+				for(var i=0;i<user.length;i++){
+
+					$("#dingdan_tbody").append(
+						"<tr class='u_tbg_tr'>"+
+						"<td><input name='user' user_index="+user[i].id+" class='table_checkbox' type='checkbox'></td>"+
+						"<td>"+handleNull(user[i].code)+"</td>"+
+						"<td>"+handleNull(user[i].projectVO.title)+"</td>"+
+						"<td>"+handleNull(user[i].payPrice)+"</td>"+
+						"<td>"+handleNull(user[i].receiveInfoVO.receiver)+"</td>"+
+						"<td>"+handleNull(user[i].receiveInfoVO.address)+"</td>"+
+						"<td>"+handleNull(user[i].receiveInfoVO.phone)+"</td>"+
+						"<td>"+handleNull(user[i].orderDate)+"</td>"+
+						"<td>"+handleNull(user[i].hasPay)+"</td>"+
+						"</tr>");
+
+				}
+			}
+		});
+
+
+	})
+
+
+	/**
+	 * 项目类别管理
+	 */
+	$("#category_menu").click(function(){
+		let token = localStorage.getItem("sys-token");
+		$.ajax({
+			url:"/user/admin/page/list",
+			async: false,   //是否为异步请求
+			type: "POST", //请求方式为POST);
+			contentType: "application/json;charset=utf-8",
+			data: JSON.stringify({
+				'pageSize': 1000
+			}),
+			headers: {
+				"Authorization": token ? ('Bearer ' + JSON.parse(token).token) : ''
+			},
+			dataType: "json",   //服务器返回的数据是什么类型
+			success: function(res){
+
+				if (res.code == 401) {
+					layer.alert("登录过期，请重新登录！！！")
+					return
+				}
+
+				var user = res.data.result
+				var a = 0;
+				$("#user_tbody tr").remove()
+				$("#user_tbody").append('<tr class="trfirst"><td colspan="9"></td></tr>')
+				for(var i=0;i<user.length;i++){
+
+					$("#user_tbody").append(
+						"<tr class='u_tbg_tr'>"+
+						"<td><input name='user' user_index="+user[i].id+" class='table_checkbox' type='checkbox'></td>"+
+						"<td>"+handleNull(user[i].id)+"</td>"+
+						"<td>"+handleNull(user[i].username)+"</td>"+
+						"<td>"+handleNull(user[i].email)+"</td>"+
+						"<td>"+handleNull(user[i].sex)+"</td>"+
+						"<td>"+handleNull(user[i].realName)+"</td>"+
+						"<td>"+handleNull(user[i].idNumber)+"</td>"+
+						"<td>"+handleNull(user[i].age)+"</td>"+
+						"<td>"+handleNull(user[i].mobile)+"</td>"+
+						"<td>"+handleNull(user[i].dateOfRegistration)+"</td>"+
+						"</tr>");
+					//				$("#table_checkboxBOx").append("<div class='table_checkbox_box'>"+
+					//			    						"<input user_index="+user[i].id+" class='table_checkbox' type='checkbox' >"+
+					//			"</div>");
+					//
+					//				$(".table_checkbox_box").height($(".u_tbg_tr:eq(i)").height());
+
+				}
+			}
+		});
+
+
+	})
+
 			
 	/**
 	 * 用户全选取消
