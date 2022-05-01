@@ -41,10 +41,10 @@
             <if test="daysRaising != '' and daysRaising != null">
                 and days_raising = #{daysRaising}
             </if>
-            <if test="hasFinish != '' and hasFinish != null">
+            <if test="hasFinish != null">
                 and has_finish = #{hasFinish}
             </if>
-            <if test="hasAudits != '' and hasAudits != null">
+            <if test="hasAudits != null">
                 and has_audits = #{hasAudits}
             </if>
             <if test="hasIndex != '' and hasIndex != null">

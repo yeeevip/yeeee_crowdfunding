@@ -70,4 +70,10 @@ public class ProjectController {
         request.getRequestDispatcher("/pages/front/private/faqi.html").forward(request, response);
     }*/
 
+    @ApiOperation("管理员项目分页")
+    @PostMapping("admin/page/list")
+    public CommonResult<PageVO<ProjectVO>> getAdminPageList(@RequestBody ProjectPageReqVO reqVO) {
+        return CommonResult.success(projectService.getAdminPageList(reqVO));
+    }
+
 }

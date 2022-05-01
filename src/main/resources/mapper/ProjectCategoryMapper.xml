@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yeeee.crowdfunding.mapper.ProjectCategoryMapper">
+
+    <sql id="searchBy">
+        <trim prefix="where" prefixOverrides="and|or">
+            <if test="id != '' and id != null">
+                and id = #{id}
+            </if>
+            <if test="categoryName != '' and categoryName != null">
+                and category_name = #{categoryName}
+            </if>
+            <if test="note != '' and note != null">
+                and note = #{note}
+            </if>
+            <if test="createDate != '' and createDate != null">
+                and create_date = #{createDate}
+            </if>
+            <if test="changeDate != '' and changeDate != null">
+                and change_date = #{changeDate}
+            </if>
+            <if test="changePerson != '' and changePerson != null">
+                and change_person = #{changePerson}
+            </if>
+        </trim>
+    </sql>
+
+    <select id="getList" resultType="com.yeeee.crowdfunding.model.entity.ProjectCategory">
+        SELECT
+            id,
+            category_name,
+            note,
+            create_date,
+            change_date,
+            change_person
+        FROM
+            t_project_category
+        <include refid="searchBy"/>
+    </select>
+
+    <select id="getOne" resultType="com.yeeee.crowdfunding.model.entity.ProjectCategory">
+        SELECT
+            id,
+            category_name,
+            note,
+            create_date,
+            change_date,
+            change_person
+        FROM
+            t_project_category
+        <include refid="searchBy"/>
+        LIMIT 1
+    </select>
+
+    <insert id="insert" parameterType="com.yeeee.crowdfunding.model.entity.ProjectCategory" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO t_project_category
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id !='' and id !=null">
+                id,
+            </if>
+            <if test="categoryName !='' and categoryName !=null">
+                category_name,
+            </if>
+            <if test="note !='' and note !=null">
+                note,
+            </if>
+            <if test="createDate !='' and createDate !=null">
+                create_date,
+            </if>
+            <if test="changeDate !='' and changeDate !=null">
+                change_date,
+            </if>
+            <if test="changePerson !='' and changePerson !=null">
+                change_person
+            </if>
+        </trim>
+        VALUE
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != '' and id != null">
+                #{id},
+            </if>
+            <if test="categoryName != '' and categoryName != null">
+                #{categoryName},
+            </if>
+            <if test="note != '' and note != null">
+                #{note},
+            </if>
+            <if test="createDate != '' and createDate != null">
+                #{createDate},
+            </if>
+            <if test="changeDate != '' and changeDate != null">
+                #{changeDate},
+            </if>
+            <if test="changePerson != '' and changePerson != null">
+                #{changePerson}
+            </if>
+        </trim>
+        <selectKey resultType="int" order="AFTER" keyProperty="id">
+            SELECT LAST_INSERT_ID() AS id
+        </selectKey>
+    </insert>
+
+    <update id="updateByPrimaryKey" parameterType="com.yeeee.crowdfunding.model.entity.ProjectCategory">
+        UPDATE t_project_category
+        <trim prefix="set" suffixOverrides=",">
+            <if test="categoryName != '' and categoryName != null">
+                category_name = #{categoryName},
+            </if>
+            <if test="note != '' and note != null">
+                note = #{note},
+            </if>
+            <if test="createDate != '' and createDate != null">
+                create_date = #{createDate},
+            </if>
+            <if test="changeDate != '' and changeDate != null">
+                change_date = #{changeDate},
+            </if>
+            <if test="changePerson != '' and changePerson != null">
+                change_person = #{changePerson}
+            </if>
+        </trim>
+        WHERE id=#{id}
+    </update>
+
+    <insert id="batchInsert" parameterType="java.util.List">
+        INSERT INTO t_project_category
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            id,category_name,note,create_date,change_date,change_person,
+        </trim>
+        VALUES
+        <foreach collection="list" item="item" index="index" separator=",">
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                #{item.id},#{item.categoryName},#{item.note},#{item.createDate},#{item.changeDate},#{item.changePerson},
+            </trim>
+        </foreach>
+    </insert >
+
+</mapper>

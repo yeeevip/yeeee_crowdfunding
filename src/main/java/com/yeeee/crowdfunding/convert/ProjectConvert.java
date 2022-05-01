@@ -5,6 +5,8 @@ import com.yeeee.crowdfunding.model.vo.LunchProjectVO;
 import com.yeeee.crowdfunding.model.vo.ProjectDetailVO;
 import com.yeeee.crowdfunding.model.vo.ProjectVO;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.Mappings;
 
 /**
  * description......
@@ -19,6 +21,7 @@ public interface ProjectConvert {
 
     ProjectDetailVO project2DetailVO(Project project);
 
+    @Mappings(@Mapping(source = "projectType", target = "categoryId"))
     Project lunchProjectVOProject(LunchProjectVO lunchProjectVO);
 
 }

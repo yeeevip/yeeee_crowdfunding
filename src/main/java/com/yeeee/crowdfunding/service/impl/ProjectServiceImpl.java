@@ -66,6 +66,10 @@ public class ProjectServiceImpl implements ProjectService {
 
     private final InitiatorCompanyInfoMapper initiatorCompanyInfoMapper;
 
+    private final ProjectCategoryMapper projectCategoryMapper;
+
+    private final ProjectCategoryConvert projectCategoryConvert;
+
     @Override
     public IndexProjectListVO getIndexShowProject() {
 
@@ -244,5 +248,29 @@ public class ProjectServiceImpl implements ProjectService {
         }
 
         return null;
+    }
+
+    @Override
+    public PageVO<ProjectVO> getAdminPageList(ProjectPageReqVO reqVO) {
+        Page<ProjectVO> page = PageHelper.startPage(reqVO.getPageNum(), reqVO.getPageSize());
+
+        Project query = new Project();
+        if (reqVO.getProjectVO() != null) {
+            query.setHasAudits(reqVO.getProjectVO().getHasAudits());
+            query.setHasFinish(reqVO.getProjectVO().getHasFinish());
+        }
+
+        List<Project> projectList = projectMapper.getList(query);
+        List<ProjectVO> result = Optional.ofNullable(projectList).orElseGet(Lists::newArrayList)
+                .stream()
+                .map(projectConvert::project2VO)
+                .peek(item -> {
+                    ProjectCategory projectCategory = projectCategoryMapper.getOne(new ProjectCategory().setId(item.getProjectType()));
+                    item.setCategoryVO(projectCategoryConvert.entity2VO(Optional.ofNullable(projectCategory).orElseGet(ProjectCategory::new)));
+                    User user = userMapper.getOne(new User().setId(item.getUserId()));
+                    item.setSeller(userConvert.user2VO(Optional.ofNullable(user).orElseGet(User::new)));
+                })
+                .collect(Collectors.toList());
+        return new PageVO<>(page.getPageNum(), page.getPageSize(), page.getPages(), page.getTotal(), result);
     }
 }

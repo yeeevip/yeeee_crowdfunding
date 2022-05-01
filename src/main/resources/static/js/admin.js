@@ -107,33 +107,41 @@ $(document).ready(function(){
 	 * 项目管理
 	 */
 	$("#project_menu").click(function(){
-		
-
-		$.ajax({	
-		url:"adminProject.jhtml",
-		async: true,   //是否为异步请求
-	    cache: false,  //是否缓存结果
-	    type: "POST", //请求方式为POST);
-	    dataType: "json",   //服务器返回的数据是什么类型 
-		success: function(project){
-			console.log(project[1].projectcategory);
-			if($(".p_tbg_tr").length == project.length) return;
-			for(var i=0;i<project.length;i++)
-			$("#project_tbody").append(
+		let token = localStorage.getItem("sys-token");
+		$.ajax({
+			url:"/project/admin/page/list",
+			async: false,   //是否为异步请求
+			type: "POST", //请求方式为POST);
+			contentType: "application/json;charset=utf-8",
+			data: JSON.stringify({
+				'pageSize': 1000
+			}),
+			headers: {
+				"Authorization": token ? ('Bearer ' + JSON.parse(token).token) : ''
+			},
+			dataType: "json",   //服务器返回的数据是什么类型
+			success: function(res){
+				var project = res.data.result
+				$("#project_tbody tr").remove()
+			for(var i=0;i<project.length;i++) {
+				var hasAudit = (project[i].hasAudits == '1' ? '是' : '否')
+				var hasFinish = (project[i].hasFinish == '1' ? '是' : '否')
+				$("#project_tbody").append(
 					"<tr class='p_tbg_tr'>"+
-					"<td><input user_index="+project[i].project_id+" class='table_checkbox' type='checkbox'></td>"+
-            		"<td>"+project[i].project_id+"</td>"+
-            		"<td>"+project[i].user_id+"</td>"+
-            		"<td>"+project[i].projectcategory.category_name+"</td>"+
-            		"<td>"+project[i].title+"</td>"+
-            		"<td>"+project[i].total_fund_raising+"</td>"+
-            		"<td>"+project[i].days_raising+"</td>"+
-            		"<td>"+project[i].has_fund_raising+"</td>"+
-            		"<td></td>"+
-            		"<td></td>"+
-            		"<td>"+project[i].is_audits+"</td>"+
-            		"<td>查看</td>"+
-            	"</tr>");
+					"<td><input user_index="+handleNull(project[i].id)+" class='table_checkbox' type='checkbox'></td>"+
+					"<td>"+handleNull(project[i].id)+"</td>"+
+					"<td>"+handleNull(project[i].seller.username)+"</td>"+
+					"<td>"+handleNull(project[i].categoryVO.categoryName)+"</td>"+
+					"<td>"+handleNull(project[i].title)+"</td>"+
+					"<td>"+handleNull(project[i].totalFundRaising)+"</td>"+
+					"<td>"+handleNull(project[i].daysRaising)+"</td>"+
+					"<td>"+handleNull(project[i].hasFundRaising)+"</td>"+
+					"<td>"+handleNull(project[i].launchDateRaising)+"</td>"+
+					"<td>"+hasFinish+"</td>"+
+					"<td>"+hasAudit+"</td>"+
+					"<td>查看</td>"+
+					"</tr>");
+			}
 		}
 	});
 	})
@@ -168,40 +176,99 @@ function handleNull(val) {
 function projectAll(){
 	$("#all_projects").show();
 	$("#no_audits").hide();
+	$("#hasFinishProject").hide();
+	$("#project_menu").trigger('click')
 }
 function projectNo(){
-$("#all_projects").hide();
-$("#no_audits").show();
+	$("#all_projects").hide();
+	$("#hasFinishProject").hide();
+	$("#no_audits").show();
+	let token = localStorage.getItem("sys-token");
+	$.ajax({
+		url:"/project/admin/page/list",
+		async: false,   //是否为异步请求
+		type: "POST", //请求方式为POST);
+		contentType: "application/json;charset=utf-8",
+		data: JSON.stringify({
+			'pageSize': 1000,
+			'projectVO': {
+				'hasAudits': 0
+			}
+		}),
+		headers: {
+			"Authorization": token ? ('Bearer ' + JSON.parse(token).token) : ''
+		},
+		dataType: "json",   //服务器返回的数据是什么类型
+		success: function(res){
+			var project = res.data.result
+			$("#project_tbody_audits tr").remove()
+			for(var i=0;i<project.length;i++) {
+				var hasAudit = (project[i].hasAudits == '1' ? '是' : '否')
+				var hasFinish = (project[i].hasFinish == '1' ? '是' : '否')
+				$("#project_tbody_audits").append(
+					"<tr class='p_tbg_tr'>"+
+					"<td><input user_index="+handleNull(project[i].id)+" class='table_checkbox' type='checkbox'></td>"+
+					"<td>"+handleNull(project[i].id)+"</td>"+
+					"<td>"+handleNull(project[i].seller.username)+"</td>"+
+					"<td>"+handleNull(project[i].categoryVO.categoryName)+"</td>"+
+					"<td>"+handleNull(project[i].title)+"</td>"+
+					"<td>"+handleNull(project[i].totalFundRaising)+"</td>"+
+					"<td>"+handleNull(project[i].daysRaising)+"</td>"+
+					"<td>"+handleNull(project[i].hasFundRaising)+"</td>"+
+					"<td>"+handleNull(project[i].launchDateRaising)+"</td>"+
+					"<td>"+hasFinish+"</td>"+
+					"<td>"+hasAudit+"</td>"+
+					"<td>查看</td>"+
+					"</tr>");
+			}
+		}
+	});
+}
 
-$.ajax({
-	url		:		"auditsProject.jhtml",
-	async	:		true,
-	cache	:		false,
-	type	:		"get",
-	dataType:		"json",
-	success	:		function(project){
-
-		if($(".p_tbg_tr.shenhe").length == project.length) return;
-		for(var i=0;i<project.length;i++)
-
-		$("#project_tbody_audits").append(
-				"<tr class='p_tbg_tr shenhe'>"+
-				"<td><input user_index="+project[i].project_id+" class='table_checkbox' type='checkbox'></td>"+
-				"<td>"+project[i].project_id+"</td>"+
-				"<td>"+project[i].user_id+"</td>"+
-				"<td>"+project[i].projectcategory.category_name+"</td>"+
-				"<td>"+project[i].title+"</td>"+
-				"<td>"+project[i].total_fund_raising+"</td>"+
-				"<td>"+project[i].days_raising+"</td>"+
-				"<td>"+project[i].has_fund_raising+"</td>"+
-				"<td></td>"+
-				"<td></td>"+
-				"<td>"+project[i].is_audits+"</td>"+
-				"<td><a target='_blank' href='shenhe.jhtml?id="+project[i].project_id+"'>去审核</a></td>"+
-			"</tr>");
-
-	}
-});
+function projectFinish(){
+	$("#all_projects").hide();
+	$("#no_audits").hide();
+	$("#hasFinishProject").show();
+	let token = localStorage.getItem("sys-token");
+	$.ajax({
+		url:"/project/admin/page/list",
+		async: false,   //是否为异步请求
+		type: "POST", //请求方式为POST);
+		contentType: "application/json;charset=utf-8",
+		data: JSON.stringify({
+			'pageSize': 1000,
+			'projectVO': {
+				'hasFinish': 1
+			}
+		}),
+		headers: {
+			"Authorization": token ? ('Bearer ' + JSON.parse(token).token) : ''
+		},
+		dataType: "json",   //服务器返回的数据是什么类型
+		success: function(res){
+			var project = res.data.result
+			$("#project_tbody_finish tr").remove()
+			for(var i=0;i<project.length;i++) {
+				var hasAudit = (project[i].hasAudits == '1' ? '是' : '否')
+				var hasFinish = (project[i].hasFinish == '1' ? '是' : '否')
+				$("#project_tbody_finish").append(
+					"<tr class='p_tbg_tr'>"+
+					"<td><input user_index="+handleNull(project[i].id)+" class='table_checkbox' type='checkbox'></td>"+
+					"<td>"+handleNull(project[i].id)+"</td>"+
+					"<td>"+handleNull(project[i].seller.username)+"</td>"+
+					"<td>"+handleNull(project[i].categoryVO.categoryName)+"</td>"+
+					"<td>"+handleNull(project[i].title)+"</td>"+
+					"<td>"+handleNull(project[i].totalFundRaising)+"</td>"+
+					"<td>"+handleNull(project[i].daysRaising)+"</td>"+
+					"<td>"+handleNull(project[i].hasFundRaising)+"</td>"+
+					"<td>"+handleNull(project[i].launchDateRaising)+"</td>"+
+					"<td>"+hasFinish+"</td>"+
+					"<td>"+hasAudit+"</td>"+
+					"<td>查看</td>"+
+					"</tr>");
+			}
+		}
+	});
 }
 
 /**

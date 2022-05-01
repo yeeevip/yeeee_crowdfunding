@@ -440,7 +440,7 @@
 				<ul  class="right_box1_ul">
 			    	<li><a href="javascript:projectAll()">全部项目</a></li>
 			        <li><a href="javascript:projectNo();" style="color: red">待审核项目</a></li>
-			        <li>已成功项目</li>
+			        <li><a href="javascript:projectFinish();">已成功项目</a></li>
 			    </ul>
 			    
 				<div id="all_projects">
@@ -620,6 +620,97 @@
 						</table>
 					</div>
 				</div>
+				<div id="hasFinishProject" style="display:none">
+
+				<form class="xiangmu_search">
+				<ul>
+				<li>
+					<select class="pd-type">
+						<option>--按项目类型查找--</option>
+						<option>公益</option>
+						<option>出版</option>
+						<option>娱乐</option>
+					</select>
+				</li>
+				<li>
+					<select class="pd-type">
+						<option>--按集资金额--</option>
+						<option>0-1000元</option>
+						<option>1001-5000元</option>
+						<option>5001-10000元</option>
+						<option>10001-100000元</option>
+						<option>100000元以上</option>
+					</select>
+				</li>
+				<li>
+					<select class="pd-type">
+						<option>--按发起时间查找--</option>
+						<option>从早到晚</option>
+						<option>从晚到早</option>
+					</select>
+				</li>
+				<li>
+					<input type="text" placeholder="可输入关键字" />
+				</li>
+				<li>
+					<a href="javascript:;" type="submit" class="search_btn">查询</a>
+				</li>
+				</ul>
+				</form>
+				<div class="project-checked">
+				<div class="l">
+				<label><input type="checkbox" id="p_allCheck" />全选/取消</label>
+				</div>
+				<div class=" r">
+				<a class="checked_ed" id="Js-outputAll" href="javascript:;">全部导出</a>
+				<a class="checked_ed" id="Js-outputItems" href="javascript:;">导出</a>
+				<a class="checked_ed" href="javascript:;">添加</a>
+				<a class="checked_ed" href="javascript:;">删除</a>
+				<a class="checked_ed" href="javascript:;">修改</a>
+				</div>
+				</div>
+				<div class="grzx_xiangmu_table">
+						<table>
+							<colgroup>
+								<col width="2%">
+								<col width="15%">
+								<col width="6%">
+								<col width="5%">
+								<col width="20%">
+								<col width="6%">
+								<col width="4%">
+								<col width="6%">
+								<col width="10%">
+								<col width="3%">
+								<col width="3%">
+								<col width="5%">
+							</colgroup>
+							<thead>
+								<tr class="bg_tr">
+									<td></td>
+									<td>项目编号</td>
+									<td>发起人</td>
+									<td>项目类别</td>
+									<td>名称</td>
+									<td>目标金额</td>
+									<td>总天数</td>
+									<td>已筹金额</td>
+									<td>发起时间</td>
+									<td>是否完成</td>
+									<td>是否审核</td>
+									<td>项目详情</td>
+
+								 </tr>
+							</thead>
+							<tbody id="project_tbody_finish">
+								<tr class="trfirst"><td colspan="9"></td></tr>
+
+							</tbody>
+						</table>
+					</div>
+				</div>
+
+
 				<div class=""	>
 				<div class="m-page">
 				<div class=wraper>

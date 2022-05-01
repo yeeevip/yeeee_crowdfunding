@@ -20,4 +20,6 @@ public interface ProjectService {
     ProjectDetailVO getIndexProjectDetail(Integer id);
 
     Void lunchProject(LunchProjectVO reqVO);
+
+    PageVO<ProjectVO> getAdminPageList(ProjectPageReqVO reqVO);
 }

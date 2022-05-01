@@ -1,6 +1,7 @@
 package com.yeeee.crowdfunding.model.vo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.yeeee.crowdfunding.model.entity.ProjectCategory;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -24,6 +25,8 @@ public class ProjectVO {
     @ApiModelProperty("标题")
     private String title;
 
+    private Integer userId;
+
     @ApiModelProperty("简介")
     private String blurb;
 
@@ -37,6 +40,8 @@ public class ProjectVO {
     @ApiModelProperty("目标集资")
     private Integer totalFundRaising;
 
+    private Integer daysRaising;
+
     @ApiModelProperty("已经集资")
     private Integer hasFundRaising;
 
@@ -48,5 +53,9 @@ public class ProjectVO {
 
     @ApiModelProperty("搜索关键字")
     private String keyword;
+
+    private UserVO seller;
+
+    private ProjectCategoryVO categoryVO;
 
 }
