@@ -30,4 +30,6 @@ public interface ProjectService {
     OrderPageVO frontProjectOrderPageDetail(Integer id);
 
     Void updateProjectProgress(ProjectProgressVO projectProgressVO);
+
+    PageVO<ProjectCategoryVO> getAdminProjectCategoryList(ProjectPageReqVO reqVO);
 }

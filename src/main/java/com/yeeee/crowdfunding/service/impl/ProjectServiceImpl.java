@@ -369,4 +369,19 @@ public class ProjectServiceImpl implements ProjectService {
 
         return null;
     }
+
+    @Override
+    public PageVO<ProjectCategoryVO> getAdminProjectCategoryList(ProjectPageReqVO reqVO) {
+
+        Page<ProjectCategory> page = PageHelper.startPage(reqVO.getPageNum(), reqVO.getPageSize());
+
+        List<ProjectCategory> categoryList = projectCategoryMapper.getList(new ProjectCategory());
+        List<ProjectCategoryVO> categoryVOList = Optional.ofNullable(categoryList).orElseGet(Lists::newArrayList)
+                .stream()
+                .map(projectCategoryConvert::entity2VO)
+                .collect(Collectors.toList());
+
+        return new PageVO<>(page.getPageNum(), page.getPageSize(), page.getPages(), page.getTotal(), categoryVOList);
+
+    }
 }

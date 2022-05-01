@@ -153,7 +153,7 @@ $(document).ready(function(){
 	$("#category_menu").click(function(){
 		let token = localStorage.getItem("sys-token");
 		$.ajax({
-			url:"/user/admin/page/list",
+			url:"/project/admin/category/list",
 			async: false,   //是否为异步请求
 			type: "POST", //请求方式为POST);
 			contentType: "application/json;charset=utf-8",
@@ -173,22 +173,20 @@ $(document).ready(function(){
 
 				var user = res.data.result
 				var a = 0;
-				$("#user_tbody tr").remove()
-				$("#user_tbody").append('<tr class="trfirst"><td colspan="9"></td></tr>')
+				$("#category_tbody tr").remove()
+				$("#category_tbody").append('<tr class="trfirst"><td colspan="9"></td></tr>')
 				for(var i=0;i<user.length;i++){
 
-					$("#user_tbody").append(
+					$("#category_tbody").append(
 						"<tr class='u_tbg_tr'>"+
 						"<td><input name='user' user_index="+user[i].id+" class='table_checkbox' type='checkbox'></td>"+
 						"<td>"+handleNull(user[i].id)+"</td>"+
-						"<td>"+handleNull(user[i].username)+"</td>"+
-						"<td>"+handleNull(user[i].email)+"</td>"+
-						"<td>"+handleNull(user[i].sex)+"</td>"+
-						"<td>"+handleNull(user[i].realName)+"</td>"+
-						"<td>"+handleNull(user[i].idNumber)+"</td>"+
-						"<td>"+handleNull(user[i].age)+"</td>"+
-						"<td>"+handleNull(user[i].mobile)+"</td>"+
-						"<td>"+handleNull(user[i].dateOfRegistration)+"</td>"+
+						"<td>"+handleNull(user[i].categoryName)+"</td>"+
+						"<td>"+handleNull(user[i].note)+"</td>"+
+						"<td>"+handleNull(user[i].createDate)+"</td>"+
+						"<td>"+handleNull(user[i].changeDate)+"</td>"+
+						"<td></td>"+
+						"<td>"+handleNull(user[i].changePerson)+"</td>"+
 						"</tr>");
 					//				$("#table_checkboxBOx").append("<div class='table_checkbox_box'>"+
 					//			    						"<input user_index="+user[i].id+" class='table_checkbox' type='checkbox' >"+

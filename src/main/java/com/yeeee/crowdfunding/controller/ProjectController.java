@@ -88,6 +88,12 @@ public class ProjectController {
         return CommonResult.success(projectService.getAdminPageList(reqVO));
     }
 
+    @ApiOperation("管理员项目类别分页")
+    @PostMapping("admin/category/list")
+    public CommonResult<PageVO<ProjectCategoryVO>> getAdminProjectCategoryList(@RequestBody ProjectPageReqVO reqVO) {
+        return CommonResult.success(projectService.getAdminProjectCategoryList(reqVO));
+    }
+
     @ApiOperation("审核-项目详情")
     @GetMapping("admin/detail")
     public CommonResult<LunchProjectVO> getAdminProjectDetail(Integer id) {
