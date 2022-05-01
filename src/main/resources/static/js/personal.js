@@ -430,40 +430,54 @@ $(document).ready(function(){
 	 * 卖家订单管理
 	 */
 	$("#myProjectShow").click(function(){
-	
+		let token = localStorage.getItem("token");
 		$.ajax({
-			url			:		"sellerOrder.jhtml",
-			async		:		true,
-			cache		:   	false,
-			type		:		"POST",
-			dataType	:		"json",
-			success		:		function(Ojson){
-				$("#myProjectTbody").find("tr").remove();
-				for(var i=0;i<Ojson.length;i++){
-					
-					var payState = "";
-					if(Ojson[i].is_pay==0){
-						payState="未支付"
-					}
-					if(Ojson[i].is_pay==1){
-						payState="支付成功"
-					}
-					
-					$("#myProjectTbody").append('<tr class="trfirst"><td colspan="4"></td></tr><tr class="u_tbg_tr" style="height:50px;margin-bottom:10px">'+
-							'<td>'+Ojson[i].id+'</td>'+
-							'<td>'+Ojson[i].project.title+'</td>'+
-							'<td>'+Ojson[i].projectrepay.title+'</td>'+
-							'<td>'+Ojson[i].user.user_name+'</td>'+
-							'<td>'+Ojson[i].order_date+'</td>'+
+			url			:		"/order/front/seller",
+			async		:		false,
+			type: 'POST',
+			contentType: "application/json;charset=utf-8",
+			headers: {
+				"Authorization": token ? ('Bearer ' + JSON.parse(token).token) : ''
+			},
+			data:  JSON.stringify({
+				'pageSize': 1000
+			}),
+			dataType: 'json',
+			success: function (res) {
+				Ojson = res.data.result
+				if (res.code == 401) {
+					layer.alert("登录过期，请重新登录！！！")
+				} else if (res.code == 200) {
+					$("#allOrderCount").html(res.data.total)
+					$("#myProjectTbody").find("tr").remove();
+					for(var i=0;i<Ojson.length;i++){
+
+						var payState = "";
+						if(Ojson[i].hasPay==0){
+							payState="未支付"
+						}
+						if(Ojson[i].hasPay==1){
+							payState="支付成功"
+						}
+
+						$("#myProjectTbody").append('<tr class="trfirst"><td colspan="4"></td></tr><tr class="u_tbg_tr" style="height:50px;margin-bottom:10px">'+
+							'<td>'+Ojson[i].code+'</td>'+
+							'<td>'+Ojson[i].projectVO.title+'</td>'+
+							'<td>'+Ojson[i].repayVO.payTitle+'</td>'+
+							'<td>'+Ojson[i].buyerVO.username+'</td>'+
+							'<td>'+Ojson[i].orderDate+'</td>'+
 							'<td>'+Ojson[i].count+'</td>'+
 							'<td>'+Ojson[i].payPrice+'</td>'+
-							'<td>'+Ojson[i].receiveInfo.receiver+'</td>'+
-							'<td>'+Ojson[i].receiveInfo.address+'</td>'+
-							'<td>'+Ojson[i].receiveInfo.phone+'</td>'+
+							'<td>'+Ojson[i].receiveInfoVO.receiver+'</td>'+
+							'<td>'+Ojson[i].receiveInfoVO.address+'</td>'+
+							'<td>'+Ojson[i].receiveInfoVO.phone+'</td>'+
 							'<td>'+payState+'</td>'+
 							'<td><a href="javascript:;" target="" class="search_btn">发货</a></td>'+
-							
-					'</tr>');
+
+							'</tr>');
+					}
+				} else {
+					layer.alert(res.message)
 				}
 				
 			}

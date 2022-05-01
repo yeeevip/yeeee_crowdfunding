@@ -46,8 +46,8 @@ public class OrderController {
 
     @ApiOperation("已卖出的订单")
     @PostMapping("front/seller")
-    public CommonResult<Object> getMyselfOrderList() {
-        return null;
+    public CommonResult<PageVO<SellerOrderVO>> getSellerOrderList(@RequestBody BuyOrderPageReqVO buyOrderPageReqVO) {
+        return CommonResult.success(orderService.getSellerOrderList(buyOrderPageReqVO));
     }
 
 }

@@ -5,10 +5,7 @@ import cn.hutool.core.util.IdUtil;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.google.common.collect.Lists;
-import com.yeeee.crowdfunding.convert.OrderConvert;
-import com.yeeee.crowdfunding.convert.ProjectConvert;
-import com.yeeee.crowdfunding.convert.ProjectRepayConvert;
-import com.yeeee.crowdfunding.convert.UserConvert;
+import com.yeeee.crowdfunding.convert.*;
 import com.yeeee.crowdfunding.exception.BizException;
 import com.yeeee.crowdfunding.mapper.*;
 import com.yeeee.crowdfunding.model.entity.*;
@@ -52,6 +49,8 @@ public class OrderServiceImpl implements OrderService {
     private final UserConvert userConvert;
 
     private final ReceiveInformationMapper receiveInformationMapper;
+
+    private final ReceiveInfoConvert receiveInfoConvert;
 
     @Override
     public PageVO<BuyOrderVO> getMyselfBuyOrderList(BuyOrderPageReqVO buyOrderPageReqVO) {
@@ -140,5 +139,28 @@ public class OrderServiceImpl implements OrderService {
         projectMapper.updateByPrimaryKey(updProject);
 
         return null;
+    }
+
+    @Override
+    public PageVO<SellerOrderVO> getSellerOrderList(BuyOrderPageReqVO buyOrderPageReqVO) {
+
+        Page<Order> page = PageHelper.startPage(buyOrderPageReqVO.getPageNum(), buyOrderPageReqVO.getPageSize());
+        List<Order> orderList = orderMapper.getList(new Order().setUserId(SecurityUtil.currentUserId()));
+        List<SellerOrderVO> orderVOList = Optional.ofNullable(orderList).orElseGet(Lists::newArrayList)
+                .stream()
+                .map(orderConvert::order2SellerVO)
+                .peek(item -> {
+                    User user = userMapper.getOne(new User().setId(item.getUserId()));
+                    item.setBuyerVO(userConvert.user2VO(user));
+                    Project project = projectMapper.getOne(new Project().setId(item.getProjectId()));
+                    item.setProjectVO(projectConvert.project2VO(project));
+                    ReceiveInformation receiveInformation = receiveInformationMapper.getOne(new ReceiveInformation().setId(item.getReceiveInformation()));
+                    item.setReceiveInfoVO(receiveInfoConvert.entity2VO(receiveInformation));
+                    ProjectRepay projectRepay = projectRepayMapper.getOne(new ProjectRepay().setId(item.getProjectRepayId()));
+                    item.setRepayVO(projectRepayConvert.projectRepay2VO(projectRepay));
+                })
+                .collect(Collectors.toList());
+
+        return new PageVO<>(page.getPageNum(), page.getPageSize(), page.getPages(), page.getTotal(), orderVOList);
     }
 }
