@@ -2,6 +2,7 @@ package com.yeeee.crowdfunding.controller;
 
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.io.IoUtil;
+import cn.hutool.core.util.RandomUtil;
 import com.google.common.collect.Lists;
 import com.yeeee.crowdfunding.annotation.AnonymousAccess;
 import com.yeeee.crowdfunding.api.CommonResult;
@@ -52,7 +53,7 @@ public class CommonController {
         List<String> paths = Lists.newArrayList();
         file.forEach(f -> {
             String dirPath;
-            try (OutputStream out = FileUtil.getOutputStream(FileUtil.file(uploadPath + (dirPath = ("upload/" + path + "/" + f.getOriginalFilename()))))) {
+            try (OutputStream out = FileUtil.getOutputStream(FileUtil.file(uploadPath + (dirPath = ("upload/" + path + "/" + RandomUtil.randomNumbers(5) + "/" + f.getOriginalFilename()))))) {
                 IoUtil.copy(f.getInputStream(), out);
                 paths.add("/" + dirPath.replace("\\", "/"));
             } catch (IOException e) {

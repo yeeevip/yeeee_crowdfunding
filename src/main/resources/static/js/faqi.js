@@ -9,7 +9,7 @@ $(document).ready(function(){
 		auto: true,
 		fileVal: 'file',
 		swf: 'js/webuploader-0.1.5/Uploader.swf',
-		server: '/general/upload?path=',
+		server: '/general/upload?path=project/cover',
 		pick: '#set_cover',
 		accept: {
 			title: 'Images',
@@ -18,10 +18,10 @@ $(document).ready(function(){
 		}
 	});
 
-	coverUploader.on("uploadSuccess", function (file, response){
-		console.log(response);
+	coverUploader.on("uploadSuccess", function (file, res){
+		console.log(res);
 		$("#cover_show").remove();
-		$("#show_cover").prepend('<img id="cover_show" width="400px" height="300px" src=' + response._raw + ' />');
+		$("#show_cover").prepend('<img id="cover_show" width="400px" height="300px" src=' + res.data + ' />');
 	})
 	
     /**
@@ -36,7 +36,7 @@ $(document).ready(function(){
 			 auto: true,
 			 fileVal: 'file',
 			 swf: 'js/webuploader-0.1.5/Uploader.swf',
-			 server: '/general/upload',
+			 server: '/general/upload?path=project/item',
 			 pick: $this,
 			 accept: {
 				 title: 'Images',
@@ -45,9 +45,9 @@ $(document).ready(function(){
 			 }
 		 });
 
-		 detailUploader.on("uploadSuccess", function (file, response){
-			 console.log(response);
-			 div.append('<img src=' + response._raw + ' />');
+		 detailUploader.on("uploadSuccess", function (file, res){
+			 console.log(res);
+			 div.append('<img src=' + res.data + ' />');
 		 })
 
 	 });
@@ -108,55 +108,78 @@ $(document).ready(function(){
 					addTextArray();//保存开始的文本
 
 					textToHtml($("#detail_info textarea")); //textare的value转htnl
-			    	var proRuestl_1 = $("#basis_info").serializeJson();//数据序列化
-			    	var project_type = $(".fq_lxItem a.cur").attr("index");//项目类别
-			    	
-			    	proRuestl_1.project_type = project_type;
-			    	var proRuestl_2= $("#detail_info").serializeJson();//数据序列化
-			    	var cover_img = $("#cover_show").attr("src");//项目封面路径
-			    	proRuestl_1.cover_img = cover_img;
-			    	var proRuestl_3= $("#repay_info").serializeJson();//数据序列化
-			    	var repay_type1 = $("#repay_info input[name=repay_type1]:checked").val();
-			    	proRuestl_3.repay_type1 = repay_type1;
-			    	
-			    	var proRuestl_4= $("#identityInfo").serializeJson();//数据序列化
-			    	var szimg = $("img#shenfenxinxi:eq(0)").attr("src");
-			    	var sfimg = $("img#shenfenxinxi:eq(1)").attr("src");//alert($("img#shenfenxinxi").length);
-			    	proRuestl_4.szimg = szimg;
-			    	proRuestl_4.sfimg = sfimg;
-			    
-			    	
 
-			    	var param;
 
-			    	param = $.extend(proRuestl_1,proRuestl_2,proRuestl_3,proRuestl_4);
+			    	var basicInfo = $("#basis_info").serializeJson();//数据序列化
+					basicInfo.projectType = $(".fq_lxItem a.cur").attr("index");//项目类别
+					basicInfo.shenfen = $(".identity-type-hd a.cur").html();//项目类别
+					basicInfo.coverPath = $("#cover_show").attr("src");//项目封面路径
+
+			    	var detailInfo = $("#detail_info").serializeJson();//数据序列化
+
+			    	var repayInfo = $("#repay_info").serializeJson();//数据序列化
+					repayInfo.repay_type1 = $("#repay_info input[name=repay_type1]:checked").val();
 			    	
-			    	 console.log(param);
+			    	var identityInfo = $("#identityInfo").serializeJson();//数据序列化
+					identityInfo.idPicFace = $("img#shenfenxinxi:eq(0)").attr("src");
+					identityInfo.idPicInverse = $("img#shenfenxinxi:eq(1)").attr("src");
+					identityInfo.licensePic = $("img#shenfenxinxi:eq(2)").attr("src");
+					identityInfo.registeredNumPic = $("img#shenfenxinxi:eq(3)").attr("src");
+					identityInfo.taxPig = $("img#shenfenxinxi:eq(4)").attr("src");
 
-//				return;//test
-				
+			    	var param = basicInfo;
+			    	//param = $.extend(proRuestl_1,proRuestl_2,proRuestl_3,proRuestl_4);
+
+					var detailInfoArr = []
+					for (var i = 1; i <= detailInfo.detailCount; i++) {
+						detailInfoArr.push({
+							'itemTitle': detailInfo['detail_title' + i],
+							'itemContent': detailInfo['detail_content' + i],
+						})
+					}
+					param.itemVOList = detailInfoArr
+
+					var repayInfoArr = []
+					for (var i = 1; i <= repayInfo.repayCount; i++) {
+						repayInfoArr.push({
+							'payTitle': repayInfo['repay_title' + i],
+							'payContent': repayInfo['repay_content' + i],
+							'type': repayInfo['repay_type' + i],
+							'time': repayInfo['repay_time' + i],
+							'money': repayInfo['repay_money' + i],
+						})
+					}
+					param.repayVOList = repayInfoArr
+
+					param.initiatorPersonInfoVO = identityInfo
+					param.initiatorCompanyInfoVO = identityInfo
+
+					console.log(param);
+
+			let token = localStorage.getItem("token");
 				$.ajax({
-					url:"issueProject.jhtml",
-					data:param,
-
-					async:true,
-					cache:false,
+					url: "/project/front/lunch",
+					data: JSON.stringify(param),
+					headers: {
+						"Authorization": token ? ('Bearer ' + JSON.parse(token).token) : ''
+					},
+					async: false,
+					contentType: 'application/json;charset=utf-8',
 					type: "POST", //请求方式为POST
-					dataType:"",
-					success:function(data){
-						data = eval('('+data+')');
-						if(data.code=="0"){
-							layer.confirm(data.msg, {
+					dataType: "json",
+					success: function(res){
+
+						if (res.code==401) {
+							layer.alert("登录过期，请重新登录！！！")
+						} else if(res.code==200){
+							layer.confirm(res.message, {
 								  btn: ['确定'], //按钮
 								  closeBtn:0
 								}, function(){
-								  //layer.msg('的确很重要', {icon: 1});
-//									var index = parent.layer.getFrameIndex(window.name); 
-//							        parent.layer.close(index);
-									window.location.href='showPerson.jhtml';
+									window.location.href='/pages/front/private/personal_info.html';
 								});
 						}else{
-							var index =layer.confirm(data.msg, {
+							var index =layer.confirm(res.message, {
 								  btn: ['确定'], //按钮
 								  closeBtn:0
 								}, function(){
@@ -167,10 +190,6 @@ $(document).ready(function(){
 									layer.close(index);
 								});
 						}
-						
-						
-						
-						
 						renewText();
 					}
 				});

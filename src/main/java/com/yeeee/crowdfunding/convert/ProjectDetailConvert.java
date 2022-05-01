@@ -15,4 +15,6 @@ public interface ProjectDetailConvert {
 
     ProjectItemVO detail2VO(ProjectDetail detail);
 
+    ProjectDetail vo2Entity(ProjectItemVO itemVO);
+
 }

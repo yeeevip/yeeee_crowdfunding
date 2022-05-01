@@ -16,6 +16,7 @@ import com.yeeee.crowdfunding.utils.SecurityUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
@@ -36,6 +37,8 @@ public class ProjectServiceImpl implements ProjectService {
     private final ProjectMapper projectMapper;
 
     private final ProjectConvert projectConvert;
+
+    private final InitiatorInfoVOConvert initiatorInfoVOConvert;
 
     private final ProjectDetailConvert projectDetailConvert;
 
@@ -58,6 +61,10 @@ public class ProjectServiceImpl implements ProjectService {
     private final CommentMapper commentMapper;
 
     private final UserMapper userMapper;
+
+    private final InitiatorPersonInfoMapper initiatorPersonInfoMapper;
+
+    private final InitiatorCompanyInfoMapper initiatorCompanyInfoMapper;
 
     @Override
     public IndexProjectListVO getIndexShowProject() {
@@ -194,5 +201,48 @@ public class ProjectServiceImpl implements ProjectService {
         projectDetailVO.setLeftDays(DateConvertUtil.getLeftDays(project.getDaysRaising(), project.getLaunchDateRaising(), new Date()));
 
         return projectDetailVO;
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public Void lunchProject(LunchProjectVO reqVO) {
+
+        Project project = projectConvert.lunchProjectVOProject(reqVO);
+        project.setLaunchDateRaising(new Date());
+        project.setUserId(SecurityUtil.currentUserId());
+        projectMapper.insert(project);
+        if (project.getId() == null) {
+            throw new BizException("发起失败");
+        }
+
+        if ("个人".equals(reqVO.getShenfen())) {
+            InitiatorPersonInfo initiatorPersonInfo = initiatorInfoVOConvert.personInfoVO2Entity(reqVO.getInitiatorPersonInfoVO());
+            initiatorPersonInfo.setProjectId(project.getId());
+            initiatorPersonInfoMapper.insert(initiatorPersonInfo);
+        } else {
+            InitiatorCompanyInfo initiatorCompanyInfo = initiatorInfoVOConvert.companyInfoVO2Entity(reqVO.getInitiatorCompanyInfoVO());
+            initiatorCompanyInfo.setProjectId(project.getId());
+            initiatorCompanyInfoMapper.insert(initiatorCompanyInfo);
+        }
+
+        if (CollectionUtil.isNotEmpty(reqVO.getItemVOList())) {
+            List<ProjectDetail> detailList = reqVO.getItemVOList()
+                    .stream()
+                    .map(projectDetailConvert::vo2Entity)
+                    .peek(item -> item.setProjectId(project.getId()))
+                    .collect(Collectors.toList());
+            projectDetailMapper.batchInsert(detailList);
+        }
+
+        if (CollectionUtil.isNotEmpty(reqVO.getRepayVOList())) {
+            List<ProjectRepay> repayList = reqVO.getRepayVOList()
+                    .stream()
+                    .map(projectRepayConvert::vo2Entity)
+                    .peek(item -> item.setProjectId(project.getId()))
+                    .collect(Collectors.toList());
+            projectRepayMapper.batchInsert(repayList);
+        }
+
+        return null;
     }
 }

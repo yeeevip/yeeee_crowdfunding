@@ -8,6 +8,7 @@ import com.yeeee.crowdfunding.service.ProjectService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.ServletException;
@@ -54,6 +55,12 @@ public class ProjectController {
     @PostMapping("front/myself")
     public CommonResult<PageVO<ProjectVO>> getMyselfProjectList(@RequestBody ProjectPageReqVO reqVO) {
         return CommonResult.success(projectService.getMyselfProjectList(reqVO));
+    }
+
+    @ApiOperation("发起项目")
+    @PostMapping("front/lunch")
+    public CommonResult<Void> lunchProject(@Validated @RequestBody LunchProjectVO reqVO) {
+        return CommonResult.success(projectService.lunchProject(reqVO));
     }
 
 /*    @ApiOperation("项目发起页")

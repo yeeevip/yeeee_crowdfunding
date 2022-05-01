@@ -15,4 +15,6 @@ public interface ProjectRepayConvert {
 
     ProjectRepayVO projectRepay2VO(ProjectRepay projectRepay);
 
+    ProjectRepay vo2Entity( ProjectRepayVO projectRepayVO);
+
 }

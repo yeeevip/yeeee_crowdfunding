@@ -21,7 +21,7 @@
             <if test="type != '' and type != null">
                 and type = #{type}
             </if>
-            <if test="time != '' and time != null">
+            <if test="time != null">
                 and time = #{time}
             </if>
             <if test="money != '' and money != null">
@@ -77,7 +77,7 @@
             <if test="type !='' and type !=null">
                 type,
             </if>
-            <if test="time !='' and time !=null">
+            <if test="time !=null">
                 time,
             </if>
             <if test="money !='' and money !=null">
@@ -101,7 +101,7 @@
             <if test="type != '' and type != null">
                 #{type},
             </if>
-            <if test="time != '' and time != null">
+            <if test="time != null">
                 #{time},
             </if>
             <if test="money != '' and money != null">

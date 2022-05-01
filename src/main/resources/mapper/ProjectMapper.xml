@@ -172,7 +172,7 @@
             <if test="categoryId !='' and categoryId !=null">
                 category_id,
             </if>
-            <if test="launchDateRaising !='' and launchDateRaising !=null">
+            <if test="launchDateRaising !=null">
                 launch_date_raising,
             </if>
             <if test="daysRaising !='' and daysRaising !=null">
@@ -190,7 +190,7 @@
             <if test="shenfen !='' and shenfen !=null">
                 shenfen,
             </if>
-            <if test="onlineTime !='' and onlineTime !=null">
+            <if test="onlineTime !=null">
                 online_time,
             </if>
             <if test="isSettlement !='' and isSettlement !=null">
@@ -223,7 +223,7 @@
             <if test="categoryId != '' and categoryId != null">
                 #{categoryId},
             </if>
-            <if test="launchDateRaising != '' and launchDateRaising != null">
+            <if test="launchDateRaising != null">
                 #{launchDateRaising},
             </if>
             <if test="daysRaising != '' and daysRaising != null">
@@ -241,7 +241,7 @@
             <if test="shenfen != '' and shenfen != null">
                 #{shenfen},
             </if>
-            <if test="onlineTime != '' and onlineTime != null">
+            <if test="onlineTime != null">
                 #{onlineTime},
             </if>
             <if test="isSettlement != '' and isSettlement != null">
