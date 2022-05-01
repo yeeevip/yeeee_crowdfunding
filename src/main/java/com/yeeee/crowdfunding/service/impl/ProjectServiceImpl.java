@@ -69,6 +69,10 @@ public class ProjectServiceImpl implements ProjectService {
 
     private final ProjectCategoryMapper projectCategoryMapper;
 
+    private final ReceiveInformationMapper receiveInformationMapper;
+
+    private final ReceiveInfoConvert receiveInfoConvert;
+
     private final ProjectCategoryConvert projectCategoryConvert;
 
     @Override
@@ -325,5 +329,26 @@ public class ProjectServiceImpl implements ProjectService {
         projectMapper.updateByPrimaryKey(new Project().setId(auditProjectVO.getProjectId()).setHasAudits(auditProjectVO.getHasAudits()));
 
         return null;
+    }
+
+    @Override
+    public OrderPageVO frontProjectOrderPageDetail(Integer id) {
+
+        Project project = projectMapper.getOne(new Project().setId(id));
+        if (project == null) {
+            throw new BizException("项目不存在");
+        }
+        OrderPageVO orderPageVO = new OrderPageVO();
+
+        List<ProjectRepayVO> repayVOList = Optional.ofNullable(projectRepayMapper.getList(new ProjectRepay().setProjectId(project.getId()))).orElseGet(Lists::newArrayList)
+                .stream()
+                .map(projectRepayConvert::projectRepay2VO)
+                .collect(Collectors.toList());
+        orderPageVO.setRepayVOList(repayVOList);
+
+        ReceiveInformation receiveInformation = receiveInformationMapper.getOne(new ReceiveInformation().setUserId(SecurityUtil.currentUserId()).setSetDefault(1));
+        orderPageVO.setReceiveInfoVO(receiveInfoConvert.entity2VO(receiveInformation));
+
+        return orderPageVO;
     }
 }

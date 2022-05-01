@@ -15,7 +15,7 @@ import java.util.concurrent.TimeUnit;
 public class DateConvertUtil {
 
     public static String getLeftDays(long totalDays, Date from, Date to){
-        long daysTimes = TimeUnit.DAYS.toDays(totalDays);
+        long daysTimes = TimeUnit.DAYS.toMillis(totalDays);
         long times = to.getTime() - from.getTime();
         long leftTimes = daysTimes - times;
         if(leftTimes <= 0){

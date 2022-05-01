@@ -63,6 +63,12 @@ public class ProjectController {
         return CommonResult.success(projectService.lunchProject(reqVO));
     }
 
+    @ApiOperation("项目下单预览页")
+    @GetMapping("front/orderPage")
+    public CommonResult<OrderPageVO> frontProjectOrderPageDetail(@RequestParam Integer id) {
+        return CommonResult.success(projectService.frontProjectOrderPageDetail(id));
+    }
+
 /*    @ApiOperation("项目发起页")
     @AnonymousAccess
     @GetMapping("front/page/private/lunch")

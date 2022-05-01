@@ -26,4 +26,6 @@ public interface ProjectService {
     LunchProjectVO getAdminProjectDetail(Integer id);
 
     Void adminProjectAudits(AuditProjectVO auditProjectVO);
+
+    OrderPageVO frontProjectOrderPageDetail(Integer id);
 }

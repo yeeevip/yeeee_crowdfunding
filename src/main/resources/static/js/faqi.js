@@ -126,6 +126,7 @@ $(document).ready(function(){
 					identityInfo.licensePic = $("img#shenfenxinxi:eq(2)").attr("src");
 					identityInfo.registeredNumPic = $("img#shenfenxinxi:eq(3)").attr("src");
 					identityInfo.taxPig = $("img#shenfenxinxi:eq(4)").attr("src");
+					identityInfo.address = $("select[name='province']").find("option:selected").text() + '/' + $("select[name='city']").find("option:selected").text()
 
 			    	var param = basicInfo;
 			    	//param = $.extend(proRuestl_1,proRuestl_2,proRuestl_3,proRuestl_4);
