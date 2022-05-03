@@ -33,7 +33,7 @@ $(document).ready(function(){
 					// 将token存储到本地
 					localStorage.setItem('sys-crowdfunding-token', JSON.stringify(res.data))
 					// 请求成功后跳转到首页
-					location.href = '/pages/admin/main.html'
+					location.href = '/pages/admin/v1/main.html'
 				}
 			}
 		});
@@ -331,7 +331,7 @@ function projectNo(){
 					"<td>"+handleNull(project[i].launchDateRaising)+"</td>"+
 					"<td>"+hasFinish+"</td>"+
 					"<td>"+hasAudit+"</td>"+
-					"<td><a target='_blank' style='color: gold' href='/pages/admin/shenhe.html?id="+project[i].id+"'>去审核</a></td>"+
+					"<td><a target='_blank' style='color: gold' href='/pages/admin/v1/shenhe.html?id="+project[i].id+"'>去审核</a></td>"+
 					"</tr>");
 			}
 		}

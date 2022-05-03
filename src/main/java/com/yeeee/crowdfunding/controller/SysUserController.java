@@ -50,7 +50,7 @@ public class SysUserController {
     @GetMapping("admin")
     @AnonymousAccess
     public void adminPage(HttpServletResponse response) throws IOException {
-        response.sendRedirect("/pages/admin/login.html");
+        response.sendRedirect("/pages/admin/temp.html");
     }
 
     @ApiOperation("用户分页")
