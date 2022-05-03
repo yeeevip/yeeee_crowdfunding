@@ -1,11 +1,11 @@
 $(document).ready(function(){
 
     var projectId = getQueryVariable('projectId');
-    let token = localStorage.getItem("token");
+    let token = localStorage.getItem("crowdfunding-token");
     $.ajax({
         type: 'GET',
         async: false,
-        url: '/project/front/orderPage',
+        url: API_BASE_URL + '/project/front/orderPage',
         //contentType: "application/json",
         data: {
             'id': projectId
@@ -171,7 +171,7 @@ var repayId
 //提交订单 ajax
 function bindSubmitOrder() {
     $(".tjdd_submitBtn").click(function(){
-        let token = localStorage.getItem("token");
+        let token = localStorage.getItem("crowdfunding-token");
         var address = $("select[name='province'] option:selected").text()+"|"+$("select[name='city'] option:selected").text()+"|"
             +$("select[name='district'] option:selected").text()+"|"+$("input[name='address']").val();
 
@@ -180,7 +180,7 @@ function bindSubmitOrder() {
             // closeBtn:0
         }, function(){
             $.ajax({
-                url			:		"/order/front/create",
+                url			:		API_BASE_URL +"/order/front/create",
                 data		:		JSON.stringify(
                     {
                         'repayId'	: repayId,

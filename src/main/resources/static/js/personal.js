@@ -95,12 +95,12 @@ function convertProjectState(hasAudits, hasFinish) {
 
 $(document).ready(function(){
 
-	let token = localStorage.getItem("token");
+	let token = localStorage.getItem('crowdfunding-token');
 	let pageNum = 1
 	$.ajax({
 		type: 'POST',
 		async: false,
-		url: '/project/front/myself' ,
+		url: API_BASE_URL +'/project/front/myself' ,
 		contentType: "application/json;charset=utf-8",
 		headers: {
 			"Authorization": token ? ('Bearer ' + JSON.parse(token).token) : ''
@@ -259,12 +259,12 @@ $(document).ready(function(){
 	 * 买家订单查询
 	 */
 	$("#myOrderShow").click(function(){
-		let token = localStorage.getItem("token");
+		let token = localStorage.getItem("crowdfunding-token");
 		let pageNum = 1
 		$.ajax({
 			type: 'POST',
 			async: false,
-			url: '/order/front/buyer' ,
+			url: API_BASE_URL + '/order/front/buyer' ,
 			contentType: "application/json;charset=utf-8",
 			headers: {
 				"Authorization": token ? ('Bearer ' + JSON.parse(token).token) : ''
@@ -342,12 +342,12 @@ $(document).ready(function(){
 					$("#myBuyOrderFlip .fy_page").click(function(){
 
 						var $this = $(this);
-						let token = localStorage.getItem("token");
+						let token = localStorage.getItem("crowdfunding-token");
 						let pageNum = $this.html()
 						$.ajax({
 							type: 'POST',
 							async: false,
-							url: '/order/front/buyer' ,
+							url: API_BASE_URL + '/order/front/buyer' ,
 							contentType: "application/json;charset=utf-8",
 							headers: {
 								"Authorization": token ? ('Bearer ' + JSON.parse(token).token) : ''
@@ -430,9 +430,9 @@ $(document).ready(function(){
 	 * 卖家订单管理
 	 */
 	$("#myProjectShow").click(function(){
-		let token = localStorage.getItem("token");
+		let token = localStorage.getItem("crowdfunding-token");
 		$.ajax({
-			url			:		"/order/front/seller",
+			url			:		API_BASE_URL + "/order/front/seller",
 			async		:		false,
 			type: 'POST',
 			contentType: "application/json;charset=utf-8",
@@ -527,12 +527,12 @@ $(document).ready(function(){
 	$("#myprojectFlip .fy_page").click(function(){
 
 		var $this = $(this);
-		let token = localStorage.getItem("token");
+		let token = localStorage.getItem("crowdfunding-token");
 		let pageNum = $this.html()
 		$.ajax({
 			type: 'POST',
 			async: false,
-			url: '/project/front/myself' ,
+			url: API_BASE_URL + '/project/front/myself' ,
 			contentType: "application/json;charset=utf-8",
 			headers: {
 				"Authorization": token ? ('Bearer ' + JSON.parse(token).token) : ''
@@ -683,9 +683,9 @@ function toPay(order_id){
 		  btn: ['确定','取消'], //按钮
 		 // closeBtn:0
 		}, function(){
-		let token = localStorage.getItem("token");
+		let token = localStorage.getItem("crowdfunding-token");
 		$.ajax({
-			url			:		"/order/front/pay",
+			url			:		API_BASE_URL + "/order/front/pay",
 			data		:		JSON.stringify({
 				'subjectId': order_id
 			}),

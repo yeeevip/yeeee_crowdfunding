@@ -4,7 +4,7 @@ $(document).ready(function(){
         $.ajax({
             type: 'POST',
             async: false,
-            url: '/user/login' ,
+            url: API_BASE_URL + '/user/login' ,
             //contentType: "application/json",
             data:  {
                 'username': $("#Account").val(),
@@ -17,7 +17,7 @@ $(document).ready(function(){
                     $("#resMsgID").html(res.message)
                 } else {
                     // 将token存储到本地
-                    localStorage.setItem('token', JSON.stringify(res.data))
+                    localStorage.setItem('crowdfunding-token', JSON.stringify(res.data))
                     // 请求成功后跳转到首页
                     location.href = '/'
                 }

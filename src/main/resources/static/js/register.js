@@ -10,7 +10,7 @@ $(document).ready(function(){
         $.ajax({
             type: 'POST',
             async: false,
-            url: '/user/register' ,
+            url: API_BASE_URL + '/user/register' ,
             //contentType: "application/json",
             data:  {
                 'username': $("#Account").val(),

@@ -64,9 +64,9 @@ public class OrderServiceImpl implements OrderService {
                 .stream()
                 .map(order -> {
                     BuyOrderVO buyOrderVO = orderConvert.order2VO(order);
-                    buyOrderVO.setProjectVO(projectConvert.project2VO(projectMapper.getOne(new Project().setId(order.getProjectId()))));
-                    buyOrderVO.setProjectRepayVO(projectRepayConvert.projectRepay2VO(projectRepayMapper.getOne(new ProjectRepay().setId(order.getProjectRepayId()))));
-                    buyOrderVO.setSellerVO(userConvert.user2VO(userMapper.getOne(new User().setId(order.getUserSeller()))));
+                    buyOrderVO.setProjectVO(Optional.ofNullable(projectConvert.project2VO(projectMapper.getOne(new Project().setId(order.getProjectId())))).orElseGet(ProjectVO::new));
+                    buyOrderVO.setProjectRepayVO(Optional.ofNullable(projectRepayConvert.projectRepay2VO(projectRepayMapper.getOne(new ProjectRepay().setId(order.getProjectRepayId())))).orElseGet(ProjectRepayVO::new));
+                    buyOrderVO.setSellerVO(Optional.ofNullable(userConvert.user2VO(userMapper.getOne(new User().setId(order.getUserSeller())))).orElseGet(UserVO::new));
                     return buyOrderVO;
                 })
                 .collect(Collectors.toList());
@@ -151,13 +151,13 @@ public class OrderServiceImpl implements OrderService {
                 .map(orderConvert::order2SellerVO)
                 .peek(item -> {
                     User user = userMapper.getOne(new User().setId(item.getUserId()));
-                    item.setBuyerVO(userConvert.user2VO(user));
+                    item.setBuyerVO(Optional.ofNullable(userConvert.user2VO(user)).orElseGet(UserVO::new));
                     Project project = projectMapper.getOne(new Project().setId(item.getProjectId()));
-                    item.setProjectVO(projectConvert.project2VO(project));
+                    item.setProjectVO(Optional.ofNullable(projectConvert.project2VO(project)).orElseGet(ProjectVO::new));
                     ReceiveInformation receiveInformation = receiveInformationMapper.getOne(new ReceiveInformation().setId(item.getReceiveInformation()));
-                    item.setReceiveInfoVO(receiveInfoConvert.entity2VO(receiveInformation));
+                    item.setReceiveInfoVO(Optional.ofNullable(receiveInfoConvert.entity2VO(receiveInformation)).orElseGet(ReceiveInfoVO::new));
                     ProjectRepay projectRepay = projectRepayMapper.getOne(new ProjectRepay().setId(item.getProjectRepayId()));
-                    item.setRepayVO(projectRepayConvert.projectRepay2VO(projectRepay));
+                    item.setRepayVO(Optional.ofNullable(projectRepayConvert.projectRepay2VO(projectRepay)).orElseGet(ProjectRepayVO::new));
                 })
                 .collect(Collectors.toList());
 
@@ -174,9 +174,9 @@ public class OrderServiceImpl implements OrderService {
                 .map(orderConvert::order2SellerVO)
                 .peek(item -> {
                     Project project = projectMapper.getOne(new Project().setId(item.getProjectId()));
-                    item.setProjectVO(projectConvert.project2VO(project));
+                    item.setProjectVO(Optional.ofNullable(projectConvert.project2VO(project)).orElseGet(ProjectVO::new));
                     ReceiveInformation receiveInformation = receiveInformationMapper.getOne(new ReceiveInformation().setId(item.getReceiveInformation()));
-                    item.setReceiveInfoVO(receiveInfoConvert.entity2VO(receiveInformation));
+                    item.setReceiveInfoVO(Optional.ofNullable(receiveInfoConvert.entity2VO(receiveInformation)).orElseGet(ReceiveInfoVO::new));
                 })
                 .collect(Collectors.toList());
 

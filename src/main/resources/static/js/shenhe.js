@@ -1,11 +1,11 @@
 $(document).ready(function(){
 
     let projectId = getQueryVariable('id');
-    let token = localStorage.getItem("sys-token");
+    let token = localStorage.getItem("sys-crowdfunding-token");
     $.ajax({
         type: 'GET',
         async: false,
-        url: '/project/admin/detail',
+        url: API_BASE_URL + '/project/admin/detail',
         //contentType: "application/json",
         data: {
             'id': projectId
@@ -175,9 +175,9 @@ $(document).ready(function(){
     var project_id = getQueryVariable('id');
 
     $(".shenheBtn").click(function(){
-        let token = localStorage.getItem("sys-token");
+        let token = localStorage.getItem("sys-crowdfunding-token");
         $.ajax({
-            url		:		'/project/admin/audits',
+            url		:		API_BASE_URL + '/project/admin/audits',
             async	:		false,
             data	:		JSON.stringify({
                 'projectId': project_id,
@@ -194,9 +194,9 @@ $(document).ready(function(){
         });
     });
     $(".shenheBtnreject").click(function(){
-        let token = localStorage.getItem("sys-token");
+        let token = localStorage.getItem("sys-crowdfunding-token");
         $.ajax({
-            url		:		'/project/admin/audits',
+            url		:		API_BASE_URL + '/project/admin/audits',
             async	:		false,
             data	:		JSON.stringify({
                 'projectId': project_id,

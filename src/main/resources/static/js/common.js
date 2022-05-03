@@ -2,6 +2,10 @@
  * 
  */
 
+// const STATIC_BASE_URL = '/'
+
+var API_BASE_URL = ''
+
 function getProvince(pid,obj){
 	$.get("/general/region?pid="+pid,function(res){
 		data = res.data

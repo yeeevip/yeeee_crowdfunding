@@ -58,7 +58,7 @@ window.onscroll = function () {
 
 
 $(document).ready(function(){
-	var token = localStorage.getItem('token')
+	var token = localStorage.getItem('crowdfunding-token')
 	if (token) {
 		$("#headerRightShow").append(
 			`
@@ -82,11 +82,11 @@ $(document).ready(function(){
 	}
 
 	$("#logoutBtn").on('click', function () {
-		let token = localStorage.getItem("token");
+		let token = localStorage.getItem("crowdfunding-token");
 		$.ajax({
 			type: 'GET',
 			async: false,
-			url: '/user/logout' ,
+			url: API_BASE_URL + '/user/logout' ,
 			//contentType: "application/json;charset=utf-8",
 			data:  {},
 			headers: {
@@ -111,7 +111,7 @@ $(document).ready(function(){
 	})
 
 	$("#lunchProjectBtn").click(function () {
-		let token = localStorage.getItem("token");
+		let token = localStorage.getItem("crowdfunding-token");
 		if (token) {
 			window.location.href = '/pages/front/private/faqi.html'
 		} else {

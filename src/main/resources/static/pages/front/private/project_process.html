@@ -7,7 +7,7 @@
 <link type="text/css" rel="stylesheet" href="/css/common.css">
 <script type="text/javascript" src="/js/jquery-3.1.1.min.js"></script>
 <script type="text/javascript" src="/js/layer/layer.js"></script>
-<script type="text/javascript" src="/js/common.js"></script>
+	<script type="text/javascript" src="/js/common.js"></script>
 	<link type="text/css" rel="stylesheet" href="/js/webuploader-0.1.5/webuploader.css">
 	<script type="text/javascript" src="/js/webuploader-0.1.5/webuploader.js"></script>
 
@@ -82,9 +82,9 @@ function updateProjectProcess(){
 	var projectId = getQueryVariable('project_id');
 	var content = $("#updateProjectProgress textarea[name='detail_content1']").val();
 
-	let token = localStorage.getItem("token");
+	let token = localStorage.getItem("crowdfunding-token");
 	$.ajax({
-		url:"/project/front/updateProgress",
+		url: API_BASE_URL + "/project/front/updateProgress",
 		data:JSON.stringify({projectId:projectId,content:content}),
 		async:false,
 		headers: {

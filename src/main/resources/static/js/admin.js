@@ -19,7 +19,7 @@ $(document).ready(function(){
 		$.ajax({
 			type: 'POST',
 			async: false,
-			url: '/sys-user/login' ,
+			url: API_BASE_URL + '/sys-user/login' ,
 			//contentType: "application/json",
 			data:  {
 				'username': $("#username").val(),
@@ -31,7 +31,7 @@ $(document).ready(function(){
 					layer.alert(res.message)
 				} else {
 					// 将token存储到本地
-					localStorage.setItem('sys-token', JSON.stringify(res.data))
+					localStorage.setItem('sys-crowdfunding-token', JSON.stringify(res.data))
 					// 请求成功后跳转到首页
 					location.href = '/pages/admin/main.html'
 				}
@@ -43,9 +43,9 @@ $(document).ready(function(){
 	 * 用户管理
 	 */
 	$("#user_menu").click(function(){
-		let token = localStorage.getItem("sys-token");
+		let token = localStorage.getItem("sys-crowdfunding-token");
 		$.ajax({	
-			url:"/user/admin/page/list",
+			url: API_BASE_URL + "/user/admin/page/list",
 			async: false,   //是否为异步请求
 			type: "POST", //请求方式为POST);
 			contentType: "application/json;charset=utf-8",
@@ -100,9 +100,9 @@ $(document).ready(function(){
 	 * 订单管理
 	 */
 	$("#dingdan_menu").click(function(){
-		let token = localStorage.getItem("sys-token");
+		let token = localStorage.getItem("sys-crowdfunding-token");
 		$.ajax({
-			url:"/order/admin/page/list",
+			url: API_BASE_URL + "/order/admin/page/list",
 			async: false,   //是否为异步请求
 			type: "POST", //请求方式为POST);
 			contentType: "application/json;charset=utf-8",
@@ -151,9 +151,9 @@ $(document).ready(function(){
 	 * 项目类别管理
 	 */
 	$("#category_menu").click(function(){
-		let token = localStorage.getItem("sys-token");
+		let token = localStorage.getItem("sys-crowdfunding-token");
 		$.ajax({
-			url:"/project/admin/category/list",
+			url: API_BASE_URL + "/project/admin/category/list",
 			async: false,   //是否为异步请求
 			type: "POST", //请求方式为POST);
 			contentType: "application/json;charset=utf-8",
@@ -220,9 +220,9 @@ $(document).ready(function(){
 	 * 项目管理
 	 */
 	$("#project_menu").click(function(){
-		let token = localStorage.getItem("sys-token");
+		let token = localStorage.getItem("sys-crowdfunding-token");
 		$.ajax({
-			url:"/project/admin/page/list",
+			url: API_BASE_URL + "/project/admin/page/list",
 			async: false,   //是否为异步请求
 			type: "POST", //请求方式为POST);
 			contentType: "application/json;charset=utf-8",
@@ -296,9 +296,9 @@ function projectNo(){
 	$("#all_projects").hide();
 	$("#hasFinishProject").hide();
 	$("#no_audits").show();
-	let token = localStorage.getItem("sys-token");
+	let token = localStorage.getItem("sys-crowdfunding-token");
 	$.ajax({
-		url:"/project/admin/page/list",
+		url: API_BASE_URL + "/project/admin/page/list",
 		async: false,   //是否为异步请求
 		type: "POST", //请求方式为POST);
 		contentType: "application/json;charset=utf-8",
@@ -342,9 +342,9 @@ function projectFinish(){
 	$("#all_projects").hide();
 	$("#no_audits").hide();
 	$("#hasFinishProject").show();
-	let token = localStorage.getItem("sys-token");
+	let token = localStorage.getItem("sys-crowdfunding-token");
 	$.ajax({
-		url:"/project/admin/page/list",
+		url: API_BASE_URL + "/project/admin/page/list",
 		async: false,   //是否为异步请求
 		type: "POST", //请求方式为POST);
 		contentType: "application/json;charset=utf-8",
@@ -395,9 +395,9 @@ function frontUser(){
 function systemUser(){
 	$("#frontUser").hide();
 	$("#systemUser").show();
-	let token = localStorage.getItem("sys-token");
+	let token = localStorage.getItem("sys-crowdfunding-token");
 	$.ajax({
-		url:"/sys-user/admin/page/list",
+		url: API_BASE_URL + "/sys-user/admin/page/list",
 		async: false,   //是否为异步请求
 		type: "POST", //请求方式为POST);
 		contentType: "application/json;charset=utf-8",

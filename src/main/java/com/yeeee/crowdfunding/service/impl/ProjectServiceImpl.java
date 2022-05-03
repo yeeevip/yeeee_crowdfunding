@@ -205,7 +205,7 @@ public class ProjectServiceImpl implements ProjectService {
         projectDetailVO.setProgressVOList(progressVOList);
 
         User createUser = userMapper.getOne(new User().setId(project.getUserId()));
-        projectDetailVO.setSellerVO(userConvert.user2VO(createUser));
+        projectDetailVO.setSellerVO(Optional.ofNullable(userConvert.user2VO(createUser)).orElseGet(UserVO::new));
 
         projectDetailVO.setLeftDays(DateConvertUtil.getLeftDays(project.getDaysRaising(), project.getLaunchDateRaising(), new Date()));
 
@@ -306,10 +306,10 @@ public class ProjectServiceImpl implements ProjectService {
         lunchProjectVO.setRepayVOList(repayVOList);
 
         InitiatorPersonInfo initiatorPersonInfo = initiatorPersonInfoMapper.getOne(new InitiatorPersonInfo().setProjectId(project.getId()));
-        lunchProjectVO.setInitiatorPersonInfoVO(initiatorInfoVOConvert.entity2PersonInfoVO(initiatorPersonInfo));
+        lunchProjectVO.setInitiatorPersonInfoVO(Optional.ofNullable(initiatorInfoVOConvert.entity2PersonInfoVO(initiatorPersonInfo)).orElseGet(InitiatorPersonInfoVO::new));
 
         InitiatorCompanyInfo initiatorCompanyInfo = initiatorCompanyInfoMapper.getOne(new InitiatorCompanyInfo().setProjectId(project.getId()));
-        lunchProjectVO.setInitiatorCompanyInfoVO(initiatorInfoVOConvert.entity2CompanyInfoVO(initiatorCompanyInfo));
+        lunchProjectVO.setInitiatorCompanyInfoVO(Optional.ofNullable(initiatorInfoVOConvert.entity2CompanyInfoVO(initiatorCompanyInfo)).orElseGet(InitiatorCompanyInfoVO::new));
 
         return lunchProjectVO;
     }
@@ -349,7 +349,7 @@ public class ProjectServiceImpl implements ProjectService {
         Integer currentUserId = SecurityUtil.currentUserId();
         if (currentUserId != null) {
             ReceiveInformation receiveInformation = receiveInformationMapper.getOne(new ReceiveInformation().setUserId(currentUserId).setSetDefault(1));
-            orderPageVO.setReceiveInfoVO(receiveInfoConvert.entity2VO(receiveInformation));
+            orderPageVO.setReceiveInfoVO(Optional.ofNullable(receiveInfoConvert.entity2VO(receiveInformation)).orElseGet(ReceiveInfoVO::new));
         }
 
         return orderPageVO;
