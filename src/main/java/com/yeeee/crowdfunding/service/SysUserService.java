@@ -17,4 +17,7 @@ public interface SysUserService {
     Oauth2TokenDTO login(String username, String password);
 
     PageVO<UserVO> sysUserPageList(SysUserPageReqVO sysUserPageReqVO);
+
+    UserVO getUserInfo();
+
 }

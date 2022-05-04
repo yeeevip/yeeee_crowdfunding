@@ -13,6 +13,7 @@ import com.yeeee.crowdfunding.model.vo.SysUserVO;
 import com.yeeee.crowdfunding.model.vo.UserVO;
 import com.yeeee.crowdfunding.service.CustomUserDetailsService;
 import com.yeeee.crowdfunding.service.SysUserService;
+import com.yeeee.crowdfunding.utils.SecurityUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -49,5 +50,11 @@ public class SysUserServiceImpl implements SysUserService {
                 .map(sysUserConvert::sysUser2VO)
                 .collect(Collectors.toList());
         return new PageVO<>(page.getPageNum(), page.getPageSize(), page.getPages(), page.getTotal(), userVOList);
+    }
+
+    @Override
+    public UserVO getUserInfo() {
+        UserVO userVO = sysUserConvert.securityUser2VO(SecurityUtil.currentSecurityUser());
+        return userVO;
     }
 }

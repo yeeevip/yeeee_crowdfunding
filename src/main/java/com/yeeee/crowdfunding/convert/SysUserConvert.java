@@ -1,5 +1,6 @@
 package com.yeeee.crowdfunding.convert;
 
+import com.yeeee.crowdfunding.model.dto.auth.SecurityUser;
 import com.yeeee.crowdfunding.model.entity.SysUser;
 import com.yeeee.crowdfunding.model.entity.User;
 import com.yeeee.crowdfunding.model.vo.SysUserVO;
@@ -19,5 +20,7 @@ public interface SysUserConvert {
 
     @Mappings(@Mapping(source = "createTime", target = "dateOfRegistration"))
     UserVO sysUser2VO(SysUser sysUser);
+
+    UserVO securityUser2VO(SecurityUser securityUser);
 
 }

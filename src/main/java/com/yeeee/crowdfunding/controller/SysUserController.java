@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 
 /**
  * description......
@@ -57,6 +58,11 @@ public class SysUserController {
     @PostMapping(value = "sys-user/admin/page/list")
     public CommonResult<PageVO<UserVO>> sysUserPageList(SysUserPageReqVO sysUserPageReqVO) {
         return CommonResult.success(sysUserService.sysUserPageList(sysUserPageReqVO));
+    }
+
+    @GetMapping("sys-user/admin/getUserInfo")
+    public CommonResult<UserVO> getUserInfo() {
+        return CommonResult.success(sysUserService.getUserInfo());
     }
 
 }

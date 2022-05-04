@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yeeee.crowdfunding.mapper.SysMenuMapper">
+
+    <sql id="searchBy">
+        <trim prefix="where" prefixOverrides="and|or">
+            <if test="id != '' and id != null">
+                and id = #{id}
+            </if>
+            <if test="pid != '' and pid != null">
+                and pid = #{pid}
+            </if>
+            <if test="name != '' and name != null">
+                and name = #{name}
+            </if>
+            <if test="url != '' and url != null">
+                and url = #{url}
+            </if>
+            <if test="perm != '' and perm != null">
+                and perm = #{perm}
+            </if>
+            <if test="icon != '' and icon != null">
+                and icon = #{icon}
+            </if>
+            <if test="seq != '' and seq != null">
+                and seq = #{seq}
+            </if>
+            <if test="remark != '' and remark != null">
+                and remark = #{remark}
+            </if>
+            <if test="type != '' and type != null">
+                and type = #{type}
+            </if>
+            <if test="createTime != '' and createTime != null">
+                and create_time = #{createTime}
+            </if>
+            <if test="createBy != '' and createBy != null">
+                and create_by = #{createBy}
+            </if>
+            <if test="updateTime != '' and updateTime != null">
+                and update_time = #{updateTime}
+            </if>
+            <if test="updateBy != '' and updateBy != null">
+                and update_by = #{updateBy}
+            </if>
+        </trim>
+    </sql>
+
+    <select id="getList" resultType="com.yeeee.crowdfunding.model.entity.SysMenu">
+        SELECT
+            id,
+            pid,
+            name,
+            url,
+            perm,
+            icon,
+            seq,
+            remark,
+            type,
+            create_time,
+            create_by,
+            update_time,
+            update_by
+        FROM
+            sys_menu
+        <include refid="searchBy"/>
+    </select>
+
+    <select id="getOne" resultType="com.yeeee.crowdfunding.model.entity.SysMenu">
+        SELECT
+            id,
+            pid,
+            name,
+            url,
+            perm,
+            icon,
+            seq,
+            remark,
+            type,
+            create_time,
+            create_by,
+            update_time,
+            update_by
+        FROM
+            sys_menu
+        <include refid="searchBy"/>
+        LIMIT 1
+    </select>
+
+    <insert id="insert" parameterType="com.yeeee.crowdfunding.model.entity.SysMenu" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO sys_menu
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id !='' and id !=null">
+                id,
+            </if>
+            <if test="pid !='' and pid !=null">
+                pid,
+            </if>
+            <if test="name !='' and name !=null">
+                name,
+            </if>
+            <if test="url !='' and url !=null">
+                url,
+            </if>
+            <if test="perm !='' and perm !=null">
+                perm,
+            </if>
+            <if test="icon !='' and icon !=null">
+                icon,
+            </if>
+            <if test="seq !='' and seq !=null">
+                seq,
+            </if>
+            <if test="remark !='' and remark !=null">
+                remark,
+            </if>
+            <if test="type !='' and type !=null">
+                type,
+            </if>
+            <if test="createTime !='' and createTime !=null">
+                create_time,
+            </if>
+            <if test="createBy !='' and createBy !=null">
+                create_by,
+            </if>
+            <if test="updateTime !='' and updateTime !=null">
+                update_time,
+            </if>
+            <if test="updateBy !='' and updateBy !=null">
+                update_by
+            </if>
+        </trim>
+        VALUE
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != '' and id != null">
+                #{id},
+            </if>
+            <if test="pid != '' and pid != null">
+                #{pid},
+            </if>
+            <if test="name != '' and name != null">
+                #{name},
+            </if>
+            <if test="url != '' and url != null">
+                #{url},
+            </if>
+            <if test="perm != '' and perm != null">
+                #{perm},
+            </if>
+            <if test="icon != '' and icon != null">
+                #{icon},
+            </if>
+            <if test="seq != '' and seq != null">
+                #{seq},
+            </if>
+            <if test="remark != '' and remark != null">
+                #{remark},
+            </if>
+            <if test="type != '' and type != null">
+                #{type},
+            </if>
+            <if test="createTime != '' and createTime != null">
+                #{createTime},
+            </if>
+            <if test="createBy != '' and createBy != null">
+                #{createBy},
+            </if>
+            <if test="updateTime != '' and updateTime != null">
+                #{updateTime},
+            </if>
+            <if test="updateBy != '' and updateBy != null">
+                #{updateBy}
+            </if>
+        </trim>
+        <selectKey resultType="int" order="AFTER" keyProperty="id">
+            SELECT LAST_INSERT_ID() AS id
+        </selectKey>
+    </insert>
+
+    <update id="updateByPrimaryKey" parameterType="com.yeeee.crowdfunding.model.entity.SysMenu">
+        UPDATE sys_menu
+        <trim prefix="set" suffixOverrides=",">
+            <if test="pid != '' and pid != null">
+                pid = #{pid},
+            </if>
+            <if test="name != '' and name != null">
+                name = #{name},
+            </if>
+            <if test="url != '' and url != null">
+                url = #{url},
+            </if>
+            <if test="perm != '' and perm != null">
+                perm = #{perm},
+            </if>
+            <if test="icon != '' and icon != null">
+                icon = #{icon},
+            </if>
+            <if test="seq != '' and seq != null">
+                seq = #{seq},
+            </if>
+            <if test="remark != '' and remark != null">
+                remark = #{remark},
+            </if>
+            <if test="type != '' and type != null">
+                type = #{type},
+            </if>
+            <if test="createTime != '' and createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="createBy != '' and createBy != null">
+                create_by = #{createBy},
+            </if>
+            <if test="updateTime != '' and updateTime != null">
+                update_time = #{updateTime},
+            </if>
+            <if test="updateBy != '' and updateBy != null">
+                update_by = #{updateBy}
+            </if>
+        </trim>
+        WHERE id=#{id}
+    </update>
+
+    <insert id="batchInsert" parameterType="java.util.List">
+        INSERT INTO sys_menu
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            id,pid,name,url,perm,icon,seq,remark,type,create_time,create_by,update_time,update_by,
+        </trim>
+        VALUES
+        <foreach collection="list" item="item" index="index" separator=",">
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                #{item.id},#{item.pid},#{item.name},#{item.url},#{item.perm},#{item.icon},#{item.seq},#{item.remark},#{item.type},#{item.createTime},#{item.createBy},#{item.updateTime},#{item.updateBy},
+            </trim>
+        </foreach>
+    </insert >
+
+    <select id="getListByRoleIds" resultType="com.yeeee.crowdfunding.model.entity.SysMenu">
+        SELECT DISTINCT
+            *
+        FROM
+            sys_menu sm
+                JOIN sys_role_menu srm ON srm.menu_id = sm.id
+        WHERE
+                sm.type = #{type}
+          and srm.role_id IN (<foreach collection="list" item="item" index="index" separator=",">#{item}</foreach>)
+        ORDER BY
+            sm.seq
+    </select>
+
+</mapper>
