@@ -1,13 +1,11 @@
 package com.yeeee.crowdfunding.config.auth;
 
 import cn.hutool.core.util.ArrayUtil;
-import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import com.yeeee.crowdfunding.annotation.AnonymousAccess;
 import com.yeeee.crowdfunding.handle.AccessDeniedHandlerHandle;
 import com.yeeee.crowdfunding.handle.AuthenticationEntryPointHandle;
 import lombok.extern.slf4j.Slf4j;
-import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.actuate.autoconfigure.security.servlet.EndpointRequest;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -20,15 +18,12 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.token.TokenStore;
-import org.springframework.security.oauth2.provider.token.store.JdbcTokenStore;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
-import javax.sql.DataSource;
-import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
