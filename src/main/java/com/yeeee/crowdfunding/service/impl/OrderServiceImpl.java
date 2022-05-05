@@ -145,7 +145,7 @@ public class OrderServiceImpl implements OrderService {
     public PageVO<SellerOrderVO> getSellerOrderList(BuyOrderPageReqVO buyOrderPageReqVO) {
 
         Page<Order> page = PageHelper.startPage(buyOrderPageReqVO.getPageNum(), buyOrderPageReqVO.getPageSize());
-        List<Order> orderList = orderMapper.getList(new Order().setUserId(SecurityUtil.currentUserId()));
+        List<Order> orderList = orderMapper.getList(new Order().setUserSeller(SecurityUtil.currentUserId()));
         List<SellerOrderVO> orderVOList = Optional.ofNullable(orderList).orElseGet(Lists::newArrayList)
                 .stream()
                 .map(orderConvert::order2SellerVO)
