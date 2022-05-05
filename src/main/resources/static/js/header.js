@@ -96,7 +96,7 @@ $(document).ready(function(){
 			success: function (res) {
 				if (res.code == 200 || res.code == 401) {
 					// 将token存储到本地
-					localStorage.removeItem('token')
+					localStorage.removeItem('crowdfunding-token')
 					// 请求成功后跳转到首页
 					if (res.code == 200) {
 						location.href = '/'
