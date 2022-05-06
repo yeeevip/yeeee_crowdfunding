@@ -187,10 +187,10 @@
             <if test="idNumber != '' and idNumber != null">
                 id_number = #{idNumber},
             </if>
-            <if test="dateOfBirth != '' and dateOfBirth != null">
+            <if test="dateOfBirth != null">
                 date_of_birth = #{dateOfBirth},
             </if>
-            <if test="dateOfRegistration != '' and dateOfRegistration != null">
+            <if test="dateOfRegistration != null">
                 date_of_registration = #{dateOfRegistration},
             </if>
             <if test="mobile != '' and mobile != null">

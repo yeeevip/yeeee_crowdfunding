@@ -16,14 +16,7 @@
 
 <script type="text/javascript">
 $(document).ready(function(){
-	getProvince(0,$("select[name='province']"));//所有省份
-	$("select[name='province']").change(function(){
-		getProvince($(this).val(),$("select[name='city']"));
-	});
-	
-	$("select[name='city']").change(function(){
-		getProvince($(this).val(),$("select[name='district']"));
-	});
+
 
 })
 </script>
@@ -186,51 +179,8 @@ $(document).ready(function(){
 			            
 			        </ul>
 			        <div class="ziLiao_form" id="ziliaoBj">
-			       	  <form>
-			            <ul id="user_ziliao">	
-			            	<li>
-			               		<label class="ziLiao_form_label"><span>*</span>昵称：</label>
-			                	<input type="text" name="user_name" value="${user.user_name }" placeholder="请输入昵称"  />
-			                </li>
-			                <li>
-			                	<label>性别：</label>
-				                <div id="sex_ch">
-				                	<input type="radio" name="sex" value="0" style="float:left;"/><span style="float:left;margin-top:7px;">男</span>
-				                    <input type="radio" name="sex" value="1" style="float:left;"/><span style="float:left;margin-top:7px;">女</span>
-				                    <input type="radio" name="sex" value="2" style="float:left;"/><span style="float:left;margin-top:7px;">保密</span>
-				                </div>
-			                </li>
-			              	<li>
-			                	<label><span>*</span>手机号：</label>
-			                    <input type="text" value="${user.phone }" name="phone" placeholder="请输入手机号" />
-			                 </li>
-			                 <li>
-			                 	<label><span>*</span>邮箱：</label>
-			                    <input type="text" value="${user.email }" name="email" placeholder="请输入邮箱" />
-			                 </li>
-			                 <li>
-			                 	<label><span>*</span>真实姓名：</label>
-			                    <input type="text" value="${user.real_name }" name="real_name" placeholder="请输入真实姓名" />
-			                 </li>
-			                 <li>
-			                 	<label><span>*</span>身份证：</label>
-			                    <input type="text" value="${user.id_number }" name="id_number" placeholder="请输入身份证号：" />
-			                 </li>
-			                 <li>
-			                 	<label>生日：</label>
-			                    <input id="calender" type="text" value="" name=""/>
-			                 </li>
-			                 <li class="province-selector">
-			                 	<label>所在地区：</label>
-	                            <select name="province" class=""><option>请选择</option></select>
-	                            <select name="city" class=""><option>请选择</option></select>
-			                 </li>
-			                 <li>
-			                 	<label></label>
-			                    <input type="button" value="保存" class="ziLiao_box_submit"/>
-			                    
-			                 </li>
-			               </ul>  
+			       	  <form id="ziliaoBjBOX">
+
 			            </form>
 			        </div>
 			        	<!--资料编辑end-->

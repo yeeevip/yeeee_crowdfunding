@@ -17,4 +17,6 @@ public interface UserConvert {
 
     UserVO user2VO(User user);
 
+    User vo2Entity(UserVO userVO);
+
 }

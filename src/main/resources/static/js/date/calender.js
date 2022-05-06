@@ -47,19 +47,19 @@ window.calender = (function(win,doc){
 		hide : function(){
 			var t = this;
 			t.cb.call(t.dom,t.format( t.nt.getFullYear()+'/'+ (t.nt.getMonth()+1)+'/'+ t.day+' '+new Date().getHours()+':'+new Date().getMinutes()+':'+new Date().getSeconds(),t.s.format));
-			if( g('.calender-wrap')) doc.body.removeChild( g('.calender-wrap') ),doc.body.removeChild( g('#calender-mask') );
+			if( g('.calendar-wrap')) doc.body.removeChild( g('.calendar-wrap') ),doc.body.removeChild( g('#calendar-mask') );
 		},
 		bind : function(){
 			var t = this;
-			var Content = g('.calender-content');
+			var Content = g('.calendar-content');
 			t.createDay();
-			var Prev = g('#calender-prev'),
-				Next = g('#calender-next'),
-				Year = g('#calender-year'),
-				Mon =  g('#calender-mon');
+			var Prev = g('#calendar-prev'),
+				Next = g('#calendar-next'),
+				Year = g('#calendar-year'),
+				Mon =  g('#calendar-mon');
 			if(t.s.button){
-				var today = g('.calender-today');
-				var enter = g('.calender-ent');
+				var today = g('.calendar-today');
+				var enter = g('.calendar-ent');
 				today.onclick = function(){
 					t.nt.setFullYear(new Date().getFullYear());
 				  	t.nt.setMonth(new Date().getMonth());
@@ -76,7 +76,7 @@ window.calender = (function(win,doc){
 			Content.onclick = function(ev){
 				var ev = ev || event;  
 		    	var _target = ev.target || ev.srcElement; 
-		    	if(!t.has(_target,'calender-cell-dark') ){
+		    	if(!t.has(_target,'calendar-cell-dark') ){
 		    		var chl = this.children;
 		    		for(var i = 0;i<chl.length;i++){
 		    			t.del(chl[i],'active');
@@ -93,10 +93,10 @@ window.calender = (function(win,doc){
 				var y = t.nt.getFullYear(),m = t.nt.getMonth();
 				if(t.moff) return
 				if(t.yoff){
-					t.nt.setFullYear( this.id=="calender-prev" ? y -= 9 :  y += 9)
+					t.nt.setFullYear( this.id=="calendar-prev" ? y -= 9 :  y += 9)
 					t.createYear()
 				}else{
-					this.id=="calender-prev" ? m-- : m++;
+					this.id=="calendar-prev" ? m-- : m++;
 					t.nt.setDate(1);
 					t.nt.setMonth( m );
 					t.createDay()
@@ -106,15 +106,15 @@ window.calender = (function(win,doc){
 				t.createYear();
 				t.yoff = true;
 				t.moff = false;
-				t.del(g('.calender-wrap'),'month');
-				t.add(g('.calender-wrap'),'year');
+				t.del(g('.calendar-wrap'),'month');
+				t.add(g('.calendar-wrap'),'year');
 			};
 			Mon.onclick = function(){
 				t.createMon();
 				t.moff = true;
 				t.yoff = false;
-				t.del(g('.calender-wrap'),'year');
-				t.add(g('.calender-wrap'),'month');
+				t.del(g('.calendar-wrap'),'year');
+				t.add(g('.calendar-wrap'),'month');
 			};
 		},
 		getDateLength : function(year,month){
@@ -130,14 +130,14 @@ window.calender = (function(win,doc){
 			var m = t.nt.getMonth()+1;
 			m = m == 0 ? 12 : m;
 			for(var i = 1;i<=12;i++){
-				html+='<div class="calender-mon-cell '+( m == i ? 'active' : '') +' ">'+ (i) +'</div>';
+				html+='<div class="calendar-mon-cell '+( m == i ? 'active' : '') +' ">'+ (i) +'</div>';
 			};
-			g('.calender-list3').innerHTML = html;
-			var cells = doc.querySelectorAll('.calender-mon-cell');
+			g('.calendar-list3').innerHTML = html;
+			var cells = doc.querySelectorAll('.calendar-mon-cell');
 			for(var i2 = 0;i2<cells.length;i2++){
 			 	cells[i2].onclick = function(){
 			 		t.moff = false
-			 		t.del(g('.calender-wrap'),'month');
+			 		t.del(g('.calendar-wrap'),'month');
 			 		t.nt.setDate(1)
 					t.nt.setMonth(+this.innerHTML-1);
 					t.createDay();
@@ -146,17 +146,17 @@ window.calender = (function(win,doc){
 		},
 		createYear : function(){
 			var t= this,html='',y = (t.nt.getFullYear());
-			var Year = g('#calender-year');
+			var Year = g('#calendar-year');
 			for(var i = 0;i<9;i++){
-				html+='<div class="calender-year-cell '+( (y-(4-i)) == y ? 'active' :'') +' ">'+ (y-(4-i)) +'</div>';
+				html+='<div class="calendar-year-cell '+( (y-(4-i)) == y ? 'active' :'') +' ">'+ (y-(4-i)) +'</div>';
 			}
 			Year.innerHTML = y
-			g('.calender-list2').innerHTML = html;
-			var cells = doc.querySelectorAll('.calender-year-cell');
+			g('.calendar-list2').innerHTML = html;
+			var cells = doc.querySelectorAll('.calendar-year-cell');
 			for(var i2 = 0;i2<cells.length;i2++){
 			 	cells[i2].onclick = function(){
 			 		t.yoff = false;
-			 		t.del(g('.calender-wrap'),'year');
+			 		t.del(g('.calendar-wrap'),'year');
 					t.nt.setFullYear(+this.innerHTML);
 					t.createDay();
 			 	}
@@ -166,8 +166,8 @@ window.calender = (function(win,doc){
 			var t = this, 
 				y = t.nt.getFullYear(),
 				m = (t.nt.getMonth())+1;
-			g('#calender-year').innerHTML = m===0 ? y-1 : y;
-			g('#calender-mon').innerHTML =  m === 0 ? 12 : two(m);
+			g('#calendar-year').innerHTML = m===0 ? y-1 : y;
+			g('#calendar-mon').innerHTML =  m === 0 ? 12 : two(m);
 			// if(t.nt.getMonth()+1 == t.s.date[1] && t.nt.getFullYear()==t.s.date[0]   ){
 			//  	t.nt.setDate(t.s.date[2]);
 			// };
@@ -179,38 +179,38 @@ window.calender = (function(win,doc){
 			//循环输出月前空格
 			if(firstDay ===0) firstDay = 7;
 			for(i=1;i<firstDay+1;i++){
-				html += '<div class="calender-cell calender-cell-dark">' + (lastMonthLength - firstDay + i) + '</div>';
+				html += '<div class="calendar-cell calendar-cell-dark">' + (lastMonthLength - firstDay + i) + '</div>';
 			}
 			//循环输出当前月所有天
 			for(i=1;i<length+1;i++){
-				html += '<div  data-n='+i+' class="calender-cell '+ (i == t.day ? 'active' :'') +'">' + i + '</div>';
+				html += '<div  data-n='+i+' class="calendar-cell '+ (i == t.day ? 'active' :'') +'">' + i + '</div>';
 			}
 			//if(8-(length+firstDay)%7 !=8){
 			for(i=1;i<= (41-(length+(firstDay==0 ? 7 : firstDay)-1));i++){
-				html+= '<div class="calender-cell calender-cell-dark">' + i + '</div>';
+				html+= '<div class="calendar-cell calendar-cell-dark">' + i + '</div>';
 			};
-			doc.querySelector('.calender-content').innerHTML = html
+			doc.querySelector('.calendar-content').innerHTML = html
 		},
 		create : function(){
 			var t= this;
-			if( g('.calender-wrap')) doc.body.removeChild( g('.calender-wrap') )
+			if( g('.calendar-wrap')) doc.body.removeChild( g('.calendar-wrap') )
 			var private_Day_title=['一','二','三','四','五','六','日'];
 			//内容
-			var html = '<div class="calender-wrap '+ t.s.addClass +'">';
-			html +='<div id="calender-header" class="calender-header none-btn "><a id="calender-prev" href="javascript:;">&lt;</a><a id="calender-next" href="javascript:;">&gt;</a>  <span id="calender-year">2016</span>年<span id="calender-mon">10</span>月</div>'
+			var html = '<div class="calendar-wrap '+ t.s.addClass +'">';
+			html +='<div id="calendar-header" class="calendar-header none-btn "><a id="calendar-prev" href="javascript:;">&lt;</a><a id="calendar-next" href="javascript:;">&gt;</a>  <span id="calendar-year">2016</span>年<span id="calendar-mon">10</span>月</div>'
 			//星期
-			html += '<div class="calender-list"><div class="calender-caption">';
+			html += '<div class="calendar-list"><div class="calendar-caption">';
 			for(i=0;i<7;i++){
-				html += '<div class="calender-cell">' + private_Day_title[i] + '</div>';
+				html += '<div class="calendar-cell">' + private_Day_title[i] + '</div>';
 			};
-			html += '</div><div class="calender-content"></div>';
+			html += '</div><div class="calendar-content"></div>';
 			if(this.s.button){
-				html+='<div class="calender-button"><a href="javascript:;" class="calender-ent">确定</a><a href="javascript:;" class="calender-today">今天</a></div>';
+				html+='<div class="calendar-button"><a href="javascript:;" class="calendar-ent">确定</a><a href="javascript:;" class="calendar-today">今天</a></div>';
 			};
-			html += '</div><div class="calender-list calender-list2"></div><div class="calender-list calender-list3"></div>'
+			html += '</div><div class="calendar-list calendar-list2"></div><div class="calendar-list calendar-list3"></div>'
 			doc.body.insertAdjacentHTML("beforeend", html);
-			doc.body.insertAdjacentHTML("beforeend", '<div id="calender-mask"></div>');
-			var wrap = g('.calender-wrap');
+			doc.body.insertAdjacentHTML("beforeend", '<div id="calendar-mask"></div>');
+			var wrap = g('.calendar-wrap');
 			function setPosi(){
 				var _top = doc.documentElement.scrollTop || doc.body.scrollTop;
 				wrap.style.left = t.dom.getBoundingClientRect().left +t.s.left +'px';;
@@ -222,7 +222,7 @@ window.calender = (function(win,doc){
 				var e = ev || event;
 				e.stopPropagation ? e.stopPropagation() : (e.cancelBubble = true)
 			}
-			g('#calender-mask').onclick = function(ev){
+			g('#calendar-mask').onclick = function(ev){
 				t.hide()
 			}
 		},

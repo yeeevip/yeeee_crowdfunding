@@ -7,10 +7,84 @@
 var f_display = function(divId){
 	var c_displays =  document.querySelectorAll(".c_display");
 	for(var i=0;i<c_displays.length;i++){
-
 		c_displays[i].style.display="none";
 	}
 	document.querySelector("#"+divId).style.display="block";
+
+	let token = localStorage.getItem("crowdfunding-token");
+	$.ajax({
+		type: 'GET',
+		async: false,
+		url: API_BASE_URL + '/user/front/info' ,
+		contentType: "application/json",
+		headers: {
+			"Authorization": token ? ('Bearer ' + JSON.parse(token).token) : ''
+		},
+		data:  '',
+		dataType: 'json',
+		success: function (res) {
+			if (res.code == 401) {
+				layer.alert("登录过期，请重新登录！！！")
+			} else if (res.code == 200) {
+				var user = res.data
+				$("#user_ziliaoBOX").remove()
+				$("#ziliaoBjBOX").append(
+					`
+					<ul id="user_ziliaoBOX">\t
+\t\t\t            \t<li>
+\t\t\t               \t\t<label class="ziLiao_form_label"><span>*</span>昵称：</label>
+\t\t\t                \t<input type="text" name="user_name" value="${user.username}" placeholder="请输入昵称"  />
+\t\t\t                </li>
+\t\t\t                <li>
+\t\t\t                \t<label>性别：</label>
+\t\t\t\t                <div id="sex_ch">
+\t\t\t\t                \t<input type="radio" name="sex" value="1" style="float:left;"/><span style="float:left;margin-top:7px;">男</span>
+\t\t\t\t                    <input type="radio" name="sex" value="2" style="float:left;"/><span style="float:left;margin-top:7px;">女</span>
+\t\t\t\t                    <input type="radio" name="sex" value="0" style="float:left;"/><span style="float:left;margin-top:7px;">保密</span>
+\t\t\t\t                </div>
+\t\t\t                </li>
+\t\t\t              \t<li>
+\t\t\t                \t<label><span>*</span>手机号：</label>
+\t\t\t                    <input type="text" value="${user.mobile}" name="phone" placeholder="请输入手机号" />
+\t\t\t                 </li>
+\t\t\t                 <li>
+\t\t\t                 \t<label><span>*</span>邮箱：</label>
+\t\t\t                    <input type="text" value="${user.email}" name="email" placeholder="请输入邮箱" />
+\t\t\t                 </li>
+\t\t\t                 <li>
+\t\t\t                 \t<label><span>*</span>真实姓名：</label>
+\t\t\t                    <input type="text" value="${user.realName}" name="real_name" placeholder="请输入真实姓名" />
+\t\t\t                 </li>
+\t\t\t                 <li>
+\t\t\t                 \t<label><span>*</span>身份证：</label>
+\t\t\t                    <input type="text" value="${user.idNumber}" name="id_number" placeholder="请输入身份证号：" />
+\t\t\t                 </li>
+\t\t\t                 <li>
+\t\t\t                 \t<label>生日：</label>
+\t\t\t                    <input id="calender" type="text" value="${user.dateOfBirth}" name="dateOfBirth"/>
+\t\t\t                 </li>
+\t\t\t                 <li class="province-selector">
+\t\t\t                 \t<label>所在地区：</label>
+\t                            <select name="province" class=""><option>请选择</option></select>
+\t                            <select name="city" class=""><option>请选择</option></select>
+\t\t\t                 </li>
+\t\t\t                 <li>
+\t\t\t                 \t<label></label>
+\t\t\t                    <input type="button" value="保存" class="ziLiao_box_submit"/>
+\t\t\t                    
+\t\t\t                 </li>
+\t\t\t               </ul> 
+					`
+				)
+				ziLiaoBoxSubmitClick()
+				calenderInit()
+				provinceInit()
+			} else {
+				layer.alert(res.message)
+			}
+		}
+	})
+
 }
 
 
@@ -183,22 +257,6 @@ $(document).ready(function(){
 		}
 	});
 	
-	//初始化日历
-	
-	calender('#calender').init({    
-	    //date : [2015,12,12], //设置默认显示年月日，默认当前年月日       
-	    format : 'yyyy-MM-dd', //设置显示格式  
-	    button : false ,//是否显示按钮    
-	    left : 0, //追加left，默认0
-	    top :0, //追加top，默认0
-	    onload : function(){  } //初始化完成执行，this为当前创建的日历对象  
-	},function(date){    
-	    //回调函数    
-	    this.value = date  ;  
-	});
-	
-	
-	
 	//收货地址
 	
 	$(".new_shdzBtn").click(function(){
@@ -216,44 +274,6 @@ $(document).ready(function(){
 
 		
 	});
-	
-	
-	$(".ziLiao_box_submit").click(function(){
-
-    	var sex = $("#user_ziliao input[name='sex']:checked").val();//性别
-    	var user_name = $("#user_ziliao input[name='user_name']").val();//用户名
-    	var phone = $("#user_ziliao input[name='phone']").val();//手机
-    	var email = $("#user_ziliao input[name='email']").val();//邮箱
-    	var real_name = $("#user_ziliao input[name='real_name']").val();//真实姓名
-    	var id_number = $("#user_ziliao input[name='id_number']").val();//身份证号码
-    	
-//    	alert(user_name);
-		
-    	$.ajax({
-            url: "reviseUser.jhtml",//要请求的服务器url 
-            //这是一个对象，表示请求的参数，两个参数：method=ajax&val=xxx，服务器可以通过request.getParameter()来获取 
-            //data:{method:"ajaxTest",val:value},  
-            data: {
-            	sex: sex,
-                user_name: user_name,
-                phone: phone,
-                email: email,
-                real_name: real_name,
-                id_number: id_number
-               
-            },
-            async: true,   //是否为异步请求
-            cache: false,  //是否缓存结果
-            type: "POST", //请求方式为POST
-            dataType: "json",   //服务器返回的数据是什么类型 
-            success: function(result){  //这个方法会在服务器执行成功是被调用 ，参数result就是服务器返回的值(现在是json类型) 
-            	console.log(result);
-            	if(result)
-            		alert("修改成功！！！");
-            }
-          });
-
-	})
 	
 	/**
 	 * 买家订单查询
@@ -722,5 +742,81 @@ function toPay(order_id){
 
 }
 
+function ziLiaoBoxSubmitClick() {
+	$(".ziLiao_box_submit").click(function(){
+
+		var sex = $("#user_ziliaoBOX input[name='sex']:checked").val();//性别
+		var user_name = $("#user_ziliaoBOX input[name='user_name']").val();//用户名
+		var phone = $("#user_ziliaoBOX input[name='phone']").val();//手机
+		var email = $("#user_ziliaoBOX input[name='email']").val();//邮箱
+		var real_name = $("#user_ziliaoBOX input[name='real_name']").val();//真实姓名
+		var id_number = $("#user_ziliaoBOX input[name='id_number']").val();//身份证号码
+		var dateOfBirth = $("#user_ziliaoBOX input[name='dateOfBirth']").val();//身份证号码
+		var city = $("#user_ziliaoBOX select[name='province']").text() + $("#user_ziliaoBOX select[name='city']").text();
+
+		let token = localStorage.getItem("crowdfunding-token");
+
+		$.ajax({
+			url: API_BASE_URL + "/user/front/update",//要请求的服务器url
+			//这是一个对象，表示请求的参数，两个参数：method=ajax&val=xxx，服务器可以通过request.getParameter()来获取
+			//data:{method:"ajaxTest",val:value},
+			data: JSON.stringify({
+				sex: sex,
+				username: user_name,
+				mobile: phone,
+				email: email,
+				realName: real_name,
+				idNumber: id_number,
+				dateOfBirth: dateOfBirth,
+				city: city
+
+			}),
+			contentType: 'application/json;charset=utf-8',
+			headers: {
+				'Authorization': 'Bearer ' + token ? ('Bearer ' + JSON.parse(token).token) : ''
+			},
+			async: false,   //是否为异步请求
+			cache: false,  //是否缓存结果
+			type: "POST", //请求方式为POST
+			dataType: "json",   //服务器返回的数据是什么类型
+			success: function(res){  //这个方法会在服务器执行成功是被调用 ，参数result就是服务器返回的值(现在是json类型)
+				if (res.code == 401) {
+					layer.alert("登录过期，请重新登录！！！")
+				} else if (res.code == 200) {
+					layer.alert('修改成功')
+				} else {
+					layer.alert(res.message)
+				}
+			}
+		});
+
+	})
+}
+
+function calenderInit() {
+	//初始化日历
+	calender('#calender').init({
+		//date : [2015,12,12], //设置默认显示年月日，默认当前年月日
+		format : 'yyyy-MM-dd', //设置显示格式
+		button : false ,//是否显示按钮
+		left : 0, //追加left，默认0
+		top :0, //追加top，默认0
+		onload : function(){  } //初始化完成执行，this为当前创建的日历对象
+	},function(date){
+		//回调函数
+		this.value = date  ;
+	});
+}
+
+function provinceInit() {
+	getProvince(0,$("select[name='province']"));//所有省份
+	$("select[name='province']").change(function(){
+		getProvince($(this).val(),$("select[name='city']"));
+	});
+
+	$("select[name='city']").change(function(){
+		getProvince($(this).val(),$("select[name='district']"));
+	});
+}
 
 

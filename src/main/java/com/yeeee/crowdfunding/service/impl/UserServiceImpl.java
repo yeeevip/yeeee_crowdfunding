@@ -86,4 +86,32 @@ public class UserServiceImpl implements UserService {
         return new PageVO<>(page.getPageNum(), page.getPageSize(), page.getPages(), page.getTotal(), userVOList);
     }
 
+    @Override
+    public Void updateMyselfInfo(UserVO userVO) {
+
+        Integer currentUserId = SecurityUtil.currentUserId();
+
+        User user = userConvert.vo2Entity(userVO);
+        user.setId(currentUserId);
+
+        userMapper.updateByPrimaryKey(user);
+
+        return null;
+
+    }
+
+    @Override
+    public UserVO getMyselfInfo() {
+
+        Integer currentUserId = SecurityUtil.currentUserId();
+
+        User user = userMapper.getOne(new User().setId(currentUserId));
+        if (user == null) {
+            throw new BizException("用户不存在");
+        }
+
+        return userConvert.user2VO(user);
+
+    }
+
 }

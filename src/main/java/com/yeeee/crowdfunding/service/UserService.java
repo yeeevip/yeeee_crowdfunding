@@ -23,4 +23,9 @@ public interface UserService {
     Void register(UserCheckVO userCheckVO);
 
     PageVO<UserVO> userPageList(UserPageReqVO userPageReqVO);
+
+    Void updateMyselfInfo(UserVO userVO);
+
+    UserVO getMyselfInfo();
+
 }

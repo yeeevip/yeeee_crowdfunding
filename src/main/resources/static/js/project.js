@@ -22,7 +22,7 @@ $(document).ready(function(){
 			type: 'POST',
 			async: false,
 			url: API_BASE_URL + '/comment/front/add' ,
-			contentType: "application/json",
+			contentType: "application/json;charset=utf-8",
 			headers: {
 				"Authorization": token ? ('Bearer ' + JSON.parse(token).token) : ''
 			},

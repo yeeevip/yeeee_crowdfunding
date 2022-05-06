@@ -14,10 +14,7 @@ import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -57,6 +54,18 @@ public class UserController {
     @PostMapping(value = "register")
     public CommonResult<Void> register(@Validated UserCheckVO userCheckVO) {
         return CommonResult.success(userService.register(userCheckVO));
+    }
+
+    @ApiOperation("修改资料")
+    @PostMapping("front/update")
+    public CommonResult<Void> updateMyselfInfo(@RequestBody UserVO userVO) {
+        return CommonResult.success(userService.updateMyselfInfo(userVO));
+    }
+
+    @ApiOperation("个人资料")
+    @GetMapping("front/info")
+    public CommonResult<UserVO> getMyselfInfo() {
+        return CommonResult.success(userService.getMyselfInfo());
     }
 
     @ApiOperation("用户分页")
