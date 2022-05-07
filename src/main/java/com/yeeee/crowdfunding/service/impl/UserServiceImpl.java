@@ -8,11 +8,9 @@ import com.yeeee.crowdfunding.exception.BizException;
 import com.yeeee.crowdfunding.mapper.UserMapper;
 import com.yeeee.crowdfunding.model.constant.AuthConstant;
 import com.yeeee.crowdfunding.model.dto.auth.Oauth2TokenDTO;
+import com.yeeee.crowdfunding.model.dto.auth.SecurityUser;
 import com.yeeee.crowdfunding.model.entity.User;
-import com.yeeee.crowdfunding.model.vo.PageVO;
-import com.yeeee.crowdfunding.model.vo.UserCheckVO;
-import com.yeeee.crowdfunding.model.vo.UserPageReqVO;
-import com.yeeee.crowdfunding.model.vo.UserVO;
+import com.yeeee.crowdfunding.model.vo.*;
 import com.yeeee.crowdfunding.service.CustomUserDetailsService;
 import com.yeeee.crowdfunding.service.UserService;
 import com.yeeee.crowdfunding.utils.SecurityUtil;
@@ -55,7 +53,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Void logout(HttpServletRequest request) {
+    public Void logout() {
         OAuth2AccessToken oAuth2AccessToken = SecurityUtil.getOAuth2AccessToken();
         if (oAuth2AccessToken != null) {
             tokenStore.removeAccessToken(oAuth2AccessToken);
@@ -112,6 +110,23 @@ public class UserServiceImpl implements UserService {
 
         return userConvert.user2VO(user);
 
+    }
+
+    @Override
+    public Void updatePassword(UpdatePasswordVO updatePasswordVO) {
+
+        SecurityUser securityUser = SecurityUtil.currentSecurityUser();
+        if (!passwordEncoder.matches(updatePasswordVO.getOldPassword(), securityUser.getPassword())) {
+            throw new BizException("旧密码不正确");
+        }
+
+        User upd = new User();
+        upd.setId(securityUser.getId()).setPassword(passwordEncoder.encode(updatePasswordVO.getNewPassword()));
+        userMapper.updateByPrimaryKey(upd);
+
+        this.logout();
+
+        return null;
     }
 
 }

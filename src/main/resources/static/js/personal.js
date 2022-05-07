@@ -12,28 +12,29 @@ var f_display = function(divId){
 	document.querySelector("#"+divId).style.display="block";
 
 	let token = localStorage.getItem("crowdfunding-token");
-	$.ajax({
-		type: 'GET',
-		async: false,
-		url: API_BASE_URL + '/user/front/info' ,
-		contentType: "application/json",
-		headers: {
-			"Authorization": token ? ('Bearer ' + JSON.parse(token).token) : ''
-		},
-		data:  '',
-		dataType: 'json',
-		success: function (res) {
-			if (res.code == 401) {
-				layer.alert("登录过期，请重新登录！！！")
-			} else if (res.code == 200) {
-				var user = res.data
-				$("#user_ziliaoBOX").remove()
-				$("#ziliaoBjBOX").append(
-					`
+	if ('myPassword' != divId) {
+		$.ajax({
+			type: 'GET',
+			async: false,
+			url: API_BASE_URL + '/user/front/info' ,
+			contentType: "application/json",
+			headers: {
+				"Authorization": token ? ('Bearer ' + JSON.parse(token).token) : ''
+			},
+			data:  '',
+			dataType: 'json',
+			success: function (res) {
+				if (res.code == 401) {
+					layer.alert("登录过期，请重新登录！！！")
+				} else if (res.code == 200) {
+					var user = res.data
+					$("#user_ziliaoBOX").remove()
+					$("#ziliaoBjBOX").append(
+						`
 					<ul id="user_ziliaoBOX">\t
 \t\t\t            \t<li>
 \t\t\t               \t\t<label class="ziLiao_form_label"><span>*</span>昵称：</label>
-\t\t\t                \t<input type="text" name="user_name" value="${user.username}" placeholder="请输入昵称"  />
+\t\t\t                \t<input type="text" name="user_name" value="${user.nickName}" placeholder="请输入昵称"  />
 \t\t\t                </li>
 \t\t\t                <li>
 \t\t\t                \t<label>性别：</label>
@@ -70,25 +71,26 @@ var f_display = function(divId){
 \t\t\t                 </li>
 \t\t\t                 <li>
 \t\t\t                 \t<label></label>
-\t\t\t                    <input type="button" value="保存" class="ziLiao_box_submit"/>
+\t\t\t                    <input type="button" value="保存" id="ziLiao_box_submit" class="ziLiao_box_submit"/>
 \t\t\t                    
 \t\t\t                 </li>
 \t\t\t               </ul> 
 					`
-				)
-				ziLiaoBoxSubmitClick()
-				calenderInit()
-				$.ajaxSettings.async = false;
-				provinceInit()
-				let city = user.city.split(',')
-				$("#user_ziliaoBOX select[name='province']").find('option:contains('+ city[0] +')').prop('selected', true)
-				$("#user_ziliaoBOX select[name='province']").trigger('change')
-				$("#user_ziliaoBOX select[name='city']").find('option:contains('+ city[1] +')').prop('selected', true)
-			} else {
-				layer.alert(res.message)
+					)
+					ziLiaoBoxSubmitClick()
+					calenderInit()
+					$.ajaxSettings.async = false;
+					provinceInit()
+					let city = user.city.split(',')
+					$("#user_ziliaoBOX select[name='province']").find('option:contains('+ city[0] +')').prop('selected', true)
+					$("#user_ziliaoBOX select[name='province']").trigger('change')
+					$("#user_ziliaoBOX select[name='city']").find('option:contains('+ city[1] +')').prop('selected', true)
+				} else {
+					layer.alert(res.message)
+				}
 			}
-		}
-	})
+		})
+	}
 
 }
 
@@ -645,9 +647,56 @@ $(document).ready(function(){
 
 	});
 
+	/**
+	 * 修改密码
+	 */
+	$("#ziLiao_box_password_submit").click(function(){
+
+		var oldPassword = $("#user_ziliao_passwordBOX input[name='oldPassword']").val();
+		var newPassword = $("#user_ziliao_passwordBOX input[name='newPassword']").val();
+		var newPassword2 = $("#user_ziliao_passwordBOX input[name='newPassword2']").val();
+
+		if (newPassword!=newPassword2) {
+			layer.alert('新密码两次不一致')
+			return
+		}
+
+		let token = localStorage.getItem("crowdfunding-token");
+
+		$.ajax({
+			url: API_BASE_URL + "/user/updatePassword",
+			data: JSON.stringify({
+				oldPassword: oldPassword,
+				newPassword: newPassword
+			}),
+			contentType: 'application/json;charset=utf-8',
+			headers: {
+				'Authorization': 'Bearer ' + token ? ('Bearer ' + JSON.parse(token).token) : ''
+			},
+			async: false,
+			cache: false,
+			type: "POST",
+			dataType: "json",
+			success: function(res){
+				if (res.code == 401) {
+					layer.alert("登录过期，请重新登录！！！")
+				} else if (res.code == 200) {
+					localStorage.removeItem("crowdfunding-token");
+					layer.confirm('修改成功，请重新登录？', {
+						btn: ['确定'], //按钮
+						closeBtn: 0
+					}, function(){
+						location.href = '/pages/front/public/login.html'
+					});
+				} else {
+					layer.alert(res.message)
+				}
+			}
+		});
+
 })
 
-
+})
 
 //更新项目最新状态
 function goProjectProcess(project_id){
@@ -696,12 +745,7 @@ function setDefaultReceiveInfo(receiveId){
 	});
 }
 
-
-
-
 //去支付
-
-
 function toPay(order_id){
 	
 	layer.confirm('确定要付款吗？', {
@@ -748,7 +792,7 @@ function toPay(order_id){
 }
 
 function ziLiaoBoxSubmitClick() {
-	$(".ziLiao_box_submit").click(function(){
+	$("#ziLiao_box_submit").click(function(){
 
 		var sex = $("#user_ziliaoBOX input[name='sex']:checked").val();//性别
 		var user_name = $("#user_ziliaoBOX input[name='user_name']").val();//用户名
@@ -767,7 +811,7 @@ function ziLiaoBoxSubmitClick() {
 			//data:{method:"ajaxTest",val:value},
 			data: JSON.stringify({
 				sex: sex,
-				username: user_name,
+				nickName: user_name,
 				mobile: phone,
 				email: email,
 				realName: real_name,

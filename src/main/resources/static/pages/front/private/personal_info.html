@@ -229,22 +229,22 @@ $(document).ready(function(){
 			        </div>
 			        <div class="xiugai_form">
 				    	<form>
-				        	<ul>
+				        	<ul id="user_ziliao_passwordBOX">
 				            	<li>
 				                	<label>请输入旧密码：</label>
-				                    <input type="text" />
+				                    <input type="text" name="oldPassword"/>
 				                </li>
 				                <li>
 				                	<label>请输入新密码：</label>
-				                    <input type="text" />
+				                    <input type="text" name="newPassword"/>
 				                </li>
 				                <li>
 				                	<label>请确认密码：</label>
-				                    <input type="text" />
+				                    <input type="text" name="newPassword2" />
 				                </li>
 				                <li>
 				                	<div>
-				                		<input type="button" value="保存" class="ziLiao_box_submit" />
+				                		<input type="button" value="保存" id="ziLiao_box_password_submit" class="ziLiao_box_submit" />
 				                   </div>
 				                </li>
 				            </ul>

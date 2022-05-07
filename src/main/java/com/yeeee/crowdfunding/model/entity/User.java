@@ -18,6 +18,8 @@ public class User {
      */
     private String username;
 
+    private String nickName;
+
     /**
      * 密码
      */

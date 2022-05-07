@@ -2,10 +2,7 @@ package com.yeeee.crowdfunding.controller;
 
 import com.yeeee.crowdfunding.api.CommonResult;
 import com.yeeee.crowdfunding.model.dto.auth.Oauth2TokenDTO;
-import com.yeeee.crowdfunding.model.vo.PageVO;
-import com.yeeee.crowdfunding.model.vo.UserCheckVO;
-import com.yeeee.crowdfunding.model.vo.UserPageReqVO;
-import com.yeeee.crowdfunding.model.vo.UserVO;
+import com.yeeee.crowdfunding.model.vo.*;
 import com.yeeee.crowdfunding.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -46,8 +43,14 @@ public class UserController {
 
     @ApiOperation("退出登录")
     @GetMapping(value = "/logout")
-    public CommonResult<Void> logout(HttpServletRequest request) {
-        return CommonResult.success(userService.logout(request));
+    public CommonResult<Void> logout() {
+        return CommonResult.success(userService.logout());
+    }
+
+    @ApiOperation("修改密码")
+    @PostMapping(value = "/updatePassword")
+    public CommonResult<Void> updatePassword(@Validated @RequestBody UpdatePasswordVO updatePasswordVO) {
+        return CommonResult.success(userService.updatePassword(updatePasswordVO));
     }
 
     @ApiOperation("用户注册")

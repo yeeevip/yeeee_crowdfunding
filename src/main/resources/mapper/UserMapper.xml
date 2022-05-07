@@ -71,6 +71,7 @@
             username,
             password,
             real_name,
+            nick_name,
             sex,
             id_number,
             date_of_birth,
@@ -180,6 +181,12 @@
             </if>
             <if test="realName != '' and realName != null">
                 real_name = #{realName},
+            </if>
+            <if test="realName != null">
+                real_name = #{realName},
+            </if>
+            <if test="nickName != null">
+                nick_name = #{nickName},
             </if>
             <if test="sex != null">
                 sex = #{sex},
