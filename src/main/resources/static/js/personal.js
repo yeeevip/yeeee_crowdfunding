@@ -12,7 +12,7 @@ var f_display = function(divId){
 	document.querySelector("#"+divId).style.display="block";
 
 	let token = localStorage.getItem("crowdfunding-token");
-	if ('myPassword' != divId) {
+	if ('myZiliao' == divId) {
 		$.ajax({
 			type: 'GET',
 			async: false,
@@ -517,26 +517,34 @@ $(document).ready(function(){
 	 * 收货地址
 	 */
 	$("#showMyReceive").click(function(){
-	
+		let token = localStorage.getItem("crowdfunding-token");
 		$.ajax({
-			url			:		"queryReceiveInfo",
-			async		:		true,
+			url			:		API_BASE_URL + "/receive/front/list",
+			async		:		false,
 			cache		:   	false,
 			type		:		"POST",
+			data		:		JSON.stringify({
+				pageSize: 1000
+			}),
+			headers: {
+				"Authorization": token ? ('Bearer ' + JSON.parse(token).token) : ''
+			},
+			contentType	:		'application/json;charset=utf-8',
 			dataType	:		"json",
-			success		:		function(Ojson){
+			success		:		function(res){
+				var Ojson = res.data.result
 				$("#myReceive_tbody").find("tr").remove();
 				for(var i=0;i<Ojson.length;i++){
 				
 					var html = '<tr class="trfirst"><td colspan="4"></td></tr>'
 						+'<tr class="u_tbg_tr" style="height:50px;margin-bottom:10px">'
-						+'<td>'+Ojson[i].receiver+'</td>'
-						+'<td>'+Ojson[i].address+'</td>'
-						+'<td>'+Ojson[i].zippost+'</td>'
-						+'<td>'+Ojson[i].phone+'</td>';
-					if(Ojson[i].is_default=="0"){
-						html =html +'<td><a   onclick="setDefaultReceiveInfo('+Ojson[i].id+')">设为默认</a></td></tr>';
-					}else if(Ojson[i].is_default=="1"){
+						+'<td>'+handleNull(Ojson[i].receiver)+'</td>'
+						+'<td>'+handleNull(Ojson[i].address)+'</td>'
+						+'<td>'+handleNull(Ojson[i].zippost)+'</td>'
+						+'<td>'+handleNull(Ojson[i].phone)+'</td>';
+					if(Ojson[i].setDefault=="0"){
+						html =html +'<td><a style="color: #50abf2" onclick="setDefaultReceiveInfo('+Ojson[i].id+')">设为默认</a></td></tr>';
+					}else if(Ojson[i].setDefault=="1"){
 						html =html +'<td>默认</td></tr>';
 					}else{
 						html =html +'<td></td></tr>';
@@ -715,32 +723,36 @@ function goProjectProcess(project_id){
 	
 }
 
+// 设为默认收货地址
 function setDefaultReceiveInfo(receiveId){
-	
-	$.get("setDefaultReceiveInfo?receiveId="+receiveId,function(data){
-		data = eval('('+data+')');
-		
-		if(data.code=="0"){
-			layer.confirm(data.msg, {
-				  btn: ['确定'], //按钮
-				  closeBtn:0
+	let token = localStorage.getItem("crowdfunding-token");
+	$.ajax({
+		url			:		API_BASE_URL + "/receive/front/update",
+		async		:		false,
+		cache		:   	false,
+		type		:		"POST",
+		data		:		JSON.stringify({
+			id: receiveId,
+			setDefault: 1
+		}),
+		headers: {
+			"Authorization": token ? ('Bearer ' + JSON.parse(token).token) : ''
+		},
+		contentType	:		'application/json;charset=utf-8',
+		dataType	:		"json",
+		success		:		function(res){
+			if (res.code == 200) {
+				layer.confirm('设置成功', {
+					btn: ['确定'], //按钮
+					closeBtn: 0
 				}, function(){
-				  //layer.msg('的确很重要', {icon: 1});
-					//var index = layer.getFrameIndex(window.name); 
 					var index = layer.alert();
 					layer.close(index);
-					
-			      //  parent.layer.close(index);
-					//window.location.href='showPerson.jhtml';
+					$("#showMyReceive").trigger('click')
 				});
-		}else{
-			var index =layer.confirm(data.msg, {
-				  btn: ['确定'], //按钮
-				  closeBtn:0
-				}, function(){
-					var index = layer.alert();
-					layer.close(index);
-				});
+			} else {
+				layer.alert(res.message)
+			}
 		}
 	});
 }
