@@ -181,7 +181,7 @@
             <if test="realName != '' and realName != null">
                 real_name = #{realName},
             </if>
-            <if test="sex != '' and sex != null">
+            <if test="sex != null">
                 sex = #{sex},
             </if>
             <if test="idNumber != '' and idNumber != null">

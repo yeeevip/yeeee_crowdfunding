@@ -38,9 +38,9 @@ var f_display = function(divId){
 \t\t\t                <li>
 \t\t\t                \t<label>性别：</label>
 \t\t\t\t                <div id="sex_ch">
-\t\t\t\t                \t<input type="radio" name="sex" value="1" style="float:left;"/><span style="float:left;margin-top:7px;">男</span>
-\t\t\t\t                    <input type="radio" name="sex" value="2" style="float:left;"/><span style="float:left;margin-top:7px;">女</span>
-\t\t\t\t                    <input type="radio" name="sex" value="0" style="float:left;"/><span style="float:left;margin-top:7px;">保密</span>
+\t\t\t\t                \t<input type="radio" name="sex" value="1" style="float:left;" ${user.sex==1 ? 'checked' : ''}/><span style="float:left;margin-top:7px;">男</span>
+\t\t\t\t                    <input type="radio" name="sex" value="2" style="float:left;" ${user.sex==2 ? 'checked' : ''} /><span style="float:left;margin-top:7px;">女</span>
+\t\t\t\t                    <input type="radio" name="sex" value="0" style="float:left;" ${user.sex==0 ? 'checked' : ''} /><span style="float:left;margin-top:7px;">保密</span>
 \t\t\t\t                </div>
 \t\t\t                </li>
 \t\t\t              \t<li>
@@ -78,7 +78,12 @@ var f_display = function(divId){
 				)
 				ziLiaoBoxSubmitClick()
 				calenderInit()
+				$.ajaxSettings.async = false;
 				provinceInit()
+				let city = user.city.split(',')
+				$("#user_ziliaoBOX select[name='province']").find('option:contains('+ city[0] +')').prop('selected', true)
+				$("#user_ziliaoBOX select[name='province']").trigger('change')
+				$("#user_ziliaoBOX select[name='city']").find('option:contains('+ city[1] +')').prop('selected', true)
 			} else {
 				layer.alert(res.message)
 			}
@@ -752,7 +757,7 @@ function ziLiaoBoxSubmitClick() {
 		var real_name = $("#user_ziliaoBOX input[name='real_name']").val();//真实姓名
 		var id_number = $("#user_ziliaoBOX input[name='id_number']").val();//身份证号码
 		var dateOfBirth = $("#user_ziliaoBOX input[name='dateOfBirth']").val();//身份证号码
-		var city = $("#user_ziliaoBOX select[name='province']").text() + $("#user_ziliaoBOX select[name='city']").text();
+		var city = $("#user_ziliaoBOX select[name='province'] option:selected").text() + ',' + $("#user_ziliaoBOX select[name='city'] option:selected").text();
 
 		let token = localStorage.getItem("crowdfunding-token");
 
