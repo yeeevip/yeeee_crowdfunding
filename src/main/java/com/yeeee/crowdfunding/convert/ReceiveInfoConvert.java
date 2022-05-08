@@ -15,4 +15,6 @@ public interface ReceiveInfoConvert {
 
     ReceiveInfoVO entity2VO(ReceiveInformation receiveInformation);
 
+    ReceiveInformation vo2Entity(ReceiveInfoVO receiveInfoVO);
+
 }

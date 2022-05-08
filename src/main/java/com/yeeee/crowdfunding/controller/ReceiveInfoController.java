@@ -33,9 +33,15 @@ public class ReceiveInfoController {
         return CommonResult.success(receiveInfoService.getReceivePageList(receivePageReqVO));
     }
 
+    @ApiOperation("添加收货地址")
+    @PostMapping("front/receive/add")
+    public CommonResult<Void> addReceiveInfo(@Validated(ReceiveInfoVO.Add.class) @RequestBody ReceiveInfoVO receiveInfoVO) {
+        return CommonResult.success(receiveInfoService.addReceiveInfo(receiveInfoVO));
+    }
+
     @ApiOperation("修改收货地址")
     @PostMapping("front/receive/update")
-    public CommonResult<Void> updateReceiveInfo(@Validated @RequestBody ReceiveInfoVO receiveInfoVO) {
+    public CommonResult<Void> updateReceiveInfo(@Validated(ReceiveInfoVO.Update.class) @RequestBody ReceiveInfoVO receiveInfoVO) {
         return CommonResult.success(receiveInfoService.updateReceiveInfo(receiveInfoVO));
     }
 

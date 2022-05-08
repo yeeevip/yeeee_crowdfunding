@@ -15,4 +15,6 @@ public interface ReceiveInfoService {
 
     Void updateReceiveInfo(ReceiveInfoVO receiveInfoVO);
 
+    Void addReceiveInfo(ReceiveInfoVO receiveInfoVO);
+
 }

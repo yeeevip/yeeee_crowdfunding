@@ -64,4 +64,12 @@ public class ReceiveInfoServiceImpl implements ReceiveInfoService {
 
         return null;
     }
+
+    @Override
+    public Void addReceiveInfo(ReceiveInfoVO receiveInfoVO) {
+        ReceiveInformation save = receiveInfoConvert.vo2Entity(receiveInfoVO);
+        save.setUserId(SecurityUtil.currentUserId());
+        receiveInformationMapper.insert(save);
+        return null;
+    }
 }

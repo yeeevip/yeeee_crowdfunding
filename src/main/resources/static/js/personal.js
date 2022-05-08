@@ -107,46 +107,44 @@ function changeTXBox(a){
 	}
 }
 
+/**
+ * 添加收货地址
+ */
 function addReceiveInfo(){
 	//内容
 	var receiver = $("input[name='receiver']").val();
 	var phone =$("input[name='phone']").val();
-	var zipcode =$("input[name='zipcode']").val();
 	var address =$("select[name='province'] option:selected").text()+"|"+$("select[name='city'] option:selected").text()+"|"+$("input[name='address']").val();
 
+	let token = localStorage.getItem('crowdfunding-token');
 	$.ajax({
-		url:"addReceiveInfo",
-		data:{receiver:receiver,phone:phone,zipcode:zipcode,address:address},
-
-		async:true,
+		url:API_BASE_URL + "/front/receive/add",
+		data:JSON.stringify({
+			receiver:receiver,
+			phone:phone,
+			address:address
+		}),
+		headers: {
+			"Authorization": token ? ('Bearer ' + JSON.parse(token).token) : ''
+		},
+		async:false,
 		cache:false,
+		contentType: 'application/json;charset=utf-8',
 		type: "POST", //请求方式为POST
-		dataType:"",
-		success:function(data){
-			//alert(data);
-			data = eval('('+data+')');
-
-			if(data.code=="0"){
-				layer.confirm(data.msg, {
-					  btn: ['确定'], //按钮
-					  closeBtn:0
-					}, function(){
-					  //layer.msg('的确很重要', {icon: 1});
-						var index = parent.layer.getFrameIndex(window.name);
-				        parent.layer.close(index);
-						//window.location.href='showPerson.jhtml';
-					});
-			}else{
-				var index =layer.confirm(data.msg, {
-					  btn: ['确定'], //按钮
-					  closeBtn:0
-					}, function(){
-					  //layer.msg('的确很重要', {icon: 1});
-//						var index = parent.layer.getFrameIndex(window.name);
-//				        parent.layer.close(index);
-					//	window.location.href='showPerson.jhtml';
-						layer.close(index);
-					});
+		dataType:"json",
+		success:function(res){
+			if (res.code == 200) {
+				var index = layer.confirm('设置成功', {
+					btn: ['确定'], //按钮
+					closeBtn: 0
+				}, function(){
+					var index = parent.layer.getFrameIndex(window.name);
+					parent.layer.close(index);
+					//window.location.href('/pages/front/private/personal_info.html')
+					$("#showMyReceive").trigger('click')
+				});
+			} else {
+				layer.alert(res.message)
 			}
 
 		}
@@ -267,7 +265,6 @@ $(document).ready(function(){
 	//收货地址
 	
 	$(".new_shdzBtn").click(function(){
-		
 
 		layer.open({
 		      type: 2,
@@ -276,10 +273,9 @@ $(document).ready(function(){
 		      shade: false,
 		      maxmin: false, //开启最大化最小化按钮
 		      area: ['600px', '400px'],
-		      content: ['ReceiveInfoPage','no']
+		      content: ['/pages/front/public/receiveInfoForm.html','yes']
 		    });
 
-		
 	});
 	
 	/**
@@ -742,11 +738,10 @@ function setDefaultReceiveInfo(receiveId){
 		dataType	:		"json",
 		success		:		function(res){
 			if (res.code == 200) {
-				layer.confirm('设置成功', {
+				var index = layer.confirm('设置成功', {
 					btn: ['确定'], //按钮
 					closeBtn: 0
 				}, function(){
-					var index = layer.alert();
 					layer.close(index);
 					$("#showMyReceive").trigger('click')
 				});
