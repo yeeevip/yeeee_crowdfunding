@@ -24,20 +24,19 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @Api(tags = "评论接口")
 @RestController
-@RequestMapping("comment")
 public class CommentController {
 
     private final CommentService commentService;
 
     @ApiOperation("新增评论")
-    @PostMapping("front/add")
+    @PostMapping("front/comment/add")
     public CommonResult<Void> frontAddComment(@Validated @RequestBody CommentVO commentVO) {
         return CommonResult.success(commentService.frontAddComment(commentVO));
     }
 
     @ApiOperation("评论列表")
     @AnonymousAccess
-    @PostMapping("front/list")
+    @PostMapping("front/comment/list")
     public CommonResult<PageVO<CommentVO>> frontCommentPageList(@Validated(CommentVO.PageListGroup.class) @RequestBody CommentPageReqVO pageReqVO) {
         return CommonResult.success(commentService.frontCommentPageList(pageReqVO));
     }

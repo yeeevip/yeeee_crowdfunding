@@ -60,9 +60,9 @@ secure:
       - "/actuator/**"
       - "/auth/oauth/**"
       - "/auth/rsa/publicKey"
-      - "/user/login"
-      - "/user/register"
-      - "/sys-user/login"
+      - "/front/user/login"
+      - "/front/user/register"
+      - "/admin/sys-user/login"
       - "/user/webSocket/**"
 
 # swagger文档增强功能

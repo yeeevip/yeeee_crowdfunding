@@ -62,7 +62,7 @@ function lunbo()
 $(document).ready(function(){
 	$.ajax({
 		type: 'GET',
-		url: API_BASE_URL + '/project/front/index' ,
+		url: API_BASE_URL + '/front/project/index' ,
 		data: {} ,
 		dataType: 'json',
 		success: function (res) {

@@ -31,5 +31,4 @@ public interface ProjectService {
 
     Void updateProjectProgress(ProjectProgressVO projectProgressVO);
 
-    PageVO<ProjectCategoryVO> getAdminProjectCategoryList(ProjectPageReqVO reqVO);
 }

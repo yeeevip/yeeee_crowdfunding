@@ -43,7 +43,7 @@ public class SysUserController {
             @ApiImplicitParam(value = "用户名", name = "username"),
             @ApiImplicitParam(value = "密码", name = "password")
     })
-    @PostMapping(value = "sys-user/login")
+    @PostMapping(value = "admin/sys-user/login")
     public CommonResult<Oauth2TokenDTO> login(String username, String password) {
         return CommonResult.success(sysUserService.login(username, password));
     }
@@ -55,12 +55,12 @@ public class SysUserController {
     }
 
     @ApiOperation("用户分页")
-    @PostMapping(value = "sys-user/admin/page/list")
+    @PostMapping(value = "admin/sys-user/page")
     public CommonResult<PageVO<UserVO>> sysUserPageList(SysUserPageReqVO sysUserPageReqVO) {
         return CommonResult.success(sysUserService.sysUserPageList(sysUserPageReqVO));
     }
 
-    @GetMapping("sys-user/admin/getUserInfo")
+    @GetMapping("admin/sys-user/getUserInfo")
     public CommonResult<UserVO> getUserInfo() {
         return CommonResult.success(sysUserService.getUserInfo());
     }

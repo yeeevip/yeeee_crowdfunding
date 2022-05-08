@@ -5,7 +5,7 @@ $(document).ready(function(){
     $.ajax({
         type: 'GET',
         async: false,
-        url: API_BASE_URL + '/project/admin/detail',
+        url: API_BASE_URL + '/admin/project/detail',
         //contentType: "application/json",
         data: {
             'id': projectId
@@ -177,7 +177,7 @@ $(document).ready(function(){
     $(".shenheBtn").click(function(){
         let token = localStorage.getItem("sys-crowdfunding-token");
         $.ajax({
-            url		:		API_BASE_URL + '/project/admin/audits',
+            url		:		API_BASE_URL + '/admin/project/audits',
             async	:		false,
             data	:		JSON.stringify({
                 'projectId': project_id,
@@ -196,7 +196,7 @@ $(document).ready(function(){
     $(".shenheBtnreject").click(function(){
         let token = localStorage.getItem("sys-crowdfunding-token");
         $.ajax({
-            url		:		API_BASE_URL + '/project/admin/audits',
+            url		:		API_BASE_URL + '/admin/project/audits',
             async	:		false,
             data	:		JSON.stringify({
                 'projectId': project_id,

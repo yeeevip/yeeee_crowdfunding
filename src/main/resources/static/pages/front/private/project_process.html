@@ -84,7 +84,7 @@ function updateProjectProcess(){
 
 	let token = localStorage.getItem("crowdfunding-token");
 	$.ajax({
-		url: API_BASE_URL + "/project/front/updateProgress",
+		url: API_BASE_URL + "/front/project/updateProgress",
 		data:JSON.stringify({projectId:projectId,content:content}),
 		async:false,
 		headers: {

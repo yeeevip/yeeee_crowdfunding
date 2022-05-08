@@ -19,7 +19,7 @@ $(document).ready(function(){
 		$.ajax({
 			type: 'POST',
 			async: false,
-			url: API_BASE_URL + '/sys-user/login' ,
+			url: API_BASE_URL + '/admin/sys-user/login' ,
 			//contentType: "application/json",
 			data:  {
 				'username': $("#username").val(),
@@ -45,7 +45,7 @@ $(document).ready(function(){
 	$("#user_menu").click(function(){
 		let token = localStorage.getItem("sys-crowdfunding-token");
 		$.ajax({	
-			url: API_BASE_URL + "/user/admin/page/list",
+			url: API_BASE_URL + "/admin/user/page",
 			async: false,   //是否为异步请求
 			type: "POST", //请求方式为POST);
 			contentType: "application/json;charset=utf-8",
@@ -102,7 +102,7 @@ $(document).ready(function(){
 	$("#dingdan_menu").click(function(){
 		let token = localStorage.getItem("sys-crowdfunding-token");
 		$.ajax({
-			url: API_BASE_URL + "/order/admin/page/list",
+			url: API_BASE_URL + "/admin/order/page",
 			async: false,   //是否为异步请求
 			type: "POST", //请求方式为POST);
 			contentType: "application/json;charset=utf-8",
@@ -153,7 +153,7 @@ $(document).ready(function(){
 	$("#category_menu").click(function(){
 		let token = localStorage.getItem("sys-crowdfunding-token");
 		$.ajax({
-			url: API_BASE_URL + "/project/admin/category/list",
+			url: API_BASE_URL + "/admin/category/page",
 			async: false,   //是否为异步请求
 			type: "POST", //请求方式为POST);
 			contentType: "application/json;charset=utf-8",
@@ -222,7 +222,7 @@ $(document).ready(function(){
 	$("#project_menu").click(function(){
 		let token = localStorage.getItem("sys-crowdfunding-token");
 		$.ajax({
-			url: API_BASE_URL + "/project/admin/page/list",
+			url: API_BASE_URL + "/admin/project/page",
 			async: false,   //是否为异步请求
 			type: "POST", //请求方式为POST);
 			contentType: "application/json;charset=utf-8",
@@ -298,7 +298,7 @@ function projectNo(){
 	$("#no_audits").show();
 	let token = localStorage.getItem("sys-crowdfunding-token");
 	$.ajax({
-		url: API_BASE_URL + "/project/admin/page/list",
+		url: API_BASE_URL + "/admin/project/page",
 		async: false,   //是否为异步请求
 		type: "POST", //请求方式为POST);
 		contentType: "application/json;charset=utf-8",
@@ -344,7 +344,7 @@ function projectFinish(){
 	$("#hasFinishProject").show();
 	let token = localStorage.getItem("sys-crowdfunding-token");
 	$.ajax({
-		url: API_BASE_URL + "/project/admin/page/list",
+		url: API_BASE_URL + "/admin/project/page",
 		async: false,   //是否为异步请求
 		type: "POST", //请求方式为POST);
 		contentType: "application/json;charset=utf-8",
@@ -397,7 +397,7 @@ function systemUser(){
 	$("#systemUser").show();
 	let token = localStorage.getItem("sys-crowdfunding-token");
 	$.ajax({
-		url: API_BASE_URL + "/sys-user/admin/page/list",
+		url: API_BASE_URL + "/admin/sys-user/page",
 		async: false,   //是否为异步请求
 		type: "POST", //请求方式为POST);
 		contentType: "application/json;charset=utf-8",

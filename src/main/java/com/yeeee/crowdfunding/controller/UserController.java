@@ -25,7 +25,6 @@ import javax.servlet.http.HttpServletRequest;
 @Api(tags = "前台用户管理", description = "前台用户管理")
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("user")
 public class UserController {
 
     private final UserService userService;
@@ -36,43 +35,37 @@ public class UserController {
             @ApiImplicitParam(value = "用户名", name = "username"),
             @ApiImplicitParam(value = "密码", name = "password")
     })
-    @PostMapping(value = "/login")
+    @PostMapping(value = "/front/user/login")
     public CommonResult<Oauth2TokenDTO> login(UserCheckVO userCheckVO) {
         return CommonResult.success(userService.login(userCheckVO));
     }
 
-    @ApiOperation("退出登录")
-    @GetMapping(value = "/logout")
-    public CommonResult<Void> logout() {
-        return CommonResult.success(userService.logout());
-    }
-
     @ApiOperation("修改密码")
-    @PostMapping(value = "/updatePassword")
+    @PostMapping(value = "/front/user/updatePassword")
     public CommonResult<Void> updatePassword(@Validated @RequestBody UpdatePasswordVO updatePasswordVO) {
         return CommonResult.success(userService.updatePassword(updatePasswordVO));
     }
 
     @ApiOperation("用户注册")
-    @PostMapping(value = "register")
+    @PostMapping(value = "front/user/register")
     public CommonResult<Void> register(@Validated UserCheckVO userCheckVO) {
         return CommonResult.success(userService.register(userCheckVO));
     }
 
     @ApiOperation("修改资料")
-    @PostMapping("front/update")
+    @PostMapping("front/user/update")
     public CommonResult<Void> updateMyselfInfo(@RequestBody UserVO userVO) {
         return CommonResult.success(userService.updateMyselfInfo(userVO));
     }
 
     @ApiOperation("个人资料")
-    @GetMapping("front/info")
+    @GetMapping("front/user/info")
     public CommonResult<UserVO> getMyselfInfo() {
         return CommonResult.success(userService.getMyselfInfo());
     }
 
     @ApiOperation("用户分页")
-    @PostMapping(value = "admin/page/list")
+    @PostMapping(value = "admin/user/page")
     public CommonResult<PageVO<UserVO>> userPageList(UserPageReqVO userPageReqVO) {
         return CommonResult.success(userService.userPageList(userPageReqVO));
     }

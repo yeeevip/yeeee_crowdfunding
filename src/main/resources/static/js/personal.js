@@ -16,7 +16,7 @@ var f_display = function(divId){
 		$.ajax({
 			type: 'GET',
 			async: false,
-			url: API_BASE_URL + '/user/front/info' ,
+			url: API_BASE_URL + '/front/user/info' ,
 			contentType: "application/json",
 			headers: {
 				"Authorization": token ? ('Bearer ' + JSON.parse(token).token) : ''
@@ -181,7 +181,7 @@ $(document).ready(function(){
 	$.ajax({
 		type: 'POST',
 		async: false,
-		url: API_BASE_URL +'/project/front/myself' ,
+		url: API_BASE_URL +'/front/project/myself' ,
 		contentType: "application/json;charset=utf-8",
 		headers: {
 			"Authorization": token ? ('Bearer ' + JSON.parse(token).token) : ''
@@ -291,7 +291,7 @@ $(document).ready(function(){
 		$.ajax({
 			type: 'POST',
 			async: false,
-			url: API_BASE_URL + '/order/front/buyer' ,
+			url: API_BASE_URL + '/front/order/buyer' ,
 			contentType: "application/json;charset=utf-8",
 			headers: {
 				"Authorization": token ? ('Bearer ' + JSON.parse(token).token) : ''
@@ -374,7 +374,7 @@ $(document).ready(function(){
 						$.ajax({
 							type: 'POST',
 							async: false,
-							url: API_BASE_URL + '/order/front/buyer' ,
+							url: API_BASE_URL + '/front/order/buyer' ,
 							contentType: "application/json;charset=utf-8",
 							headers: {
 								"Authorization": token ? ('Bearer ' + JSON.parse(token).token) : ''
@@ -459,7 +459,7 @@ $(document).ready(function(){
 	$("#myProjectShow").click(function(){
 		let token = localStorage.getItem("crowdfunding-token");
 		$.ajax({
-			url			:		API_BASE_URL + "/order/front/seller",
+			url			:		API_BASE_URL + "/front/order/seller",
 			async		:		false,
 			type: 'POST',
 			contentType: "application/json;charset=utf-8",
@@ -519,7 +519,7 @@ $(document).ready(function(){
 	$("#showMyReceive").click(function(){
 		let token = localStorage.getItem("crowdfunding-token");
 		$.ajax({
-			url			:		API_BASE_URL + "/receive/front/list",
+			url			:		API_BASE_URL + "/front/receive/page",
 			async		:		false,
 			cache		:   	false,
 			type		:		"POST",
@@ -567,7 +567,7 @@ $(document).ready(function(){
 		$.ajax({
 			type: 'POST',
 			async: false,
-			url: API_BASE_URL + '/project/front/myself' ,
+			url: API_BASE_URL + '/front/project/myself' ,
 			contentType: "application/json;charset=utf-8",
 			headers: {
 				"Authorization": token ? ('Bearer ' + JSON.parse(token).token) : ''
@@ -672,7 +672,7 @@ $(document).ready(function(){
 		let token = localStorage.getItem("crowdfunding-token");
 
 		$.ajax({
-			url: API_BASE_URL + "/user/updatePassword",
+			url: API_BASE_URL + "/front/user/updatePassword",
 			data: JSON.stringify({
 				oldPassword: oldPassword,
 				newPassword: newPassword
@@ -727,7 +727,7 @@ function goProjectProcess(project_id){
 function setDefaultReceiveInfo(receiveId){
 	let token = localStorage.getItem("crowdfunding-token");
 	$.ajax({
-		url			:		API_BASE_URL + "/receive/front/update",
+		url			:		API_BASE_URL + "/front/receive/update",
 		async		:		false,
 		cache		:   	false,
 		type		:		"POST",
@@ -766,7 +766,7 @@ function toPay(order_id){
 		}, function(){
 		let token = localStorage.getItem("crowdfunding-token");
 		$.ajax({
-			url			:		API_BASE_URL + "/order/front/pay",
+			url			:		API_BASE_URL + "/front/order/pay",
 			data		:		JSON.stringify({
 				'subjectId': order_id
 			}),
@@ -818,7 +818,7 @@ function ziLiaoBoxSubmitClick() {
 		let token = localStorage.getItem("crowdfunding-token");
 
 		$.ajax({
-			url: API_BASE_URL + "/user/front/update",//要请求的服务器url
+			url: API_BASE_URL + "/front/user/update",//要请求的服务器url
 			//这是一个对象，表示请求的参数，两个参数：method=ajax&val=xxx，服务器可以通过request.getParameter()来获取
 			//data:{method:"ajaxTest",val:value},
 			data: JSON.stringify({

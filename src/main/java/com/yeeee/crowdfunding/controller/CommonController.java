@@ -8,6 +8,7 @@ import com.yeeee.crowdfunding.annotation.AnonymousAccess;
 import com.yeeee.crowdfunding.api.CommonResult;
 import com.yeeee.crowdfunding.model.entity.ProvinceCityDistrict;
 import com.yeeee.crowdfunding.service.ProvinceCityDistrictService;
+import com.yeeee.crowdfunding.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -36,6 +37,8 @@ public class CommonController {
 
     private final ProvinceCityDistrictService provinceCityDistrictService;
 
+    private final UserService userService;
+
     @Value("${local.upload.location}")
     private String uploadPath;
 
@@ -44,6 +47,12 @@ public class CommonController {
     @GetMapping("region")
     public CommonResult<List<ProvinceCityDistrict>> getRegion(Integer pid) {
         return CommonResult.success(provinceCityDistrictService.getList(pid));
+    }
+
+    @ApiOperation("退出登录")
+    @GetMapping(value = "/logout")
+    public CommonResult<Void> logout() {
+        return CommonResult.success(userService.logout());
     }
 
     @ApiOperation("上传")

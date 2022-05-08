@@ -20,17 +20,16 @@ import java.util.List;
  */
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("menu")
 public class SysMenuController {
 
     private final SysMenuService sysMenuService;
 
-    @GetMapping("admin/listTree")
+    @GetMapping("admin/menu/listTree")
     public CommonResult<List<SysMenuVO>> getMenuListTree() {
         return CommonResult.success(sysMenuService.getMenuListTree());
     }
 
-    @GetMapping("admin/getAuthz")
+    @GetMapping("admin/menu/getAuthz")
     public CommonResult<Object> getMenuAuthz() {
         return CommonResult.success(ImmutableMap.of("roles", Collections.emptyList(), "stringPermissions", Collections.emptyList()));
     }

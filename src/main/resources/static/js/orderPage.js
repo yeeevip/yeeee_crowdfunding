@@ -5,7 +5,7 @@ $(document).ready(function(){
     $.ajax({
         type: 'GET',
         async: false,
-        url: API_BASE_URL + '/project/front/orderPage',
+        url: API_BASE_URL + '/front/project/orderPage',
         //contentType: "application/json",
         data: {
             'id': projectId
@@ -180,7 +180,7 @@ function bindSubmitOrder() {
             // closeBtn:0
         }, function(){
             $.ajax({
-                url			:		API_BASE_URL +"/order/front/create",
+                url			:		API_BASE_URL +"/front/order/create",
                 data		:		JSON.stringify(
                     {
                         'repayId'	: repayId,

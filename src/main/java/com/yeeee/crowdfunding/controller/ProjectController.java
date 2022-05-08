@@ -25,53 +25,52 @@ import java.io.IOException;
 @RequiredArgsConstructor
 @Api(tags = "众筹项目")
 @RestController
-@RequestMapping("project")
 public class ProjectController {
 
     private final ProjectService projectService;
 
     @ApiOperation("首页项目")
     @AnonymousAccess
-    @GetMapping("front/index")
+    @GetMapping("front/project/index")
     public CommonResult<IndexProjectListVO> getIndexShowProject() {
         return CommonResult.success(projectService.getIndexShowProject());
     }
 
     @ApiOperation("项目详情")
     @AnonymousAccess
-    @GetMapping("front/detail")
+    @GetMapping("front/project/detail")
     public CommonResult<ProjectDetailVO> getIndexProjectDetail(Integer id) {
         return CommonResult.success(projectService.getIndexProjectDetail(id));
     }
 
     @ApiOperation("项目分页")
     @AnonymousAccess
-    @PostMapping("front/list")
+    @PostMapping("front/project/page")
     public CommonResult<PageVO<ProjectVO>> getProjectList(@RequestBody ProjectPageReqVO reqVO) {
         return CommonResult.success(projectService.getProjectPageList(reqVO));
     }
 
     @ApiOperation("我发起的项目")
-    @PostMapping("front/myself")
+    @PostMapping("front/project/myself")
     public CommonResult<PageVO<ProjectVO>> getMyselfProjectList(@RequestBody ProjectPageReqVO reqVO) {
         return CommonResult.success(projectService.getMyselfProjectList(reqVO));
     }
 
     @ApiOperation("发起项目")
-    @PostMapping("front/lunch")
+    @PostMapping("front/project/lunch")
     public CommonResult<Void> lunchProject(@Validated @RequestBody LunchProjectVO reqVO) {
         return CommonResult.success(projectService.lunchProject(reqVO));
     }
 
     @ApiOperation("发起项目")
-    @PostMapping("front/updateProgress")
+    @PostMapping("front/project/updateProgress")
     public CommonResult<Void> updateProjectProgress(@Validated @RequestBody ProjectProgressVO projectProgressVO) {
         return CommonResult.success(projectService.updateProjectProgress(projectProgressVO));
     }
 
     @ApiOperation("项目下单预览页")
     @AnonymousAccess
-    @GetMapping("front/orderPage")
+    @GetMapping("front/project/orderPage")
     public CommonResult<OrderPageVO> frontProjectOrderPageDetail(@RequestParam Integer id) {
         return CommonResult.success(projectService.frontProjectOrderPageDetail(id));
     }
@@ -84,25 +83,19 @@ public class ProjectController {
     }*/
 
     @ApiOperation("管理员项目分页")
-    @PostMapping("admin/page/list")
+    @PostMapping("admin/project/page")
     public CommonResult<PageVO<ProjectVO>> getAdminPageList(@RequestBody ProjectPageReqVO reqVO) {
         return CommonResult.success(projectService.getAdminPageList(reqVO));
     }
 
-    @ApiOperation("管理员项目类别分页")
-    @PostMapping("admin/category/list")
-    public CommonResult<PageVO<ProjectCategoryVO>> getAdminProjectCategoryList(@RequestBody ProjectPageReqVO reqVO) {
-        return CommonResult.success(projectService.getAdminProjectCategoryList(reqVO));
-    }
-
     @ApiOperation("审核-项目详情")
-    @GetMapping("admin/detail")
+    @GetMapping("admin/project/detail")
     public CommonResult<LunchProjectVO> getAdminProjectDetail(Integer id) {
         return CommonResult.success(projectService.getAdminProjectDetail(id));
     }
 
     @ApiOperation("审核项目")
-    @PostMapping("admin/audits")
+    @PostMapping("admin/project/audits")
     public CommonResult<Void> adminProjectAudits(@RequestBody AuditProjectVO auditProjectVO) {
         return CommonResult.success(projectService.adminProjectAudits(auditProjectVO));
     }

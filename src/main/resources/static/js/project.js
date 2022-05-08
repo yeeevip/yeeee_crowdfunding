@@ -21,7 +21,7 @@ $(document).ready(function(){
     	$.ajax({
 			type: 'POST',
 			async: false,
-			url: API_BASE_URL + '/comment/front/add' ,
+			url: API_BASE_URL + '/front/comment/add' ,
 			contentType: "application/json;charset=utf-8",
 			headers: {
 				"Authorization": token ? ('Bearer ' + JSON.parse(token).token) : ''
@@ -39,7 +39,7 @@ $(document).ready(function(){
 					$.ajax({
 						type: 'POST',
 						async: false,
-						url: API_BASE_URL + '/comment/front/list',
+						url: API_BASE_URL + '/front/comment/list',
 						contentType: "application/json",
 						data: JSON.stringify({
 							'pageSize': 100,
@@ -93,7 +93,7 @@ function initProjectDetail() {
 	$.ajax({
 		type: 'GET',
 		async: false,
-		url: API_BASE_URL + '/project/front/detail' ,
+		url: API_BASE_URL + '/front/project/detail' ,
 		//contentType: "application/json",
 		data:  {
 			'id': projectId

@@ -159,7 +159,7 @@ $(document).ready(function(){
 
 			let token = localStorage.getItem("crowdfunding-token");
 				$.ajax({
-					url: API_BASE_URL + "/project/front/lunch",
+					url: API_BASE_URL + "/front/project/lunch",
 					data: JSON.stringify(param),
 					headers: {
 						"Authorization": token ? ('Bearer ' + JSON.parse(token).token) : ''

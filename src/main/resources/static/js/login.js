@@ -4,7 +4,7 @@ $(document).ready(function(){
         $.ajax({
             type: 'POST',
             async: false,
-            url: API_BASE_URL + '/user/login' ,
+            url: API_BASE_URL + '/front/user/login' ,
             //contentType: "application/json",
             data:  {
                 'username': $("#Account").val(),

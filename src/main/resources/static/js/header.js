@@ -86,7 +86,7 @@ $(document).ready(function(){
 		$.ajax({
 			type: 'GET',
 			async: false,
-			url: API_BASE_URL + '/user/logout' ,
+			url: API_BASE_URL + '/general/logout' ,
 			//contentType: "application/json;charset=utf-8",
 			data:  {},
 			headers: {

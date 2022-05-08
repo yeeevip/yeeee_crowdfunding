@@ -21,37 +21,36 @@ import org.springframework.web.bind.annotation.RestController;
 @Api(tags = "订单中心")
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("order")
 public class OrderController {
 
     private final OrderService orderService;
 
     @ApiOperation("我下的订单")
-    @PostMapping("front/buyer")
+    @PostMapping("front/order/buyer")
     public CommonResult<PageVO<BuyOrderVO>> getMyselfBuyOrderList(@RequestBody BuyOrderPageReqVO buyOrderPageReqVO) {
         return CommonResult.success(orderService.getMyselfBuyOrderList(buyOrderPageReqVO));
     }
 
     @ApiOperation("下单-支持项目")
-    @PostMapping("front/create")
+    @PostMapping("front/order/create")
     public CommonResult<Void> frontCreateOrder(@Validated @RequestBody CreateOrderVO createOrderVO) {
         return CommonResult.success(orderService.frontCreateOrder(createOrderVO));
     }
 
     @ApiOperation("支付订单")
-    @PostMapping("front/pay")
+    @PostMapping("front/order/pay")
     public CommonResult<Void> frontPayOrder(@Validated @RequestBody PayVO payVO) {
         return CommonResult.success(orderService.frontPayOrder(payVO));
     }
 
     @ApiOperation("已卖出的订单")
-    @PostMapping("front/seller")
+    @PostMapping("front/order/seller")
     public CommonResult<PageVO<SellerOrderVO>> getSellerOrderList(@RequestBody BuyOrderPageReqVO buyOrderPageReqVO) {
         return CommonResult.success(orderService.getSellerOrderList(buyOrderPageReqVO));
     }
 
     @ApiOperation("管理员订单管理")
-    @PostMapping("admin/page/list")
+    @PostMapping("admin/order/page")
     public CommonResult<PageVO<SellerOrderVO>> getAdminOrderPageList(@RequestBody BuyOrderPageReqVO buyOrderPageReqVO) {
         return CommonResult.success(orderService.getAdminOrderPageList(buyOrderPageReqVO));
     }
