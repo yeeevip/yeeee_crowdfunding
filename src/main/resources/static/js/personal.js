@@ -34,7 +34,7 @@ var f_display = function(divId){
 					<ul id="user_ziliaoBOX">\t
 \t\t\t            \t<li>
 \t\t\t               \t\t<label class="ziLiao_form_label"><span>*</span>昵称：</label>
-\t\t\t                \t<input type="text" name="user_name" value="${user.nickName}" placeholder="请输入昵称"  />
+\t\t\t                \t<input type="text" name="user_name" value="${handleNull(user.nickName)}" placeholder="请输入昵称"  />
 \t\t\t                </li>
 \t\t\t                <li>
 \t\t\t                \t<label>性别：</label>
@@ -46,23 +46,23 @@ var f_display = function(divId){
 \t\t\t                </li>
 \t\t\t              \t<li>
 \t\t\t                \t<label><span>*</span>手机号：</label>
-\t\t\t                    <input type="text" value="${user.mobile}" name="phone" placeholder="请输入手机号" />
+\t\t\t                    <input type="text" value="${handleNull(user.mobile)}" name="phone" placeholder="请输入手机号" />
 \t\t\t                 </li>
 \t\t\t                 <li>
 \t\t\t                 \t<label><span>*</span>邮箱：</label>
-\t\t\t                    <input type="text" value="${user.email}" name="email" placeholder="请输入邮箱" />
+\t\t\t                    <input type="text" value="${handleNull(user.email)}" name="email" placeholder="请输入邮箱" />
 \t\t\t                 </li>
 \t\t\t                 <li>
 \t\t\t                 \t<label><span>*</span>真实姓名：</label>
-\t\t\t                    <input type="text" value="${user.realName}" name="real_name" placeholder="请输入真实姓名" />
+\t\t\t                    <input type="text" value="${handleNull(user.realName)}" name="real_name" placeholder="请输入真实姓名" />
 \t\t\t                 </li>
 \t\t\t                 <li>
 \t\t\t                 \t<label><span>*</span>身份证：</label>
-\t\t\t                    <input type="text" value="${user.idNumber}" name="id_number" placeholder="请输入身份证号：" />
+\t\t\t                    <input type="text" value="${handleNull(user.idNumber)}" name="id_number" placeholder="请输入身份证号：" />
 \t\t\t                 </li>
 \t\t\t                 <li>
 \t\t\t                 \t<label>生日：</label>
-\t\t\t                    <input id="calender" type="text" value="${user.dateOfBirth}" name="dateOfBirth"/>
+\t\t\t                    <input id="calender" type="text" value="${handleNull(user.dateOfBirth)}" name="dateOfBirth"/>
 \t\t\t                 </li>
 \t\t\t                 <li class="province-selector">
 \t\t\t                 \t<label>所在地区：</label>
