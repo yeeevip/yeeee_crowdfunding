@@ -3,6 +3,7 @@ package com.yeeee.crowdfunding.service;
 import com.yeeee.crowdfunding.model.vo.SysMenuVO;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * description......
@@ -14,4 +15,5 @@ public interface SysMenuService {
 
     List<SysMenuVO> getMenuListTree();
 
+    Map<String, Object> getMenuAuthz();
 }

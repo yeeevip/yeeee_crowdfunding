@@ -31,7 +31,7 @@ public class SysMenuController {
 
     @GetMapping("admin/menu/getAuthz")
     public CommonResult<Object> getMenuAuthz() {
-        return CommonResult.success(ImmutableMap.of("roles", Collections.emptyList(), "stringPermissions", Collections.emptyList()));
+        return CommonResult.success(sysMenuService.getMenuAuthz());
     }
 
 }

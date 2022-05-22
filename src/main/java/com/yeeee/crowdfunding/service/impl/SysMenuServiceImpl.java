@@ -1,6 +1,8 @@
 package com.yeeee.crowdfunding.service.impl;
 
 import cn.hutool.core.collection.CollectionUtil;
+import cn.hutool.core.util.StrUtil;
+import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
 import com.yeeee.crowdfunding.convert.SysMenuConvert;
 import com.yeeee.crowdfunding.mapper.SysMenuMapper;
@@ -34,6 +36,8 @@ import java.util.stream.Collectors;
 public class SysMenuServiceImpl implements SysMenuService {
 
     private final SysMenuMapper sysMenuMapper;
+
+    private final SysRoleMapper sysRoleMapper;
 
     private final SysUserRoleMapper sysUserRoleMapper;
 
@@ -71,6 +75,32 @@ public class SysMenuServiceImpl implements SysMenuService {
 
 
         return parentMenu;
+    }
+
+    @Override
+    public Map<String, Object> getMenuAuthz() {
+        List<String> roles = Lists.newArrayList();
+        List<String> stringPermissions = Lists.newArrayList();
+        Integer userId = SecurityUtil.currentUserId();
+        List<SysUserRole> userRoles = sysUserRoleMapper.getList(new SysUserRole().setUserId(userId));
+        if (CollectionUtil.isNotEmpty(userRoles)) {
+            userRoles.forEach(role -> {
+                SysRole sysRole = sysRoleMapper.getOne(new SysRole().setId(role.getRoleId()));
+                if (sysRole != null && StrUtil.isNotEmpty(sysRole.getCode())) {
+                    roles.add(sysRole.getCode());
+                }
+            });
+        }
+        List<SysMenu> sysMenuList = sysMenuMapper.getListByRoleIds(userRoles.stream()
+                .map(SysUserRole::getRoleId).collect(Collectors.toList()), SysMenuTypeEnum.func.getCode());
+        if (CollectionUtil.isNotEmpty(sysMenuList)) {
+            sysMenuList.forEach(menu -> {
+                if (StrUtil.isNotEmpty(menu.getPerm())) {
+                    stringPermissions.addAll(StrUtil.split(menu.getPerm(), ','));
+                }
+            });
+        }
+        return ImmutableMap.of("roles", roles, "stringPermissions", stringPermissions);
     }
 
     private void tree(Map<Long, List<SysMenuVO>> pidMap, SysMenuVO curMenu) {

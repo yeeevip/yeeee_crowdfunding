@@ -18,7 +18,6 @@ import org.mapstruct.Mappings;
 @Mapper(componentModel = "spring")
 public interface SysUserConvert {
 
-    @Mappings(@Mapping(source = "createTime", target = "dateOfRegistration"))
     UserVO sysUser2VO(SysUser sysUser);
 
     UserVO securityUser2VO(SecurityUser securityUser);

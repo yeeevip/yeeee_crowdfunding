@@ -1,5 +1,7 @@
 package com.yeeee.crowdfunding.service.impl;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.google.common.collect.Lists;
@@ -14,6 +16,7 @@ import com.yeeee.crowdfunding.model.vo.UserVO;
 import com.yeeee.crowdfunding.service.CustomUserDetailsService;
 import com.yeeee.crowdfunding.service.SysUserService;
 import com.yeeee.crowdfunding.utils.SecurityUtil;
+import com.yeeee.crowdfunding.utils.wrapper.MyPageWrapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -29,7 +32,7 @@ import java.util.stream.Collectors;
  */
 @RequiredArgsConstructor
 @Service
-public class SysUserServiceImpl implements SysUserService {
+public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> implements SysUserService {
 
     private final CustomUserDetailsService userDetailsService;
 
@@ -50,6 +53,17 @@ public class SysUserServiceImpl implements SysUserService {
                 .map(sysUserConvert::sysUser2VO)
                 .collect(Collectors.toList());
         return new PageVO<>(page.getPageNum(), page.getPageSize(), page.getPages(), page.getTotal(), userVOList);
+    }
+
+    @Override
+    public PageVO<UserVO> sysUserPageList(String query) {
+        MyPageWrapper<SysUser> pageWrapper = new MyPageWrapper<>(query);
+        IPage<SysUser> page = this.page(pageWrapper.getPage(), pageWrapper.getQueryWrapper());
+        List<UserVO> userVOList = page.getRecords()
+                .stream()
+                .map(sysUserConvert::sysUser2VO)
+                .collect(Collectors.toList());
+        return new PageVO<>((int)page.getCurrent(), (int)page.getSize(), (int)page.getPages(), page.getTotal(), userVOList);
     }
 
     @Override

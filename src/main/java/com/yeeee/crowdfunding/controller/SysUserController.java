@@ -60,6 +60,12 @@ public class SysUserController {
         return CommonResult.success(sysUserService.sysUserPageList(sysUserPageReqVO));
     }
 
+    @ApiOperation("用户分页")
+    @GetMapping(value = "admin/sys-user/page")
+    public CommonResult<PageVO<UserVO>> sysUserPageList(String query) {
+        return CommonResult.success(sysUserService.sysUserPageList(query));
+    }
+
     @GetMapping("admin/sys-user/getUserInfo")
     public CommonResult<UserVO> getUserInfo() {
         return CommonResult.success(sysUserService.getUserInfo());
