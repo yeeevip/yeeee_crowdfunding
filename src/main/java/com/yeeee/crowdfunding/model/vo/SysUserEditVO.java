@@ -5,10 +5,11 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;
-import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import java.util.Date;
+import javax.validation.constraints.Size;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -22,11 +23,15 @@ import java.util.Set;
 public class SysUserEditVO {
 
     @ApiModelProperty("ID")
-    @NotNull(message = "ID不能空", groups = {Edit.class, Info.class, Del.class})
+    @NotNull(message = "ID不能空", groups = {Edit.class, Info.class})
     private Integer id;
 
+    @NotNull(message = "ID不能空", groups = {Del.class})
+    @Size(min = 1, message = "ID不能空", groups = {Del.class})
+    private List<Integer> ids;
+
     @ApiModelProperty("用户名")
-    @NotNull(message = "用户名不能空", groups = {Base.class})
+    @NotBlank(message = "用户名不能空", groups = {Base.class})
     private String username;
 
     @ApiModelProperty("昵称")
@@ -39,6 +44,8 @@ public class SysUserEditVO {
     private String email;
 
     @ApiModelProperty("角色ID")
+    @NotNull(groups = {Base.class}, message = "角色ID不能空")
+    @Size(min = 1, groups = {Base.class}, message = "角色ID不能空")
     private Set<Integer> roleIds;
 
     @ApiModelProperty("组织ID")

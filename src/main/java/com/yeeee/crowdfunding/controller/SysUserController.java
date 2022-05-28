@@ -91,7 +91,7 @@ public class SysUserController {
 
     @ApiOperation("删除用户")
     @PostMapping(value = "admin/sys-user/del")
-    public CommonResult<Void> delSysUser(@Validated(SysUserEditVO.Info.class) @RequestBody SysUserEditVO editVO) {
+    public CommonResult<Void> delSysUser(@Validated(SysUserEditVO.Del.class) @RequestBody SysUserEditVO editVO) {
         return CommonResult.success(sysUserService.delSysUser(editVO));
     }
 

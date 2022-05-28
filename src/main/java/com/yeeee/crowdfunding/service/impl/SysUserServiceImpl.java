@@ -113,11 +113,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
     @Override
     public Void delSysUser(SysUserEditVO editVO) {
-        SysUser sysUser = this.getById(editVO.getId());
-        if (sysUser == null) {
-            throw new BizException("用户不存在");
-        }
-        this.removeById(editVO.getId());
+        this.removeByIds(editVO.getIds());
         return null;
     }
 
