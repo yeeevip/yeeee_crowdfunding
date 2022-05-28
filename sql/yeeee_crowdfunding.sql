@@ -252,9 +252,9 @@ CREATE TABLE `sys_role`  (
   `name` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '角色名称',
   `status` int(2) NULL DEFAULT 0 COMMENT '状态 （0正常 1停用）',
   `remark` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '简介',
-  `create_by` int(11) NULL DEFAULT NULL COMMENT '创建人',
+  `create_by` varchar(32) NULL DEFAULT NULL COMMENT '创建人',
   `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
-  `update_by` int(11) NULL DEFAULT NULL COMMENT '更新人',
+  `update_by` varchar(32) NULL DEFAULT NULL COMMENT '更新人',
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `code`(`code`) USING BTREE
