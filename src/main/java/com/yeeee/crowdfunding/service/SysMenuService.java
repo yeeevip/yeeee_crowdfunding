@@ -3,6 +3,7 @@ package com.yeeee.crowdfunding.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.yeeee.crowdfunding.model.entity.SysMenu;
 import com.yeeee.crowdfunding.model.vo.PageVO;
+import com.yeeee.crowdfunding.model.vo.SysMenuHasSetVO;
 import com.yeeee.crowdfunding.model.vo.SysMenuVO;
 
 import java.util.List;
@@ -29,5 +30,7 @@ public interface SysMenuService extends IService<SysMenu> {
     SysMenuVO sysMenuInfo(SysMenuVO editVO);
 
     Void delSysMenu(SysMenuVO editVO);
+
+    SysMenuHasSetVO sysMenuListAndHasSet(Integer roleId);
 
 }

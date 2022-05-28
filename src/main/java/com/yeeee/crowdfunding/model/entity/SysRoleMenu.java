@@ -1,9 +1,11 @@
 package com.yeeee.crowdfunding.model.entity;
 
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 import java.util.Date;
 
+@Accessors(chain = true)
 @Data
 public class SysRoleMenu {
     /**
@@ -14,7 +16,7 @@ public class SysRoleMenu {
     /**
      * 被授权对象ID
      */
-    private Long roleId;
+    private Integer roleId;
 
     /**
      * 授权资源表ID

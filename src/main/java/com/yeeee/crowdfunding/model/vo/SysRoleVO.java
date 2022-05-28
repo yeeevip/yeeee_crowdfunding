@@ -31,6 +31,8 @@ public class SysRoleVO {
 
     private String remark;
 
+    private List<Long> rscoIdList;
+
     public interface Base {}
     public interface Add extends SysUserEditVO.Base {}
     public interface Edit extends SysUserEditVO.Base {}

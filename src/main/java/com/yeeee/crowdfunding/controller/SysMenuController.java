@@ -1,8 +1,8 @@
 package com.yeeee.crowdfunding.controller;
 
-import com.google.common.collect.ImmutableMap;
 import com.yeeee.crowdfunding.api.CommonResult;
 import com.yeeee.crowdfunding.model.vo.PageVO;
+import com.yeeee.crowdfunding.model.vo.SysMenuHasSetVO;
 import com.yeeee.crowdfunding.model.vo.SysMenuVO;
 import com.yeeee.crowdfunding.service.SysMenuService;
 import io.swagger.annotations.ApiOperation;
@@ -61,6 +61,12 @@ public class SysMenuController {
     @PostMapping(value = "admin/sys-menu/del")
     public CommonResult<Void> delSysMenu(@Validated(SysMenuVO.Del.class) @RequestBody SysMenuVO editVO) {
         return CommonResult.success(sysMenuService.delSysMenu(editVO));
+    }
+
+    @ApiOperation("查询菜单和及已设置的")
+    @GetMapping(value = "admin/sys-menu/list-set")
+    public CommonResult<SysMenuHasSetVO> sysMenuListAndHasSet(Integer roleId) {
+        return CommonResult.success(sysMenuService.sysMenuListAndHasSet(roleId));
     }
 
 }

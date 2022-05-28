@@ -10,12 +10,15 @@ import com.yeeee.crowdfunding.convert.SysMenuConvert;
 import com.yeeee.crowdfunding.exception.BizException;
 import com.yeeee.crowdfunding.mapper.SysMenuMapper;
 import com.yeeee.crowdfunding.mapper.SysRoleMapper;
+import com.yeeee.crowdfunding.mapper.SysRoleMenuMapper;
 import com.yeeee.crowdfunding.mapper.SysUserRoleMapper;
 import com.yeeee.crowdfunding.model.entity.SysMenu;
 import com.yeeee.crowdfunding.model.entity.SysRole;
+import com.yeeee.crowdfunding.model.entity.SysRoleMenu;
 import com.yeeee.crowdfunding.model.entity.SysUserRole;
 import com.yeeee.crowdfunding.model.enums.SysMenuTypeEnum;
 import com.yeeee.crowdfunding.model.vo.PageVO;
+import com.yeeee.crowdfunding.model.vo.SysMenuHasSetVO;
 import com.yeeee.crowdfunding.model.vo.SysMenuVO;
 import com.yeeee.crowdfunding.service.SysMenuService;
 import com.yeeee.crowdfunding.utils.SecurityUtil;
@@ -45,6 +48,8 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
     private final SysUserRoleMapper sysUserRoleMapper;
 
     private final SysMenuConvert sysMenuConvert;
+
+    private final SysRoleMenuMapper sysRoleMenuMapper;
 
     @Override
     public List<SysMenuVO> getMenuListTree() {
@@ -160,6 +165,28 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
     public Void delSysMenu(SysMenuVO editVO) {
         this.removeByIds(editVO.getIds());
         return null;
+    }
+
+    @Override
+    public SysMenuHasSetVO sysMenuListAndHasSet(Integer roleId) {
+        SysMenuHasSetVO sysMenuHasSetVO = new SysMenuHasSetVO();
+        List<SysRoleMenu> roleMenuList = roleId != null ? sysRoleMenuMapper.getList(new SysRoleMenu().setRoleId(roleId)) : Collections.emptyList();
+        sysMenuHasSetVO.setCheckedKeys(roleMenuList.stream().map(SysRoleMenu::getMenuId).collect(Collectors.toSet()));
+        List<SysMenu> sysMenuList = this.list();
+        List<SysMenuVO> sysMenuVOList = sysMenuList
+                .stream()
+                .map(sysMenuConvert::entity2VO)
+                .collect(Collectors.toList());
+        Map<Long, List<SysMenuVO>> pidMap = sysMenuVOList.stream().filter(item -> item.getPid() != null).collect(Collectors.groupingBy(SysMenuVO::getPid));
+        List<SysMenuVO> parentMenu = Lists.newArrayList();
+        sysMenuVOList.forEach(item -> {
+            if (item.getPid() == null) {
+                tree(pidMap, item);
+                parentMenu.add(item);
+            }
+        });
+        sysMenuHasSetVO.setList(parentMenu);
+        return sysMenuHasSetVO;
     }
 
     private void tree(Map<Long, List<SysMenuVO>> pidMap, SysMenuVO curMenu) {
