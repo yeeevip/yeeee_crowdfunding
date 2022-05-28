@@ -38,7 +38,7 @@ public class MyPageWrapper<T> {
         return page;
     }
 
-    public Wrapper<T> getQueryWrapper() {
+    public QueryWrapper<T> getQueryWrapper() {
         QueryWrapper<T> wrapper = new QueryWrapper<>();
         QueryClause queryClause = this.clause;
         whereHandle(wrapper, queryClause.getW());

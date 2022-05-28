@@ -2,6 +2,7 @@ package com.yeeee.crowdfunding.controller;
 
 import com.google.common.collect.ImmutableMap;
 import com.yeeee.crowdfunding.api.CommonResult;
+import com.yeeee.crowdfunding.model.vo.PageVO;
 import com.yeeee.crowdfunding.model.vo.SysMenuVO;
 import com.yeeee.crowdfunding.service.SysMenuService;
 import lombok.RequiredArgsConstructor;
@@ -27,6 +28,11 @@ public class SysMenuController {
     @GetMapping("admin/menu/listTree")
     public CommonResult<List<SysMenuVO>> getMenuListTree() {
         return CommonResult.success(sysMenuService.getMenuListTree());
+    }
+
+    @GetMapping("admin/sys-menu/list")
+    public CommonResult<PageVO<SysMenuVO>> getSysMenuListTreenode(String query) {
+        return CommonResult.success(sysMenuService.getSysMenuListTreenode(query));
     }
 
     @GetMapping("admin/menu/getAuthz")

@@ -2,6 +2,9 @@ package com.yeeee.crowdfunding.service.impl;
 
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.StrUtil;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
 import com.yeeee.crowdfunding.convert.SysMenuConvert;
@@ -14,9 +17,11 @@ import com.yeeee.crowdfunding.model.entity.SysRole;
 import com.yeeee.crowdfunding.model.entity.SysRoleMenu;
 import com.yeeee.crowdfunding.model.entity.SysUserRole;
 import com.yeeee.crowdfunding.model.enums.SysMenuTypeEnum;
+import com.yeeee.crowdfunding.model.vo.PageVO;
 import com.yeeee.crowdfunding.model.vo.SysMenuVO;
 import com.yeeee.crowdfunding.service.SysMenuService;
 import com.yeeee.crowdfunding.utils.SecurityUtil;
+import com.yeeee.crowdfunding.utils.wrapper.MyPageWrapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -33,7 +38,7 @@ import java.util.stream.Collectors;
  */
 @RequiredArgsConstructor
 @Service
-public class SysMenuServiceImpl implements SysMenuService {
+public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> implements SysMenuService {
 
     private final SysMenuMapper sysMenuMapper;
 
@@ -75,6 +80,28 @@ public class SysMenuServiceImpl implements SysMenuService {
 
 
         return parentMenu;
+    }
+
+    @Override
+    public PageVO<SysMenuVO> getSysMenuListTreenode(String query) {
+        MyPageWrapper<SysMenu> pageWrapper = new MyPageWrapper<>(query);
+        QueryWrapper<SysMenu> queryWrapper = pageWrapper.getQueryWrapper();
+        queryWrapper.eq("type", SysMenuTypeEnum.menu.getCode());
+        List<SysMenu> sysMenuList = this.list(queryWrapper);
+        sysMenuList.addAll(this.list(Wrappers.<SysMenu>lambdaQuery().in(SysMenu::getPid, sysMenuList.stream().map(SysMenu::getId).collect(Collectors.toList()))));
+        List<SysMenuVO> sysMenuVOList = sysMenuList
+                .stream()
+                .map(sysMenuConvert::entity2VO)
+                .collect(Collectors.toList());
+        Map<Long, List<SysMenuVO>> pidMap = sysMenuVOList.stream().filter(item -> item.getPid() != null).collect(Collectors.groupingBy(SysMenuVO::getPid));
+        List<SysMenuVO> parentMenu = Lists.newArrayList();
+        sysMenuVOList.forEach(item -> {
+            if (item.getPid() == null) {
+                tree(pidMap, item);
+                parentMenu.add(item);
+            }
+        });
+        return new PageVO<>(0, 0, 0, 0L, parentMenu);
     }
 
     @Override

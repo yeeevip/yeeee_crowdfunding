@@ -144,7 +144,7 @@ CREATE TABLE `sys_menu`  (
   `perm` varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '权限标识',
   `icon` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '图标',
   `seq` smallint(6) NULL DEFAULT NULL COMMENT '排序',
-  `reamrk` varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '备注',
+  `remark` varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '备注',
   `type` tinyint(4) NULL DEFAULT NULL COMMENT '类型 (0：菜单， 1：功能， 2：伪菜单)',
   `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
   `create_by` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '创建人',
