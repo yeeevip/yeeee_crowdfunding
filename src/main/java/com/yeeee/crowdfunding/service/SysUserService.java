@@ -3,9 +3,7 @@ package com.yeeee.crowdfunding.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.yeeee.crowdfunding.model.dto.auth.Oauth2TokenDTO;
 import com.yeeee.crowdfunding.model.entity.SysUser;
-import com.yeeee.crowdfunding.model.vo.PageVO;
-import com.yeeee.crowdfunding.model.vo.SysUserPageReqVO;
-import com.yeeee.crowdfunding.model.vo.UserVO;
+import com.yeeee.crowdfunding.model.vo.*;
 
 /**
  * description......
@@ -23,4 +21,13 @@ public interface SysUserService extends IService<SysUser> {
 
     UserVO getUserInfo();
 
+    Void addSysUser(SysUserEditVO editVO);
+
+    Void editSysUser(SysUserEditVO editVO);
+
+    SysUserInfoVO sysUserInfo(SysUserEditVO editVO);
+
+    Void delSysUser(SysUserEditVO editVO);
+
+    Void updSysUserPwd(SysUserUpdPwdVO userUpdPwdVO);
 }

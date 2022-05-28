@@ -1,5 +1,7 @@
 package com.yeeee.crowdfunding.model.entity;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.TableField;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -76,22 +78,26 @@ public class SysUser {
     /**
      * 创建日期
      */
+    @TableField(fill = FieldFill.INSERT)
     private Date createTime;
 
     /**
      * 修改时间
      */
+    @TableField(fill = FieldFill.INSERT_UPDATE)
     private Date updateTime;
 
     /**
      * 创建人
      */
-    private Integer createBy;
+    @TableField(fill = FieldFill.INSERT)
+    private String createBy;
 
     /**
      * 修改人
      */
-    private Integer updateBy;
+    @TableField(fill = FieldFill.INSERT_UPDATE)
+    private String updateBy;
 
     /**
      * 备注
