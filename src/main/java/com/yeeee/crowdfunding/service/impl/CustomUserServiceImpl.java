@@ -69,7 +69,7 @@ public class CustomUserServiceImpl implements CustomUserDetailsService {
             if (CollectionUtil.isEmpty(userRoles)) {
                 throw new BizException(MessageConstant.USER_NO_ROLES);
             }
-            Set<String> roles = Sets.newHashSet();
+            Set<String> roles = Sets.newHashSet("SYSTEM-USER");
             userRoles.forEach(ur -> {
                 SysRole role = sysRoleMapper.getOne(new SysRole().setId(ur.getRoleId()));
                 if (role != null) {
@@ -85,7 +85,7 @@ public class CustomUserServiceImpl implements CustomUserDetailsService {
                 throw new BizException(MessageConstant.USER_NOT_EXIST);
             }
             // build security-user
-            securityUser = new SecurityUser(user.getId(), user.getUsername(), user.getPassword(), 0, Sets.newHashSet("MEMBER"));
+            securityUser = new SecurityUser(user.getId(), user.getUsername(), user.getPassword(), 0, Sets.newHashSet("FRONT-USER"));
         }
 
         // check
