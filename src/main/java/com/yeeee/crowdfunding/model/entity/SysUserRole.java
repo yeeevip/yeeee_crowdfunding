@@ -1,5 +1,7 @@
 package com.yeeee.crowdfunding.model.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -11,6 +13,7 @@ public class SysUserRole {
     /**
      * 主键ID
      */
+    @TableId(type = IdType.AUTO)
     private Integer id;
 
     /**
@@ -26,7 +29,7 @@ public class SysUserRole {
     /**
      * 创建人
      */
-    private Integer createBy;
+    private String createBy;
 
     /**
      * 创建时间
@@ -36,7 +39,7 @@ public class SysUserRole {
     /**
      * 更新人
      */
-    private Integer updateBy;
+    private String updateBy;
 
     /**
      * 更新时间

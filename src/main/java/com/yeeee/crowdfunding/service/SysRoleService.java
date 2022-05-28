@@ -3,8 +3,8 @@ package com.yeeee.crowdfunding.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.yeeee.crowdfunding.model.entity.SysRole;
 import com.yeeee.crowdfunding.model.vo.PageVO;
+import com.yeeee.crowdfunding.model.vo.SysRoleHasSetVO;
 import com.yeeee.crowdfunding.model.vo.SysRoleVO;
-import com.yeeee.crowdfunding.model.vo.SysUserInfoVO;
 
 /**
  * description......
@@ -25,5 +25,7 @@ public interface SysRoleService extends IService<SysRole> {
     SysRoleVO sysRoleInfo(SysRoleVO editVO);
 
     Void delSysRole(SysRoleVO editVO);
+
+    SysRoleHasSetVO sysRoleListAndHasSet(Integer userId);
 
 }

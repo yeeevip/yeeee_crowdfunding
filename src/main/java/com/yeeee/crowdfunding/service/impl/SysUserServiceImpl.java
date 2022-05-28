@@ -2,6 +2,7 @@ package com.yeeee.crowdfunding.service.impl;
 
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
@@ -9,8 +10,10 @@ import com.google.common.collect.Lists;
 import com.yeeee.crowdfunding.convert.SysUserConvert;
 import com.yeeee.crowdfunding.exception.BizException;
 import com.yeeee.crowdfunding.mapper.SysUserMapper;
+import com.yeeee.crowdfunding.mapper.SysUserRoleMapper;
 import com.yeeee.crowdfunding.model.dto.auth.Oauth2TokenDTO;
 import com.yeeee.crowdfunding.model.entity.SysUser;
+import com.yeeee.crowdfunding.model.entity.SysUserRole;
 import com.yeeee.crowdfunding.model.vo.*;
 import com.yeeee.crowdfunding.service.CustomUserDetailsService;
 import com.yeeee.crowdfunding.service.SysUserService;
@@ -20,9 +23,12 @@ import com.yeeee.crowdfunding.utils.wrapper.MyPageWrapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -44,6 +50,8 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     private final PasswordEncoder passwordEncoder;
 
     private final UserService userService;
+
+    private final SysUserRoleMapper sysUserRoleMapper;
 
     @Override
     public Oauth2TokenDTO login(String username, String password) {
@@ -83,23 +91,48 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         return userVO;
     }
 
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public Void addSysUser(SysUserEditVO editVO) {
         SysUser sysUser = sysUserConvert.editVO2Entity(editVO);
         sysUser.setPassword(passwordEncoder.encode("111111"));
         this.save(sysUser);
+        this.setUserRoles(editVO.getRoleIds(), sysUser.getId());
         return null;
     }
 
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public Void editSysUser(SysUserEditVO editVO) {
-        SysUser sysUser = this.getById(editVO.getId());
+        Integer userId = editVO.getId();
+        SysUser sysUser = this.getById(userId);
         if (sysUser == null) {
             throw new BizException("用户不存在");
         }
         SysUser upd = sysUserConvert.editVO2Entity(editVO);
         this.updateById(upd);
+        sysUserRoleMapper.delete(Wrappers.<SysUserRole>lambdaQuery().eq(SysUserRole::getUserId, userId));
+        this.setUserRoles(editVO.getRoleIds(), sysUser.getId());
         return null;
+    }
+
+    private void setUserRoles(Set<Integer> roleIds, Integer userId) {
+        List<SysUserRole> userRoleList = roleIds
+                .stream()
+                .map(roleId -> {
+                    SysUserRole sysUserRole = new SysUserRole();
+                    sysUserRole.setUserId(userId);
+                    sysUserRole.setRoleId(roleId);
+                    String username = SecurityUtil.currentSecurityUser().getUsername();
+                    Date date = new Date();
+                    sysUserRole.setCreateTime(date);
+                    sysUserRole.setCreateBy(username);
+                    sysUserRole.setUpdateTime(date);
+                    sysUserRole.setUpdateBy(username);
+                    return sysUserRole;
+                })
+                .collect(Collectors.toList());
+        sysUserRoleMapper.batchInsert(userRoleList);
     }
 
     @Override

@@ -61,4 +61,10 @@ public class SysRoleController {
         return CommonResult.success(sysRoleService.delSysRole(editVO));
     }
 
+    @ApiOperation("查询角色和及已设置的")
+    @GetMapping(value = "admin/sys-role/list-set")
+    public CommonResult<SysRoleHasSetVO> sysRoleListAndHasSet(Integer userId) {
+        return CommonResult.success(sysRoleService.sysRoleListAndHasSet(userId));
+    }
+
 }
