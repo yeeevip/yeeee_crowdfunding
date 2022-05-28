@@ -72,6 +72,12 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     }
 
     @Override
+    public boolean sysUserExist(String query) {
+        MyPageWrapper<SysUser> pageWrapper = new MyPageWrapper<>(query);
+        return this.count(pageWrapper.getQueryWrapper()) > 0;
+    }
+
+    @Override
     public UserVO getUserInfo() {
         UserVO userVO = sysUserConvert.securityUser2VO(SecurityUtil.currentSecurityUser());
         return userVO;

@@ -59,6 +59,12 @@ public class SysUserController {
         return CommonResult.success(sysUserService.sysUserPageList(query));
     }
 
+    @ApiOperation("用户是否存在")
+    @GetMapping(value = "admin/sys-user/exist")
+    public CommonResult<Boolean> sysUserExist(String query) {
+        return CommonResult.success(sysUserService.sysUserExist(query));
+    }
+
     @ApiOperation("创建用户")
     @PostMapping(value = "admin/sys-user/add")
     public CommonResult<Void> addSysUser(@Validated(SysUserEditVO.Add.class) @RequestBody SysUserEditVO editVO) {

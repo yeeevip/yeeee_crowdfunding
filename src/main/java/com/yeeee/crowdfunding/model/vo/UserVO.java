@@ -43,6 +43,8 @@ public class UserVO {
 
     private String mobile = "";
 
+    private String phone = "";
+
     private String city = "";
 
     @JsonFormat(shape= JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm:ss")

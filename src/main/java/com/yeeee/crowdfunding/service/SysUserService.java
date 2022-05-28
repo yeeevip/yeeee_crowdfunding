@@ -19,6 +19,8 @@ public interface SysUserService extends IService<SysUser> {
 
     PageVO<UserVO> sysUserPageList(String query);
 
+    boolean sysUserExist(String query);
+
     UserVO getUserInfo();
 
     Void addSysUser(SysUserEditVO editVO);
@@ -30,4 +32,5 @@ public interface SysUserService extends IService<SysUser> {
     Void delSysUser(SysUserEditVO editVO);
 
     Void updSysUserPwd(SysUserUpdPwdVO userUpdPwdVO);
+
 }

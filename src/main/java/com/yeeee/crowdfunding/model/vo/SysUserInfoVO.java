@@ -26,7 +26,7 @@ public class SysUserInfoVO {
     private String nickName;
 
     @ApiModelProperty("手机")
-    private String mobile;
+    private String phone;
 
     @ApiModelProperty("邮箱")
     private String email;
