@@ -22,4 +22,12 @@ public interface SysMenuService extends IService<SysMenu> {
 
     Map<String, Object> getMenuAuthz();
 
+    Void addSysMenu(SysMenuVO editVO);
+
+    Void editSysMenu(SysMenuVO editVO);
+
+    SysMenuVO sysMenuInfo(SysMenuVO editVO);
+
+    Void delSysMenu(SysMenuVO editVO);
+
 }

@@ -3,18 +3,16 @@ package com.yeeee.crowdfunding.service.impl;
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
 import com.yeeee.crowdfunding.convert.SysMenuConvert;
+import com.yeeee.crowdfunding.exception.BizException;
 import com.yeeee.crowdfunding.mapper.SysMenuMapper;
 import com.yeeee.crowdfunding.mapper.SysRoleMapper;
-import com.yeeee.crowdfunding.mapper.SysRoleMenuMapper;
 import com.yeeee.crowdfunding.mapper.SysUserRoleMapper;
 import com.yeeee.crowdfunding.model.entity.SysMenu;
 import com.yeeee.crowdfunding.model.entity.SysRole;
-import com.yeeee.crowdfunding.model.entity.SysRoleMenu;
 import com.yeeee.crowdfunding.model.entity.SysUserRole;
 import com.yeeee.crowdfunding.model.enums.SysMenuTypeEnum;
 import com.yeeee.crowdfunding.model.vo.PageVO;
@@ -86,9 +84,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
     public PageVO<SysMenuVO> getSysMenuListTreenode(String query) {
         MyPageWrapper<SysMenu> pageWrapper = new MyPageWrapper<>(query);
         QueryWrapper<SysMenu> queryWrapper = pageWrapper.getQueryWrapper();
-        queryWrapper.eq("type", SysMenuTypeEnum.menu.getCode());
         List<SysMenu> sysMenuList = this.list(queryWrapper);
-        sysMenuList.addAll(this.list(Wrappers.<SysMenu>lambdaQuery().in(SysMenu::getPid, sysMenuList.stream().map(SysMenu::getId).collect(Collectors.toList()))));
         List<SysMenuVO> sysMenuVOList = sysMenuList
                 .stream()
                 .map(sysMenuConvert::entity2VO)
@@ -128,6 +124,42 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
             });
         }
         return ImmutableMap.of("roles", roles, "stringPermissions", stringPermissions);
+    }
+
+    @Override
+    public Void addSysMenu(SysMenuVO editVO) {
+        SysMenu sysMenu = sysMenuConvert.vo2Entity(editVO);
+        this.save(sysMenu);
+        return null;
+    }
+
+    @Override
+    public Void editSysMenu(SysMenuVO editVO) {
+        SysMenu sysMenu = this.getById(editVO.getId());
+        if (sysMenu == null) {
+            throw new BizException("菜单不存在");
+        }
+        if (editVO.getId().equals(editVO.getPid())) {
+            editVO.setPid(null);
+        }
+        SysMenu upd = sysMenuConvert.vo2Entity(editVO);
+        this.updateById(upd);
+        return null;
+    }
+
+    @Override
+    public SysMenuVO sysMenuInfo(SysMenuVO editVO) {
+        SysMenu sysMenu = this.getById(editVO.getId());
+        if (sysMenu == null) {
+            throw new BizException("菜单不存在");
+        }
+        return sysMenuConvert.entity2VO(sysMenu);
+    }
+
+    @Override
+    public Void delSysMenu(SysMenuVO editVO) {
+        this.removeByIds(editVO.getIds());
+        return null;
     }
 
     private void tree(Map<Long, List<SysMenuVO>> pidMap, SysMenuVO curMenu) {

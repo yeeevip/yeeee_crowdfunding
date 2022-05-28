@@ -11,7 +11,7 @@ import java.util.List;
 public interface SysUserMapper extends BaseMapper<SysUser> {
        List<SysUser> getList(SysUser sysUser);
        SysUser getOne(SysUser sysUser);
-       int insert(SysUser sysUser);
+       //int insert(SysUser sysUser);
        int updateByPrimaryKey(SysUser sysUser);
        int batchInsert(List<SysUser> sysUserList);
 }

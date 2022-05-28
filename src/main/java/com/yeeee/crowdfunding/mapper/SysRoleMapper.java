@@ -11,7 +11,7 @@ import java.util.List;
 public interface SysRoleMapper extends BaseMapper<SysRole> {
        List<SysRole> getList(SysRole sysRole);
        SysRole getOne(SysRole sysRole);
-       int insert(SysRole sysRole);
+       //int insert(SysRole sysRole);
        int updateByPrimaryKey(SysRole sysRole);
        int batchInsert(List<SysRole> sysRoleList);
 }

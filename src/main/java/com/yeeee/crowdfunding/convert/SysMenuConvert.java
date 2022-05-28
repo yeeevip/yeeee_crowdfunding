@@ -17,4 +17,6 @@ public interface SysMenuConvert {
 
     SysMenuVO entity2VO(SysMenu sysMenu);
 
+    SysMenu vo2Entity(SysMenuVO sysMenuVO);
+
 }

@@ -12,7 +12,7 @@ import java.util.List;
 public interface SysMenuMapper extends BaseMapper<SysMenu> {
        List<SysMenu> getList(SysMenu sysMenu);
        SysMenu getOne(SysMenu sysMenu);
-       int insert(SysMenu sysMenu);
+       //int insert(SysMenu sysMenu);
        int updateByPrimaryKey(SysMenu sysMenu);
        int batchInsert(List<SysMenu> sysMenuList);
 

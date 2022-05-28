@@ -136,22 +136,22 @@ INSERT INTO `sys_dept` VALUES (432, '客户满意部', 'KHMYB', -1, '-1', 0, 5, 
 -- Table structure for sys_menu
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_menu`;
-CREATE TABLE `sys_menu`  (
-  `id` bigint(20) NOT NULL COMMENT 'ID',
-  `pid` bigint(20) NULL DEFAULT NULL COMMENT '父ID',
-  `name` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '名称',
-  `url` varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '资源路径',
-  `perm` varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '权限标识',
-  `icon` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '图标',
-  `seq` smallint(6) NULL DEFAULT NULL COMMENT '排序',
-  `remark` varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '备注',
-  `type` tinyint(4) NULL DEFAULT NULL COMMENT '类型 (0：菜单， 1：功能， 2：伪菜单)',
-  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
-  `create_by` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '创建人',
-  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '修改时间',
-  `update_by` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '修改人',
+CREATE TABLE `sys_menu` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `pid` bigint(20) DEFAULT NULL COMMENT '父ID',
+  `name` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '名称',
+  `url` varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '资源路径',
+  `perm` varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '权限标识',
+  `icon` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '图标',
+  `seq` smallint(6) DEFAULT NULL COMMENT '排序',
+  `remark` varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '备注',
+  `type` tinyint(4) DEFAULT NULL COMMENT '类型 (0：菜单， 1：功能， 2：伪菜单)',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `create_by` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '创建人',
+  `update_time` datetime DEFAULT NULL COMMENT '修改时间',
+  `update_by` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '修改人',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '系统权限资源' ROW_FORMAT = Dynamic;
+) ENGINE=InnoDB AUTO_INCREMENT=4353221119792134 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='系统权限资源';
 
 -- ----------------------------
 -- Records of sys_menu
