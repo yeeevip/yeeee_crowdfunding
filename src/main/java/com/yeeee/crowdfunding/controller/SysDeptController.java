@@ -2,6 +2,7 @@ package com.yeeee.crowdfunding.controller;
 
 import com.yeeee.crowdfunding.api.CommonResult;
 import com.yeeee.crowdfunding.model.vo.PageVO;
+import com.yeeee.crowdfunding.model.vo.SysDeptHasSetVO;
 import com.yeeee.crowdfunding.model.vo.SysDeptVO;
 import com.yeeee.crowdfunding.service.SysDeptService;
 import io.swagger.annotations.Api;
@@ -60,6 +61,12 @@ public class SysDeptController {
     @PostMapping(value = "admin/sys-dept/del")
     public CommonResult<Void> delSysDept(@Validated(SysDeptVO.Del.class) @RequestBody SysDeptVO editVO) {
         return CommonResult.success(sysDeptService.delSysDept(editVO));
+    }
+
+    @ApiOperation("查询组织机构及已设置的")
+    @GetMapping(value = "admin/sys-dept/list-set")
+    public CommonResult<SysDeptHasSetVO> sysDeptListAndHasSet(Integer userId) {
+        return CommonResult.success(sysDeptService.sysDeptListAndHasSet(userId));
     }
 
 }

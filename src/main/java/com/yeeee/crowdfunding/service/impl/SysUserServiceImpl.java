@@ -1,6 +1,6 @@
 package com.yeeee.crowdfunding.service.impl;
 
-import cn.hutool.core.util.StrUtil;
+import cn.hutool.core.collection.CollectionUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -9,10 +9,12 @@ import com.github.pagehelper.PageHelper;
 import com.google.common.collect.Lists;
 import com.yeeee.crowdfunding.convert.SysUserConvert;
 import com.yeeee.crowdfunding.exception.BizException;
+import com.yeeee.crowdfunding.mapper.SysUserDeptMapper;
 import com.yeeee.crowdfunding.mapper.SysUserMapper;
 import com.yeeee.crowdfunding.mapper.SysUserRoleMapper;
 import com.yeeee.crowdfunding.model.dto.auth.Oauth2TokenDTO;
 import com.yeeee.crowdfunding.model.entity.SysUser;
+import com.yeeee.crowdfunding.model.entity.SysUserDept;
 import com.yeeee.crowdfunding.model.entity.SysUserRole;
 import com.yeeee.crowdfunding.model.vo.*;
 import com.yeeee.crowdfunding.service.CustomUserDetailsService;
@@ -52,6 +54,8 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     private final UserService userService;
 
     private final SysUserRoleMapper sysUserRoleMapper;
+
+    private final SysUserDeptMapper sysUserDeptMapper;
 
     @Override
     public Oauth2TokenDTO login(String username, String password) {
@@ -98,6 +102,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         sysUser.setPassword(passwordEncoder.encode("111111"));
         this.save(sysUser);
         this.setUserRoles(editVO.getRoleIds(), sysUser.getId());
+        this.setUserDepts(editVO.getOrgIds(), sysUser.getId());
         return null;
     }
 
@@ -113,6 +118,8 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         this.updateById(upd);
         sysUserRoleMapper.delete(Wrappers.<SysUserRole>lambdaQuery().eq(SysUserRole::getUserId, userId));
         this.setUserRoles(editVO.getRoleIds(), sysUser.getId());
+        sysUserDeptMapper.delete(Wrappers.<SysUserDept>lambdaQuery().eq(SysUserDept::getUserId, userId));
+        this.setUserDepts(editVO.getOrgIds(), sysUser.getId());
         return null;
     }
 
@@ -133,6 +140,22 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
                 })
                 .collect(Collectors.toList());
         sysUserRoleMapper.batchInsert(userRoleList);
+    }
+
+    private void setUserDepts(Set<Integer> orgIds, Integer userId) {
+        if (CollectionUtil.isEmpty(orgIds)) {
+            return;
+        }
+        List<SysUserDept> userRoleList = orgIds
+                .stream()
+                .map(deptId -> {
+                    SysUserDept sysUserDept = new SysUserDept();
+                    sysUserDept.setUserId(userId);
+                    sysUserDept.setDeptId(deptId);
+                    return sysUserDept;
+                })
+                .collect(Collectors.toList());
+        userRoleList.forEach(sysUserDeptMapper::insert);
     }
 
     @Override

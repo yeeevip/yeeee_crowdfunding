@@ -1,19 +1,24 @@
 package com.yeeee.crowdfunding.service.impl;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.google.common.collect.Lists;
 import com.yeeee.crowdfunding.convert.SysDeptConvert;
 import com.yeeee.crowdfunding.exception.BizException;
 import com.yeeee.crowdfunding.mapper.SysDeptMapper;
+import com.yeeee.crowdfunding.mapper.SysUserDeptMapper;
 import com.yeeee.crowdfunding.model.entity.SysDept;
+import com.yeeee.crowdfunding.model.entity.SysUserDept;
 import com.yeeee.crowdfunding.model.vo.PageVO;
+import com.yeeee.crowdfunding.model.vo.SysDeptHasSetVO;
 import com.yeeee.crowdfunding.model.vo.SysDeptVO;
 import com.yeeee.crowdfunding.service.SysDeptService;
 import com.yeeee.crowdfunding.utils.wrapper.MyPageWrapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -32,6 +37,8 @@ import java.util.stream.Collectors;
 public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> implements SysDeptService {
 
     private final SysDeptConvert sysDeptConvert;
+
+    private final SysUserDeptMapper sysUserDeptMapper;
 
     @Override
     public PageVO<SysDeptVO> sysDeptPageList(String query) {
@@ -103,5 +110,26 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> impl
     public Void delSysDept(SysDeptVO editVO) {
         this.removeByIds(editVO.getIds());
         return null;
+    }
+
+    @Override
+    public SysDeptHasSetVO sysDeptListAndHasSet(Integer userId) {
+        SysDeptHasSetVO sysDeptHasSetVO = new SysDeptHasSetVO();
+        List<SysUserDept> userDeptList = userId != null ? sysUserDeptMapper.selectList(Wrappers.<SysUserDept>lambdaQuery().eq(SysUserDept::getUserId, userId)) : Collections.emptyList();
+        sysDeptHasSetVO.setCheckedKeys(userDeptList.stream().map(SysUserDept::getDeptId).collect(Collectors.toSet()));
+        List<SysDeptVO> deptVOList = this.list()
+                .stream()
+                .map(sysDeptConvert::entity2VO)
+                .collect(Collectors.toList());
+        Map<Integer, List<SysDeptVO>> pidMap = deptVOList.stream().filter(item -> item.getPid() != null && item.getPid() !=-1).collect(Collectors.groupingBy(SysDeptVO::getPid));
+        List<SysDeptVO> rootList = Lists.newArrayList();
+        deptVOList.forEach(item -> {
+            if (item.getPid() == null || item.getPid() == -1) {
+                this.tree(pidMap, item);
+                rootList.add(item);
+            }
+        });
+        sysDeptHasSetVO.setList(rootList);
+        return sysDeptHasSetVO;
     }
 }

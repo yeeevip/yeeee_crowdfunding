@@ -3,6 +3,7 @@ package com.yeeee.crowdfunding.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.yeeee.crowdfunding.model.entity.SysDept;
 import com.yeeee.crowdfunding.model.vo.PageVO;
+import com.yeeee.crowdfunding.model.vo.SysDeptHasSetVO;
 import com.yeeee.crowdfunding.model.vo.SysDeptVO;
 
 /**
@@ -26,5 +27,7 @@ public interface SysDeptService extends IService<SysDept> {
     SysDeptVO sysDeptInfo(SysDeptVO editVO);
 
     Void delSysDept(SysDeptVO editVO);
+
+    SysDeptHasSetVO sysDeptListAndHasSet(Integer userId);
 
 }
