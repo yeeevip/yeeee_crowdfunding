@@ -12,6 +12,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -22,9 +23,15 @@ import java.util.Map;
 public class MyPageWrapper<T> {
 
     private final QueryClause clause;
+    private final Map<String, Object> wkv;
 
     public MyPageWrapper(String query) {
         this.clause = JSON.parseObject(query, QueryClause.class);
+        wkv = this.clause.getW().stream().collect(Collectors.toMap(WhereClause::getK, WhereClause::getV));
+    }
+
+    public Object getQueryValue(String key) {
+        return wkv.get(key);
     }
 
     public IPage<T> getPage() {

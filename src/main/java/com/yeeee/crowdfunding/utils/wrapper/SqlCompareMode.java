@@ -20,6 +20,7 @@ public enum SqlCompareMode {
     BT(" between ", "位于..和..之间"),
     IS(" is ", "是"),
     NIS(" is not ", "不是"),
+    OR(" or ", "或者"),
     ASC(" asc ", "升序"),
     DESC(" desc ", "降序"),
     ;

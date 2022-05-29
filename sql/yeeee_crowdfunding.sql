@@ -152,22 +152,23 @@ INSERT INTO `sys_dept` VALUES (432, '客户满意部', 'KHMYB', -1, '-1', 0, 5, 
 -- Table structure for sys_cat
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_cat`;
-CREATE TABLE `sys_cat`  (
+CREATE TABLE `sys_cat` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '部门id',
-  `code` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '编码',
-  `name` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '名称',
-  `pid` int(11) NULL DEFAULT -1 COMMENT '父id',
-  `status` int(2) NULL DEFAULT 0 COMMENT '状态（0正常 1停用）',
-  `sort` int(4) NULL DEFAULT 0 COMMENT '显示顺序',
-  `remark` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '备注',
-  `create_by` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '创建者',
-  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
-  `update_by` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '更新者',
-  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `code` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '编码',
+  `name` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT '' COMMENT '名称',
+  `tid` int(11) DEFAULT '-1' COMMENT '顶层ID',
+  `pid` int(11) DEFAULT '-1' COMMENT '父id',
+  `status` int(2) DEFAULT '0' COMMENT '状态（0正常 1停用）',
+  `sort` int(4) DEFAULT '0' COMMENT '显示顺序',
+  `remark` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '备注',
+  `create_by` varchar(32) DEFAULT NULL COMMENT '创建者',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `update_by` varchar(32) DEFAULT NULL COMMENT '更新者',
+  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE,
-  UNIQUE INDEX `idx_code`(`code`) USING BTREE,
-  INDEX `idx_parent_id`(`pid`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 433 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '字典表' ROW_FORMAT = DYNAMIC;
+  UNIQUE KEY `idx_code` (`code`) USING BTREE,
+  KEY `idx_parent_id` (`pid`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=434 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='字典表';
 
 -- ----------------------------
 -- Table structure for sys_menu

@@ -24,6 +24,8 @@ public class SysMenuVO {
      */
     private Long pid;
 
+    private String pnm;
+
     /**
      * 名称
      */

@@ -29,6 +29,7 @@ import org.springframework.stereotype.Service;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -158,7 +159,12 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
         if (sysMenu == null) {
             throw new BizException("菜单不存在");
         }
-        return sysMenuConvert.entity2VO(sysMenu);
+        SysMenuVO sysMenuVO = sysMenuConvert.entity2VO(sysMenu);
+        if (sysMenuVO.getPid() != null) {
+            SysMenu pMenu = this.getById(sysMenuVO.getPid());
+            sysMenuVO.setPnm(Optional.ofNullable(pMenu).orElseGet(SysMenu::new).getName());
+        }
+        return sysMenuVO;
     }
 
     @Override
