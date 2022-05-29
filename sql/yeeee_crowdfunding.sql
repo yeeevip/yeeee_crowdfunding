@@ -255,6 +255,11 @@ INSERT INTO `sys_menu` VALUES (4353221119792128, 4323654351082496, '调度日志
 INSERT INTO `sys_menu` VALUES (4353221119792129, 4353221119792128, '查看', NULL, 'sys:qrtzLog:page, sys:qrtzLog:list, sys:qrtzLog:info', NULL, 10, NULL, 1, NULL, 'auto', NULL, 'auto');
 INSERT INTO `sys_menu` VALUES (4353221119792132, 4353221119792128, '删除', NULL, 'sys:qrtzLog:del', NULL, 40, NULL, 1, NULL, 'auto', NULL, 'auto');
 INSERT INTO `sys_menu` VALUES (4353221119792133, 4353221119792128, '导出', NULL, 'sys:qrtzLog:expt', NULL, 50, NULL, 1, NULL, 'auto', NULL, 'auto');
+INSERT INTO `sys_menu` VALUES (4353221119792134, 4347326007383040, '详情', '', 'sys:dept:info', '', 1, NULL, 1, '2022-05-29 14:52:26', 'admin', '2022-05-29 14:52:26', 'admin');
+INSERT INTO `sys_menu` VALUES (4353221119792135, 4347326007383040, '删除', '', 'sys:dept:del', '', 1, NULL, 1, '2022-05-29 14:53:00', 'admin', '2022-05-29 14:53:00', 'admin');
+INSERT INTO `sys_menu` VALUES (4353221119792136, 4347326007383040, '编辑', '', 'sys:dept:upd', '', 1, NULL, 1, '2022-05-29 14:53:18', 'admin', '2022-05-29 14:53:18', 'admin');
+INSERT INTO `sys_menu` VALUES (4353221119792137, 4347326007383040, '新增', '', 'sys:dept:add', '', 1, NULL, 1, '2022-05-29 14:53:53', 'admin', '2022-05-29 14:53:53', 'admin');
+
 
 -- ----------------------------
 -- Table structure for sys_oauth_client_details
