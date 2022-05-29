@@ -102,23 +102,39 @@ INSERT INTO `oauth_refresh_token` VALUES ('e21e4a9910395fb82df5497f4c1195ed', 0x
 -- Table structure for sys_dept
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_dept`;
-CREATE TABLE `sys_dept`  (
+CREATE TABLE `sys_dept` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '部门id',
-  `dept_name` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '部门名称',
-  `code` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '部门代码',
-  `parent_id` int(11) NULL DEFAULT -1 COMMENT '父部门id',
-  `ancestors` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '祖级列表',
-  `status` int(2) NULL DEFAULT 0 COMMENT '部门状态（0正常 1停用）',
-  `sort` int(4) NULL DEFAULT 0 COMMENT '显示顺序',
-  `remark` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '备注',
-  `create_by` int(11) NULL DEFAULT NULL COMMENT '创建者',
+  `name` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT '' COMMENT '部门名称',
+  `code` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '部门代码',
+  `pid` int(11) DEFAULT '-1' COMMENT '父部门id',
+  `ancestors` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '祖级列表',
+  `status` int(2) DEFAULT '0' COMMENT '部门状态（0正常 1停用）',
+  `sort` int(4) DEFAULT '0' COMMENT '显示顺序',
+  `remark` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '备注',
+  `create_by` varchar(32) DEFAULT NULL COMMENT '创建者',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `update_by` varchar(32) DEFAULT NULL COMMENT '更新者',
+  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
+  PRIMARY KEY (`id`) USING BTREE,
+  UNIQUE KEY `idx_code` (`code`) USING BTREE,
+  KEY `idx_parent_id` (`pid`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=433 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='部门表';
+
+-- ----------------------------
+-- Table structure for sys_user_dept
+-- ----------------------------
+DROP TABLE IF EXISTS `sys_user_dept`;
+CREATE TABLE `sys_user_dept`  (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '部门id',
+  `user_id` int(11) NULL DEFAULT -1 COMMENT '用户ID',
+  `dept_id` int(11) NULL DEFAULT NULL COMMENT '部门ID',
+  `create_by` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '创建者',
   `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
-  `update_by` int(11) NULL DEFAULT NULL COMMENT '更新者',
+  `update_by` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '更新者',
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE,
-  UNIQUE INDEX `idx_code`(`code`) USING BTREE,
-  INDEX `idx_parent_id`(`parent_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 433 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '部门表' ROW_FORMAT = Dynamic;
+  INDEX `idx_parent_id`(`user_id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 433 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '部门表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_dept
@@ -131,6 +147,27 @@ INSERT INTO `sys_dept` VALUES (7, '渠道组', 'QD', 1, '-1,1', 0, 4, NULL, 1, '
 INSERT INTO `sys_dept` VALUES (430, '测试1', '11', 8, '-1,8', 0, 11, NULL, 1, '2021-12-30 21:51:01', 1, '2021-12-30 21:51:01');
 INSERT INTO `sys_dept` VALUES (431, '技术部', 'JS', -1, '-1', 0, 1, NULL, 1, '2022-01-05 17:01:56', 1, '2022-01-05 17:01:56');
 INSERT INTO `sys_dept` VALUES (432, '客户满意部', 'KHMYB', -1, '-1', 0, 5, NULL, 10280, '2022-02-15 11:46:46', 10280, '2022-02-15 11:46:46');
+
+-- ----------------------------
+-- Table structure for sys_cat
+-- ----------------------------
+DROP TABLE IF EXISTS `sys_cat`;
+CREATE TABLE `sys_cat`  (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '部门id',
+  `code` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '编码',
+  `name` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '名称',
+  `pid` int(11) NULL DEFAULT -1 COMMENT '父id',
+  `status` int(2) NULL DEFAULT 0 COMMENT '状态（0正常 1停用）',
+  `sort` int(4) NULL DEFAULT 0 COMMENT '显示顺序',
+  `remark` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '备注',
+  `create_by` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '创建者',
+  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+  `update_by` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '更新者',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  PRIMARY KEY (`id`) USING BTREE,
+  UNIQUE INDEX `idx_code`(`code`) USING BTREE,
+  INDEX `idx_parent_id`(`pid`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 433 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '字典表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Table structure for sys_menu
@@ -403,11 +440,11 @@ INSERT INTO `sys_user` VALUES (1, 'admin', '$2a$10$B3Cxicl0/zR2uAJ1tM55DeuGGiHjD
 INSERT INTO `sys_user` VALUES (2, 'shenhe', '$2a$10$B3Cxicl0/zR2uAJ1tM55DeuGGiHjDh.BD7XMop1qFoEAfto8g7O3O', '审核员', NULL, '13888888888', NULL, NULL, 131, NULL, 0, NULL, '2021-07-12 11:24:02', '2021-12-16 16:59:44', 1, 1, '管理员', 0);
 
 -- ----------------------------
--- Table structure for sys_user_log
+-- Table structure for sys_user_opr_log
 -- ----------------------------
-DROP TABLE IF EXISTS `sys_user_log`;
-CREATE TABLE `sys_user_log`  (
-  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '主键',
+DROP TABLE IF EXISTS `sys_user_opr_log`;
+CREATE TABLE `sys_user_opr_log`  (
+  `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '主键',
   `route_path` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL COMMENT '路由地址',
   `browser` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL COMMENT '浏览器',
   `ip_address` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL COMMENT 'IP地址',
@@ -419,19 +456,11 @@ CREATE TABLE `sys_user_log`  (
   `access_time` bigint(20) NULL DEFAULT NULL COMMENT '执行时间',
   `access_result` mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL COMMENT '返回数据',
   `error_message` mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL COMMENT '异常信息',
-  `state` int(4) NULL DEFAULT NULL COMMENT '状态',
   `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建日期',
-  `create_by` int(11) NULL DEFAULT NULL COMMENT '创建人',
-  `create_name` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL COMMENT '操作人',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `idx_create_time`(`create_time`) USING BTREE,
-  INDEX `idx_create_by`(`create_by`) USING BTREE,
   INDEX `idx_url`(`url`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of sys_user_log
--- ----------------------------
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Table structure for sys_user_role
@@ -4547,5 +4576,27 @@ CREATE TABLE `t_user_account`  (
 -- ----------------------------
 -- Records of t_user_account
 -- ----------------------------
+
+-- ----------------------------
+-- Table structure for sys_qrtz_log
+-- ----------------------------
+DROP TABLE IF EXISTS `sys_qrtz_log`;
+CREATE TABLE `sys_qrtz_log` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `url` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT 'url',
+  `job_key` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '任务标识',
+  `remark` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '备注',
+  `spend_time` int(11) DEFAULT NULL COMMENT '运行时长',
+  `next_fire_tm` datetime DEFAULT NULL COMMENT '下次执行时间',
+  `pre_fire_tm` datetime DEFAULT NULL COMMENT '这次执行时间',
+  `status` tinyint(2) DEFAULT '0' COMMENT '状态 (0：成功， 1：失败， 2: 异常)',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `create_by` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '创建人',
+  `update_time` datetime DEFAULT NULL COMMENT '修改时间',
+  `update_by` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '修改人',
+  `edit_flag` tinyint(4) DEFAULT '0' COMMENT '逻辑删除',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='系统调度日志';
+
 
 SET FOREIGN_KEY_CHECKS = 1;
