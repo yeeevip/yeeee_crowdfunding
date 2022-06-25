@@ -1,6 +1,6 @@
 # CrowdFunding（众筹系统）
 
-> [基于springboot的前后端分离重构实现]
+> 基于springboot+mybatis-plus+oauth2+vue开发众筹平台项目系统
 > 
 
 # 运行步骤
