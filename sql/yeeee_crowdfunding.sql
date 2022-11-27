@@ -283,7 +283,7 @@ CREATE TABLE `oauth_client_details`  (
 -- ----------------------------
 -- Records of oauth_client_details
 -- ----------------------------
-INSERT INTO `oauth_client_details` VALUES ('yeeee_crowdfunding-web', NULL, '$2a$10$y2TZo5p42YuYTnOGe/shXeJPANesqGWtZdNrJrHvRcfy0akWB..aq', 'all', 'password,refresh_token,authorization_code,client_credentials', '', NULL, 864000, 6048000, NULL, 'true');
+INSERT INTO `oauth_client_details` VALUES ('yeeee_crowdfunding-web', NULL, '96e79218965eb72c92a549dd5a330112', 'all', 'password,refresh_token,authorization_code,client_credentials', '', NULL, 864000, 6048000, NULL, 'true');
 
 -- ----------------------------
 -- Table structure for sys_role
