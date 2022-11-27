@@ -1,9 +1,9 @@
 package com.yeeee.crowdfunding.handle;
 
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
-import com.yeeee.crowdfunding.utils.SecurityUtil;
 import org.apache.ibatis.reflection.MetaObject;
 import org.springframework.stereotype.Component;
+import vip.yeee.memo.integrate.common.websecurity.context.SecurityContext;
 
 import java.util.Date;
 
@@ -44,7 +44,7 @@ public class FillMetaObjectHandler implements MetaObjectHandler {
      * 获取登陆名
      */
     private String getUsername() {
-        return SecurityUtil.currentSecurityUser().getUsername();
+        return SecurityContext.getCurUser().getUsername();
     }
 
 }

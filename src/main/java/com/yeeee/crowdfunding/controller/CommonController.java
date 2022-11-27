@@ -4,7 +4,6 @@ import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.io.IoUtil;
 import cn.hutool.core.util.RandomUtil;
 import com.google.common.collect.Lists;
-import com.yeeee.crowdfunding.annotation.AnonymousAccess;
 import com.yeeee.crowdfunding.api.CommonResult;
 import com.yeeee.crowdfunding.model.entity.ProvinceCityDistrict;
 import com.yeeee.crowdfunding.service.ProvinceCityDistrictService;
@@ -17,6 +16,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import vip.yeee.memo.integrate.common.websecurity.annotation.AnonymousAccess;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.*;

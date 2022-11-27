@@ -17,11 +17,11 @@ import com.yeeee.crowdfunding.model.vo.PageVO;
 import com.yeeee.crowdfunding.model.vo.SysRoleHasSetVO;
 import com.yeeee.crowdfunding.model.vo.SysRoleVO;
 import com.yeeee.crowdfunding.service.SysRoleService;
-import com.yeeee.crowdfunding.utils.SecurityUtil;
 import com.yeeee.crowdfunding.utils.wrapper.MyPageWrapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import vip.yeee.memo.integrate.common.websecurity.context.SecurityContext;
 
 import java.util.Collections;
 import java.util.Date;
@@ -97,7 +97,7 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
                     SysRoleMenu sysRoleMenu = new SysRoleMenu();
                     sysRoleMenu.setRoleId(roleId);
                     sysRoleMenu.setMenuId(rsco);
-                    String username = SecurityUtil.currentSecurityUser().getUsername();
+                    String username = SecurityContext.getCurUser().getUsername();
                     Date date = new Date();
                     sysRoleMenu.setCreateTime(date);
                     sysRoleMenu.setCreateBy(username);

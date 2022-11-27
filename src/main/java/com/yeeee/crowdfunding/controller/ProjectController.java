@@ -1,7 +1,6 @@
 package com.yeeee.crowdfunding.controller;
 
 import com.github.pagehelper.Page;
-import com.yeeee.crowdfunding.annotation.AnonymousAccess;
 import com.yeeee.crowdfunding.api.CommonResult;
 import com.yeeee.crowdfunding.model.vo.*;
 import com.yeeee.crowdfunding.service.ProjectService;
@@ -10,6 +9,7 @@ import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import vip.yeee.memo.integrate.common.websecurity.annotation.AnonymousAccess;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;

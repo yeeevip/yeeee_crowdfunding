@@ -11,10 +11,11 @@ import com.yeeee.crowdfunding.model.vo.PageVO;
 import com.yeeee.crowdfunding.model.vo.ReceiveInfoVO;
 import com.yeeee.crowdfunding.model.vo.ReceivePageReqVO;
 import com.yeeee.crowdfunding.service.ReceiveInfoService;
-import com.yeeee.crowdfunding.utils.SecurityUtil;
+import com.yeeee.crowdfunding.utils.BusinessUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import vip.yeee.memo.integrate.common.websecurity.context.SecurityContext;
 
 import java.util.List;
 import java.util.Optional;
@@ -40,7 +41,7 @@ public class ReceiveInfoServiceImpl implements ReceiveInfoService {
 
         Page<ReceiveInformation> page = PageHelper.startPage(receivePageReqVO.getPageNum(), receivePageReqVO.getPageSize());
 
-        List<ReceiveInformation> informationList = receiveInformationMapper.getList(new ReceiveInformation().setUserId(SecurityUtil.currentUserId()));
+        List<ReceiveInformation> informationList = receiveInformationMapper.getList(new ReceiveInformation().setUserId(BusinessUtils.getCurUserId()));
         List<ReceiveInfoVO> infoVOList = Optional.ofNullable(informationList).orElseGet(Lists::newArrayList)
                 .stream()
                 .map(receiveInfoConvert::entity2VO)
@@ -53,7 +54,7 @@ public class ReceiveInfoServiceImpl implements ReceiveInfoService {
     @Override
     public Void updateReceiveInfo(ReceiveInfoVO receiveInfoVO) {
 
-        List<ReceiveInformation> informationList = receiveInformationMapper.getList(new ReceiveInformation().setUserId(SecurityUtil.currentUserId()).setSetDefault(1));
+        List<ReceiveInformation> informationList = receiveInformationMapper.getList(new ReceiveInformation().setUserId(BusinessUtils.getCurUserId()).setSetDefault(1));
         if (CollectionUtil.isNotEmpty(informationList)) {
             informationList.forEach(item -> receiveInformationMapper.updateByPrimaryKey(new ReceiveInformation().setId(item.getId()).setSetDefault(0)));
         }
@@ -68,7 +69,7 @@ public class ReceiveInfoServiceImpl implements ReceiveInfoService {
     @Override
     public Void addReceiveInfo(ReceiveInfoVO receiveInfoVO) {
         ReceiveInformation save = receiveInfoConvert.vo2Entity(receiveInfoVO);
-        save.setUserId(SecurityUtil.currentUserId());
+        save.setUserId(BusinessUtils.getCurUserId());
         receiveInformationMapper.insert(save);
         return null;
     }

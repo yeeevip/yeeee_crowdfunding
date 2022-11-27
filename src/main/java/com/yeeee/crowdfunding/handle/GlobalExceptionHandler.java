@@ -51,6 +51,12 @@ public class GlobalExceptionHandler {
         return CommonResult.failed(e.getResultCode(), e.getMessage());
     }
 
+    @ExceptionHandler(vip.yeee.memo.integrate.common.model.exception.BizException.class)
+    public CommonResult<Object> handleBizException2(vip.yeee.memo.integrate.common.model.exception.BizException e) {
+        log.error("code:{}, message:{}", e.getResultCode().getCode(), e.getMessage());
+        return CommonResult.failed(e.getMessage());
+    }
+
     /**
      * 验证异常 JSR303 校验堆栈异常不打印
      */

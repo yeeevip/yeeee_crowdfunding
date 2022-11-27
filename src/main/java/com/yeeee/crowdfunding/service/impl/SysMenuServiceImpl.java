@@ -21,10 +21,11 @@ import com.yeeee.crowdfunding.model.vo.PageVO;
 import com.yeeee.crowdfunding.model.vo.SysMenuHasSetVO;
 import com.yeeee.crowdfunding.model.vo.SysMenuVO;
 import com.yeeee.crowdfunding.service.SysMenuService;
-import com.yeeee.crowdfunding.utils.SecurityUtil;
+import com.yeeee.crowdfunding.utils.BusinessUtils;
 import com.yeeee.crowdfunding.utils.wrapper.MyPageWrapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import vip.yeee.memo.integrate.common.websecurity.context.SecurityContext;
 
 import java.util.Collections;
 import java.util.List;
@@ -55,7 +56,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
     @Override
     public List<SysMenuVO> getMenuListTree() {
 
-        Integer userId = SecurityUtil.currentUserId();
+        Integer userId = BusinessUtils.getCurUserId();
 
         List<SysUserRole> userRoles = sysUserRoleMapper.getList(new SysUserRole().setUserId(userId));
         if (CollectionUtil.isEmpty(userRoles)) {
@@ -110,7 +111,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
     public Map<String, Object> getMenuAuthz() {
         List<String> roles = Lists.newArrayList();
         List<String> stringPermissions = Lists.newArrayList();
-        Integer userId = SecurityUtil.currentUserId();
+        Integer userId = BusinessUtils.getCurUserId();
         List<SysUserRole> userRoles = sysUserRoleMapper.getList(new SysUserRole().setUserId(userId));
         if (CollectionUtil.isNotEmpty(userRoles)) {
             userRoles.forEach(role -> {

@@ -1,9 +1,9 @@
 package com.yeeee.crowdfunding.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.yeeee.crowdfunding.model.dto.auth.Oauth2TokenDTO;
 import com.yeeee.crowdfunding.model.entity.SysUser;
 import com.yeeee.crowdfunding.model.vo.*;
+import vip.yeee.memo.integrate.common.websecurity.model.Oauth2TokenVo;
 
 /**
  * description......
@@ -13,7 +13,7 @@ import com.yeeee.crowdfunding.model.vo.*;
  */
 public interface SysUserService extends IService<SysUser> {
 
-    Oauth2TokenDTO login(String username, String password);
+    Oauth2TokenVo login(String username, String password);
 
     PageVO<UserVO> sysUserPageList(SysUserPageReqVO sysUserPageReqVO);
 

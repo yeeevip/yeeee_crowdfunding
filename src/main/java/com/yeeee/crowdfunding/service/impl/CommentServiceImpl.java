@@ -10,9 +10,10 @@ import com.yeeee.crowdfunding.model.vo.CommentPageReqVO;
 import com.yeeee.crowdfunding.model.vo.CommentVO;
 import com.yeeee.crowdfunding.model.vo.PageVO;
 import com.yeeee.crowdfunding.service.CommentService;
-import com.yeeee.crowdfunding.utils.SecurityUtil;
+import com.yeeee.crowdfunding.utils.BusinessUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import vip.yeee.memo.integrate.common.websecurity.context.SecurityContext;
 
 import java.util.Date;
 import java.util.List;
@@ -37,8 +38,8 @@ public class CommentServiceImpl implements CommentService {
     public Void frontAddComment(CommentVO commentVO) {
 
         Comment comment = commentConvert.vo2Comment(commentVO);
-        comment.setUserId(SecurityUtil.currentUserId());
-        comment.setUsername(SecurityUtil.currentSecurityUser().getUsername());
+        comment.setUserId(BusinessUtils.getCurUserId());
+        comment.setUsername(SecurityContext.getCurUser().getUsername());
         comment.setTime(new Date());
 
         commentMapper.insert(comment);

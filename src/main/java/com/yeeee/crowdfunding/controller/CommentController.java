@@ -1,6 +1,5 @@
 package com.yeeee.crowdfunding.controller;
 
-import com.yeeee.crowdfunding.annotation.AnonymousAccess;
 import com.yeeee.crowdfunding.api.CommonResult;
 import com.yeeee.crowdfunding.model.vo.CommentPageReqVO;
 import com.yeeee.crowdfunding.model.vo.CommentVO;
@@ -14,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import vip.yeee.memo.integrate.common.websecurity.annotation.AnonymousAccess;
 
 /**
  * description......

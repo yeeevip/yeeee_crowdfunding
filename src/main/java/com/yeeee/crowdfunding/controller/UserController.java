@@ -1,7 +1,6 @@
 package com.yeeee.crowdfunding.controller;
 
 import com.yeeee.crowdfunding.api.CommonResult;
-import com.yeeee.crowdfunding.model.dto.auth.Oauth2TokenDTO;
 import com.yeeee.crowdfunding.model.vo.*;
 import com.yeeee.crowdfunding.service.UserService;
 import io.swagger.annotations.Api;
@@ -12,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import vip.yeee.memo.integrate.common.websecurity.model.Oauth2TokenVo;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -36,7 +36,7 @@ public class UserController {
             @ApiImplicitParam(value = "密码", name = "password")
     })
     @PostMapping(value = "/front/user/login")
-    public CommonResult<Oauth2TokenDTO> login(UserCheckVO userCheckVO) {
+    public CommonResult<Oauth2TokenVo> login(UserCheckVO userCheckVO) {
         return CommonResult.success(userService.login(userCheckVO));
     }
 

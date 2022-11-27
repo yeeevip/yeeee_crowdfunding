@@ -6,20 +6,16 @@ import com.google.common.collect.Lists;
 import com.yeeee.crowdfunding.convert.UserConvert;
 import com.yeeee.crowdfunding.exception.BizException;
 import com.yeeee.crowdfunding.mapper.UserMapper;
-import com.yeeee.crowdfunding.model.constant.AuthConstant;
-import com.yeeee.crowdfunding.model.dto.auth.Oauth2TokenDTO;
-import com.yeeee.crowdfunding.model.dto.auth.SecurityUser;
 import com.yeeee.crowdfunding.model.entity.User;
 import com.yeeee.crowdfunding.model.vo.*;
-import com.yeeee.crowdfunding.service.CustomUserDetailsService;
 import com.yeeee.crowdfunding.service.UserService;
-import com.yeeee.crowdfunding.utils.SecurityUtil;
+import com.yeeee.crowdfunding.utils.BusinessUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.oauth2.common.OAuth2AccessToken;
-import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.stereotype.Service;
+import vip.yeee.memo.integrate.common.websecurity.constant.SecurityUserTypeEnum;
+import vip.yeee.memo.integrate.common.websecurity.context.SecurityContext;
+import vip.yeee.memo.integrate.common.websecurity.model.Oauth2TokenVo;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -41,23 +37,16 @@ public class UserServiceImpl implements UserService {
 
     private final UserConvert userConvert;
 
-    private final PasswordEncoder passwordEncoder;
-
-    private final TokenStore tokenStore;
-
-    private final CustomUserDetailsService userDetailsService;
+    private final UserAuthService userAuthService;
 
     @Override
-    public Oauth2TokenDTO login(UserCheckVO userCheckVO) {
-        return userDetailsService.oauthToken(userCheckVO.getUsername(), userCheckVO.getPassword(), null);
+    public Oauth2TokenVo login(UserCheckVO userCheckVO) {
+        return userAuthService.getUserAccessToken(userCheckVO.getUsername(), userCheckVO.getPassword(), SecurityUserTypeEnum.FRONT_USER.getType());
     }
 
     @Override
     public Void logout() {
-        OAuth2AccessToken oAuth2AccessToken = SecurityUtil.getOAuth2AccessToken();
-        if (oAuth2AccessToken != null) {
-            tokenStore.removeAccessToken(oAuth2AccessToken);
-        }
+        userAuthService.userLogout(SecurityContext.getCurToken());
         return null;
     }
 
@@ -69,7 +58,7 @@ public class UserServiceImpl implements UserService {
         }
         User saveUser = new User();
         saveUser.setUsername(userCheckVO.getUsername());
-        saveUser.setPassword(passwordEncoder.encode(userCheckVO.getPassword()));
+        saveUser.setPassword(userAuthService.encodePassword(userCheckVO.getPassword()));
         userMapper.insert(saveUser);
         return null;
     }
@@ -87,7 +76,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public Void updateMyselfInfo(UserVO userVO) {
 
-        Integer currentUserId = SecurityUtil.currentUserId();
+        Integer currentUserId = BusinessUtils.getCurUserId();
 
         User user = userConvert.vo2Entity(userVO);
         user.setId(currentUserId);
@@ -101,7 +90,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserVO getMyselfInfo() {
 
-        Integer currentUserId = SecurityUtil.currentUserId();
+        Integer currentUserId = BusinessUtils.getCurUserId();
 
         User user = userMapper.getOne(new User().setId(currentUserId));
         if (user == null) {
@@ -115,13 +104,17 @@ public class UserServiceImpl implements UserService {
     @Override
     public Void updatePassword(UpdatePasswordVO updatePasswordVO) {
 
-        SecurityUser securityUser = SecurityUtil.currentSecurityUser();
-        if (!passwordEncoder.matches(updatePasswordVO.getOldPassword(), securityUser.getPassword())) {
+        User user = userMapper.getOne(new User().setId(BusinessUtils.getCurUserId()));
+        if (user == null) {
+            throw new BizException("用户不存在");
+        }
+
+        if (!userAuthService.matchPassword(updatePasswordVO.getOldPassword(), user.getPassword())) {
             throw new BizException("旧密码不正确");
         }
 
         User upd = new User();
-        upd.setId(securityUser.getId()).setPassword(passwordEncoder.encode(updatePasswordVO.getNewPassword()));
+        upd.setId(user.getId()).setPassword(userAuthService.encodePassword(updatePasswordVO.getNewPassword()));
         userMapper.updateByPrimaryKey(upd);
 
         this.logout();

@@ -11,10 +11,11 @@ import com.yeeee.crowdfunding.mapper.*;
 import com.yeeee.crowdfunding.model.entity.*;
 import com.yeeee.crowdfunding.model.vo.*;
 import com.yeeee.crowdfunding.service.OrderService;
-import com.yeeee.crowdfunding.utils.SecurityUtil;
+import com.yeeee.crowdfunding.utils.BusinessUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import vip.yeee.memo.integrate.common.websecurity.context.SecurityContext;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -57,7 +58,7 @@ public class OrderServiceImpl implements OrderService {
 
         Page<Order> page = PageHelper.startPage(buyOrderPageReqVO.getPageNum(), buyOrderPageReqVO.getPageSize());
 
-        Order query = new Order().setUserId(SecurityUtil.currentUserId());
+        Order query = new Order().setUserId(BusinessUtils.getCurUserId());
         List<Order> orderList = orderMapper.getList(query);
 
         List<BuyOrderVO> buyOrderVOS = Optional.ofNullable(orderList).orElseGet(Lists::newArrayList)
@@ -83,7 +84,7 @@ public class OrderServiceImpl implements OrderService {
             throw new BizException("购买的项目不存在");
         }
 
-        Integer currentUserId = SecurityUtil.currentUserId();
+        Integer currentUserId = BusinessUtils.getCurUserId();
         Project project = projectMapper.getOne(new Project().setId(projectRepay.getProjectId()));
 
         Order order = new Order();
@@ -145,7 +146,7 @@ public class OrderServiceImpl implements OrderService {
     public PageVO<SellerOrderVO> getSellerOrderList(BuyOrderPageReqVO buyOrderPageReqVO) {
 
         Page<Order> page = PageHelper.startPage(buyOrderPageReqVO.getPageNum(), buyOrderPageReqVO.getPageSize());
-        List<Order> orderList = orderMapper.getList(new Order().setUserSeller(SecurityUtil.currentUserId()));
+        List<Order> orderList = orderMapper.getList(new Order().setUserSeller(BusinessUtils.getCurUserId()));
         List<SellerOrderVO> orderVOList = Optional.ofNullable(orderList).orElseGet(Lists::newArrayList)
                 .stream()
                 .map(orderConvert::order2SellerVO)

@@ -11,12 +11,13 @@ import com.yeeee.crowdfunding.mapper.*;
 import com.yeeee.crowdfunding.model.entity.*;
 import com.yeeee.crowdfunding.model.vo.*;
 import com.yeeee.crowdfunding.service.ProjectService;
+import com.yeeee.crowdfunding.utils.BusinessUtils;
 import com.yeeee.crowdfunding.utils.DateConvertUtil;
-import com.yeeee.crowdfunding.utils.SecurityUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import vip.yeee.memo.integrate.common.websecurity.context.SecurityContext;
 
 import java.util.Arrays;
 import java.util.Date;
@@ -153,7 +154,7 @@ public class ProjectServiceImpl implements ProjectService {
         Page<ProjectVO> page = PageHelper.startPage(reqVO.getPageNum(), 5);
 
         Project query = new Project();
-        query.setUserId(SecurityUtil.currentUserId());
+        query.setUserId(BusinessUtils.getCurUserId());
 
         List<Project> projectList = projectMapper.getList(query);
         List<ProjectVO> result = Optional.ofNullable(projectList).orElseGet(Lists::newArrayList)
@@ -218,7 +219,7 @@ public class ProjectServiceImpl implements ProjectService {
 
         Project project = projectConvert.lunchProjectVOProject(reqVO);
         project.setLaunchDateRaising(new Date());
-        project.setUserId(SecurityUtil.currentUserId());
+        project.setUserId(BusinessUtils.getCurUserId());
         projectMapper.insert(project);
         if (project.getId() == null) {
             throw new BizException("发起失败");
@@ -346,7 +347,7 @@ public class ProjectServiceImpl implements ProjectService {
                 .collect(Collectors.toList());
         orderPageVO.setRepayVOList(repayVOList);
 
-        Integer currentUserId = SecurityUtil.currentUserId();
+        Integer currentUserId = BusinessUtils.getCurUserId();
         if (currentUserId != null) {
             ReceiveInformation receiveInformation = receiveInformationMapper.getOne(new ReceiveInformation().setUserId(currentUserId).setSetDefault(1));
             orderPageVO.setReceiveInfoVO(Optional.ofNullable(receiveInfoConvert.entity2VO(receiveInformation)).orElseGet(ReceiveInfoVO::new));
@@ -366,7 +367,7 @@ public class ProjectServiceImpl implements ProjectService {
         ProjectProgress add = new ProjectProgress();
         add.setProjectId(project.getId());
         add.setPublishDate(new Date());
-        add.setPubUser(SecurityUtil.currentSecurityUser().getUsername());
+        add.setPubUser(SecurityContext.getCurUser().getUsername());
         add.setContent(projectProgressVO.getContent());
         projectProgressMapper.insert(add);
 

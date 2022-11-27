@@ -262,10 +262,10 @@ INSERT INTO `sys_menu` VALUES (4353221119792137, 4347326007383040, '新增', '',
 
 
 -- ----------------------------
--- Table structure for sys_oauth_client_details
+-- Table structure for oauth_client_details
 -- ----------------------------
-DROP TABLE IF EXISTS `sys_oauth_client_details`;
-CREATE TABLE `sys_oauth_client_details`  (
+DROP TABLE IF EXISTS `oauth_client_details`;
+CREATE TABLE `oauth_client_details`  (
   `client_id` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `resource_ids` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `client_secret` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
@@ -281,9 +281,9 @@ CREATE TABLE `sys_oauth_client_details`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '终端信息表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
--- Records of sys_oauth_client_details
+-- Records of oauth_client_details
 -- ----------------------------
-INSERT INTO `sys_oauth_client_details` VALUES ('yeeee_crowdfunding-web', NULL, '$2a$10$y2TZo5p42YuYTnOGe/shXeJPANesqGWtZdNrJrHvRcfy0akWB..aq', 'all', 'password,refresh_token,authorization_code,client_credentials', '', NULL, 864000, 6048000, NULL, 'true');
+INSERT INTO `oauth_client_details` VALUES ('yeeee_crowdfunding-web', NULL, '$2a$10$y2TZo5p42YuYTnOGe/shXeJPANesqGWtZdNrJrHvRcfy0akWB..aq', 'all', 'password,refresh_token,authorization_code,client_credentials', '', NULL, 864000, 6048000, NULL, 'true');
 
 -- ----------------------------
 -- Table structure for sys_role
@@ -442,8 +442,8 @@ CREATE TABLE `sys_user`  (
 -- ----------------------------
 -- Records of sys_user
 -- ----------------------------
-INSERT INTO `sys_user` VALUES (1, 'admin', '$2a$10$B3Cxicl0/zR2uAJ1tM55DeuGGiHjDh.BD7XMop1qFoEAfto8g7O3O', '超级管理员', NULL, '13888888888', NULL, NULL, 8, NULL, 0, NULL, '2021-07-12 11:24:02', '2022-01-05 17:04:43', 1, 1, '管理员', 1);
-INSERT INTO `sys_user` VALUES (2, 'shenhe', '$2a$10$B3Cxicl0/zR2uAJ1tM55DeuGGiHjDh.BD7XMop1qFoEAfto8g7O3O', '审核员', NULL, '13888888888', NULL, NULL, 131, NULL, 0, NULL, '2021-07-12 11:24:02', '2021-12-16 16:59:44', 1, 1, '管理员', 0);
+INSERT INTO `sys_user` VALUES (1, 'admin', '96e79218965eb72c92a549dd5a330112', '超级管理员', NULL, '13888888888', NULL, NULL, 8, NULL, 0, NULL, '2021-07-12 11:24:02', '2022-01-05 17:04:43', 1, 1, '管理员', 1);
+INSERT INTO `sys_user` VALUES (2, 'shenhe', '96e79218965eb72c92a549dd5a330112', '审核员', NULL, '13888888888', NULL, NULL, 131, NULL, 0, NULL, '2021-07-12 11:24:02', '2021-12-16 16:59:44', 1, 1, '管理员', 0);
 
 -- ----------------------------
 -- Table structure for sys_user_opr_log
@@ -4557,16 +4557,16 @@ CREATE TABLE `t_user`  (
 -- ----------------------------
 -- Records of t_user
 -- ----------------------------
-INSERT INTO `t_user` VALUES (30, 'wo shi shui 111', '17855830787', '$2a$10$Kfck9mATf.9.30Gn3AO0LOH7apfQ4j47U8plHOV/dFPJngt6uZs4S', '打算发', 1, '565465465', '2022-05-21', '2017-09-22 09:22:40', '178558307879', '湖南,张家界', '', 'lvfengxian88@163.com');
-INSERT INTO `t_user` VALUES (34, NULL, '13754113543', 'e10adc3949ba59abbe56e057f20f883e', NULL, NULL, NULL, NULL, '2017-12-29 04:48:33', '13754113543', NULL, NULL, NULL);
-INSERT INTO `t_user` VALUES (35, NULL, '1324459373', 'e10adc3949ba59abbe56e057f20f883e', NULL, NULL, NULL, NULL, '2017-12-29 07:17:59', '1324459373', NULL, NULL, NULL);
-INSERT INTO `t_user` VALUES (37, NULL, '123456', '$2a$10$2rHgpR2VaPvR/hdzU0I3QeSDwnW7CzEoL/1Q64mZfbrB7uxQRKZy2', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `t_user` VALUES (38, NULL, '111111', '$2a$10$/wnIHcPkX3ynj7txyTvt7.gj54iKd/ndu4wdk89yQKTPm.kiMSv4i', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `t_user` VALUES (39, NULL, '1111111', '$2a$10$q4GOU5Vje8lCP.bEav9SFuAYRQgLWlvyBh7IAzWA4/e3hryexomMm', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `t_user` VALUES (40, NULL, '11111111', '$2a$10$jZ/d2af/znqiN5Atb14OqOoEa2cyI0.rbpiJ05aUeWFmCLQU73r6u', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `t_user` VALUES (41, NULL, '17855830001', '$2a$10$uxH5mzxzxaY24VNClQOxSuYOKLOKHjCjqrjuSzQmys62mp4ydnbdu', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `t_user` VALUES (42, NULL, '17855830002', '$2a$10$MMSco1AER5PGEJouUFGm5Obyk4aSl9LxiMWar/.Y/uNL3sw8iQHYu', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `t_user` VALUES (43, NULL, '17855830003', '$2a$10$MMSco1AER5PGEJouUFGm5Obyk4aSl9LxiMWar/.Y/uNL3sw8iQHYu', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `t_user` VALUES (30, 'wo shi shui 111', '17855830787', '96e79218965eb72c92a549dd5a330112', '打算发', 1, '565465465', '2022-05-21', '2017-09-22 09:22:40', '178558307879', '湖南,张家界', '', 'lvfengxian88@163.com');
+INSERT INTO `t_user` VALUES (34, NULL, '13754113543', '96e79218965eb72c92a549dd5a330112', NULL, NULL, NULL, NULL, '2017-12-29 04:48:33', '13754113543', NULL, NULL, NULL);
+INSERT INTO `t_user` VALUES (35, NULL, '1324459373', '96e79218965eb72c92a549dd5a330112', NULL, NULL, NULL, NULL, '2017-12-29 07:17:59', '1324459373', NULL, NULL, NULL);
+INSERT INTO `t_user` VALUES (37, NULL, '123456', '96e79218965eb72c92a549dd5a330112', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `t_user` VALUES (38, NULL, '111111', '96e79218965eb72c92a549dd5a330112', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `t_user` VALUES (39, NULL, '1111111', '96e79218965eb72c92a549dd5a330112', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `t_user` VALUES (40, NULL, '11111111', '96e79218965eb72c92a549dd5a330112', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `t_user` VALUES (41, NULL, '17855830001', '96e79218965eb72c92a549dd5a330112', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `t_user` VALUES (42, NULL, '17855830002', '96e79218965eb72c92a549dd5a330112', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `t_user` VALUES (43, NULL, '17855830003', '96e79218965eb72c92a549dd5a330112', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for t_user_account

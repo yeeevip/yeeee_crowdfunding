@@ -12,20 +12,19 @@ import com.yeeee.crowdfunding.exception.BizException;
 import com.yeeee.crowdfunding.mapper.SysUserDeptMapper;
 import com.yeeee.crowdfunding.mapper.SysUserMapper;
 import com.yeeee.crowdfunding.mapper.SysUserRoleMapper;
-import com.yeeee.crowdfunding.model.dto.auth.Oauth2TokenDTO;
 import com.yeeee.crowdfunding.model.entity.SysUser;
 import com.yeeee.crowdfunding.model.entity.SysUserDept;
 import com.yeeee.crowdfunding.model.entity.SysUserRole;
 import com.yeeee.crowdfunding.model.vo.*;
-import com.yeeee.crowdfunding.service.CustomUserDetailsService;
 import com.yeeee.crowdfunding.service.SysUserService;
 import com.yeeee.crowdfunding.service.UserService;
-import com.yeeee.crowdfunding.utils.SecurityUtil;
 import com.yeeee.crowdfunding.utils.wrapper.MyPageWrapper;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import vip.yeee.memo.integrate.common.websecurity.constant.SecurityUserTypeEnum;
+import vip.yeee.memo.integrate.common.websecurity.context.SecurityContext;
+import vip.yeee.memo.integrate.common.websecurity.model.Oauth2TokenVo;
 
 import java.util.Date;
 import java.util.List;
@@ -43,13 +42,9 @@ import java.util.stream.Collectors;
 @Service
 public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> implements SysUserService {
 
-    private final CustomUserDetailsService userDetailsService;
-
     private final SysUserMapper sysUserMapper;
 
     private final SysUserConvert sysUserConvert;
-
-    private final PasswordEncoder passwordEncoder;
 
     private final UserService userService;
 
@@ -57,9 +52,11 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
     private final SysUserDeptMapper sysUserDeptMapper;
 
+    private final UserAuthService userAuthService;
+
     @Override
-    public Oauth2TokenDTO login(String username, String password) {
-        return userDetailsService.oauthToken(username, password, "SYSTEM");
+    public Oauth2TokenVo login(String username, String password) {
+        return userAuthService.getUserAccessToken(username, password, SecurityUserTypeEnum.SYSTEM_USER.getType());
     }
 
     @Override
@@ -91,7 +88,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
     @Override
     public UserVO getUserInfo() {
-        UserVO userVO = sysUserConvert.securityUser2VO(SecurityUtil.currentSecurityUser());
+        UserVO userVO = sysUserConvert.securityUser2VO(SecurityContext.getCurUser());
         return userVO;
     }
 
@@ -99,7 +96,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     @Override
     public Void addSysUser(SysUserEditVO editVO) {
         SysUser sysUser = sysUserConvert.editVO2Entity(editVO);
-        sysUser.setPassword(passwordEncoder.encode("111111"));
+        sysUser.setPassword(userAuthService.encodePassword("111111"));
         this.save(sysUser);
         this.setUserRoles(editVO.getRoleIds(), sysUser.getId());
         this.setUserDepts(editVO.getOrgIds(), sysUser.getId());
@@ -130,7 +127,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
                     SysUserRole sysUserRole = new SysUserRole();
                     sysUserRole.setUserId(userId);
                     sysUserRole.setRoleId(roleId);
-                    String username = SecurityUtil.currentSecurityUser().getUsername();
+                    String username = SecurityContext.getCurUser().getUsername();
                     Date date = new Date();
                     sysUserRole.setCreateTime(date);
                     sysUserRole.setCreateBy(username);
@@ -175,19 +172,19 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
     @Override
     public Void updSysUserPwd(SysUserUpdPwdVO userUpdPwdVO) {
-        SysUser sysUser = this.getById(SecurityUtil.currentUserId());
+        SysUser sysUser = this.getById(SecurityContext.getCurUserId());
         if (sysUser == null) {
             throw new BizException("用户不存在");
         }
 //        if (!userUpdPwdVO.getNewPassword1().equals(userUpdPwdVO.getNewPassword2())) {
 //            throw new BizException("两次新密码前后不一致");
 //        }
-        if (!passwordEncoder.matches(userUpdPwdVO.getOldPassword(), sysUser.getPassword())) {
+        if (!userAuthService.matchPassword(userUpdPwdVO.getOldPassword(), sysUser.getPassword())) {
             throw new BizException("旧密码不正确");
         }
         SysUser upd = new SysUser();
         upd.setId(sysUser.getId());
-        upd.setPassword(passwordEncoder.encode(userUpdPwdVO.getNewPassword()));
+        upd.setPassword(userAuthService.encodePassword(userUpdPwdVO.getNewPassword()));
         boolean res = this.updateById(upd);
         if (res) {
             userService.logout();

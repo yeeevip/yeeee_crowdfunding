@@ -1,6 +1,5 @@
 package com.yeeee.crowdfunding.convert;
 
-import com.yeeee.crowdfunding.model.dto.auth.SecurityUser;
 import com.yeeee.crowdfunding.model.entity.SysUser;
 import com.yeeee.crowdfunding.model.vo.SysUserEditVO;
 import com.yeeee.crowdfunding.model.vo.SysUserInfoVO;
@@ -8,6 +7,7 @@ import com.yeeee.crowdfunding.model.vo.UserVO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
+import vip.yeee.memo.integrate.common.websecurity.model.AuthedUser;
 
 /**
  * description......
@@ -20,7 +20,7 @@ public interface SysUserConvert {
 
     UserVO sysUser2VO(SysUser sysUser);
 
-    UserVO securityUser2VO(SecurityUser securityUser);
+    UserVO securityUser2VO(AuthedUser securityUser);
 
     SysUser editVO2Entity(SysUserEditVO editVO);
 
