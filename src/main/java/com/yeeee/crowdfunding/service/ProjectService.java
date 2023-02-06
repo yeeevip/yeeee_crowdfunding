@@ -1,6 +1,8 @@
 package com.yeeee.crowdfunding.service;
 
-import com.github.pagehelper.Page;
+import com.baomidou.mybatisplus.extension.service.IService;
+import com.yeeee.crowdfunding.model.entity.Project;
+import com.yeeee.crowdfunding.model.request.IdsRequest;
 import com.yeeee.crowdfunding.model.vo.*;
 
 /**
@@ -9,7 +11,7 @@ import com.yeeee.crowdfunding.model.vo.*;
  * @author yeeee
  * @since 2022/4/29 21:38
  */
-public interface ProjectService {
+public interface ProjectService extends IService<Project> {
 
     IndexProjectListVO getIndexShowProject();
 
@@ -23,6 +25,8 @@ public interface ProjectService {
 
     PageVO<ProjectVO> getAdminPageList(ProjectPageReqVO reqVO);
 
+    PageVO<ProjectVO> getAdminPageList(String query);
+
     LunchProjectVO getAdminProjectDetail(Integer id);
 
     Void adminProjectAudits(AuditProjectVO auditProjectVO);
@@ -31,4 +35,5 @@ public interface ProjectService {
 
     Void updateProjectProgress(ProjectProgressVO projectProgressVO);
 
+    Void delCfProject(IdsRequest request);
 }

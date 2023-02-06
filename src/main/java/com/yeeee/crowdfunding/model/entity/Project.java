@@ -1,5 +1,7 @@
 package com.yeeee.crowdfunding.model.entity;
 
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -7,6 +9,7 @@ import java.util.Date;
 
 @Data
 @Accessors(chain = true)
+@TableName("t_project")
 public class Project {
 
     /**
@@ -89,6 +92,7 @@ public class Project {
      */
     private Integer isSettlement;
 
+    @TableField(exist = false)
     private String keyword;
 
 }

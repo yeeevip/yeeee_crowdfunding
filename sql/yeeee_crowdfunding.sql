@@ -4604,5 +4604,20 @@ CREATE TABLE `sys_qrtz_log` (
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='系统调度日志';
 
+DROP TABLE IF EXISTS `t_msg`;
+CREATE TABLE `t_msg` (
+ `id` bigint(20) NOT NULL AUTO_INCREMENT,
+ `subject_type` tinyint(2) NOT NULL COMMENT '1：项目',
+ `subject_id` varchar(64) NOT NULL,
+ `content` varchar(1024) DEFAULT NULL,
+ `target` varchar(64) NOT NULL,
+ `has_read` tinyint(1) DEFAULT NULL,
+ `create_time` datetime DEFAULT NULL,
+ `create_by` varchar(32) DEFAULT NULL,
+ `update_time` datetime DEFAULT NULL,
+ `update_by` varchar(32) DEFAULT NULL,
+ PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=utf8mb4;
+
 
 SET FOREIGN_KEY_CHECKS = 1;

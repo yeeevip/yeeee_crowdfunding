@@ -2,6 +2,7 @@ package com.yeeee.crowdfunding.controller;
 
 import com.github.pagehelper.Page;
 import com.yeeee.crowdfunding.api.CommonResult;
+import com.yeeee.crowdfunding.model.request.IdsRequest;
 import com.yeeee.crowdfunding.model.vo.*;
 import com.yeeee.crowdfunding.service.ProjectService;
 import io.swagger.annotations.Api;
@@ -86,6 +87,18 @@ public class ProjectController {
     @PostMapping("admin/project/page")
     public CommonResult<PageVO<ProjectVO>> getAdminPageList(@RequestBody ProjectPageReqVO reqVO) {
         return CommonResult.success(projectService.getAdminPageList(reqVO));
+    }
+
+    @ApiOperation("管理员项目分页")
+    @GetMapping("admin/cf-project/page")
+    public CommonResult<PageVO<ProjectVO>> getAdminPageList(String query) {
+        return CommonResult.success(projectService.getAdminPageList(query));
+    }
+
+    @ApiOperation("删除项目")
+    @PostMapping(value = "admin/cf-project/del")
+    public CommonResult<Void> delCfProject(@Validated @RequestBody IdsRequest request) {
+        return CommonResult.success(projectService.delCfProject(request));
     }
 
     @ApiOperation("审核-项目详情")

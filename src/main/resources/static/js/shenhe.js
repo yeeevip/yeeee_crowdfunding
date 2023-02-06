@@ -1,7 +1,11 @@
 $(document).ready(function(){
 
     let projectId = getQueryVariable('id');
-    let token = localStorage.getItem("sys-crowdfunding-token");
+    let token = getQueryVariable('tt')
+    if (!token) {
+        token = localStorage.getItem("sys-crowdfunding-token");
+        token = token ? (JSON.parse(token).token) : ''
+    }
     $.ajax({
         type: 'GET',
         async: false,
@@ -11,7 +15,7 @@ $(document).ready(function(){
             'id': projectId
         },
         headers: {
-            "Authorization": token ? ('Bearer ' + JSON.parse(token).token) : ''
+            "Authorization": 'Bearer ' + token
         },
         dataType: 'json',
         success: function (res) {
@@ -175,7 +179,11 @@ $(document).ready(function(){
     var project_id = getQueryVariable('id');
 
     $(".shenheBtn").click(function(){
-        let token = localStorage.getItem("sys-crowdfunding-token");
+        let token = getQueryVariable('tt')
+        if (!token) {
+            token = localStorage.getItem("sys-crowdfunding-token");
+            token = token ? (JSON.parse(token).token) : ''
+        }
         $.ajax({
             url		:		API_BASE_URL + '/admin/project/audits',
             async	:		false,
@@ -185,7 +193,7 @@ $(document).ready(function(){
             }),
             contentType: 'application/json;charset=utf-8',
             headers: {
-                "Authorization": token ? ('Bearer ' + JSON.parse(token).token) : ''
+                "Authorization": 'Bearer ' + token
             },
             type	:		"post",
             success	:		function(res){
@@ -194,7 +202,11 @@ $(document).ready(function(){
         });
     });
     $(".shenheBtnreject").click(function(){
-        let token = localStorage.getItem("sys-crowdfunding-token");
+        let token = getQueryVariable('tt')
+        if (!token) {
+            token = localStorage.getItem("sys-crowdfunding-token");
+            token = token ? (JSON.parse(token).token) : ''
+        }
         $.ajax({
             url		:		API_BASE_URL + '/admin/project/audits',
             async	:		false,
@@ -204,7 +216,7 @@ $(document).ready(function(){
             }),
             contentType: 'application/json;charset=utf-8',
             headers: {
-                "Authorization": token ? ('Bearer ' + JSON.parse(token).token) : ''
+                "Authorization": 'Bearer ' + token
             },
             type	:		"post",
             success	:		function(res){

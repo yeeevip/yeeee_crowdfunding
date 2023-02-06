@@ -90,6 +90,8 @@ var f_display = function(divId){
 				}
 			}
 		})
+	} else if ('myLaunch' == divId) {
+		handleMyMsg();
 	}
 
 }
@@ -872,6 +874,69 @@ function provinceInit() {
 
 	$("select[name='city']").change(function(){
 		getProvince($(this).val(),$("select[name='district']"));
+	});
+}
+
+function handleMyMsg() {
+	let token = localStorage.getItem('crowdfunding-token');
+	$.ajax({
+		url:API_BASE_URL + "/front/msg/list",
+		data:JSON.stringify({
+			pageNum: 1,
+			pageSize: 20
+		}),
+		headers: {
+			"Authorization": token ? ('Bearer ' + JSON.parse(token).token) : ''
+		},
+		async:false,
+		cache:false,
+		contentType: 'application/json;charset=utf-8',
+		type: "POST", //请求方式为POST
+		dataType:"json",
+		success:function(res){
+			if (res.code == 200) {
+				if (res.data.result) {
+					confirmMsg(0, res.data.result)
+				}
+			} else {
+				layer.alert(res.message)
+			}
+
+		}
+	});
+}
+
+function confirmMsg(i, msg) {
+	if (i >= msg.length) {
+		return
+	}
+	let token = localStorage.getItem('crowdfunding-token');
+	var index = layer.confirm(msg[i].content, {
+		btn: ['确定'], //按钮
+		closeBtn: 0
+	}, function(){
+		$.ajax({
+			url:API_BASE_URL + "/front/msg/read",
+			data:JSON.stringify({
+				ids: [msg[i].id]
+			}),
+			headers: {
+				"Authorization": token ? ('Bearer ' + JSON.parse(token).token) : ''
+			},
+			async:false,
+			cache:false,
+			contentType: 'application/json;charset=utf-8',
+			type: "POST", //请求方式为POST
+			dataType:"json",
+			success:function(res){
+				if (res.code == 200) {
+					confirmMsg(i + 1, msg)
+					layer.close(index)
+				} else {
+					layer.alert(res.message)
+				}
+			}
+		});
 	});
 }
 

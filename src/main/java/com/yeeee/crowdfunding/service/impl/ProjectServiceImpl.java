@@ -1,6 +1,8 @@
 package com.yeeee.crowdfunding.service.impl;
 
 import cn.hutool.core.collection.CollectionUtil;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.google.common.collect.ImmutableMap;
@@ -9,16 +11,20 @@ import com.yeeee.crowdfunding.convert.*;
 import com.yeeee.crowdfunding.exception.BizException;
 import com.yeeee.crowdfunding.mapper.*;
 import com.yeeee.crowdfunding.model.entity.*;
+import com.yeeee.crowdfunding.model.request.IdsRequest;
 import com.yeeee.crowdfunding.model.vo.*;
 import com.yeeee.crowdfunding.service.ProjectService;
+import com.yeeee.crowdfunding.service.TMsgService;
 import com.yeeee.crowdfunding.utils.BusinessUtils;
 import com.yeeee.crowdfunding.utils.DateConvertUtil;
+import com.yeeee.crowdfunding.utils.wrapper.MyPageWrapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import vip.yeee.memo.integrate.common.websecurity.context.SecurityContext;
 
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -34,7 +40,7 @@ import java.util.stream.Collectors;
 @Slf4j
 @RequiredArgsConstructor
 @Service
-public class ProjectServiceImpl implements ProjectService {
+public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, Project> implements ProjectService {
 
     private final ProjectMapper projectMapper;
 
@@ -75,6 +81,8 @@ public class ProjectServiceImpl implements ProjectService {
     private final ReceiveInfoConvert receiveInfoConvert;
 
     private final ProjectCategoryConvert projectCategoryConvert;
+
+    private final TMsgService tMsgService;
 
     @Override
     public IndexProjectListVO getIndexShowProject() {
@@ -281,6 +289,25 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
+    public PageVO<ProjectVO> getAdminPageList(String query) {
+        MyPageWrapper<Project> pageWrapper = new MyPageWrapper<>(query);
+        IPage<Project> page = this.page(pageWrapper.getPage(), pageWrapper.getQueryWrapper());
+        List<ProjectVO> result = Optional
+                .ofNullable(page.getRecords())
+                .orElseGet(Lists::newArrayList)
+                .stream()
+                .map(projectConvert::project2VO)
+                .peek(item -> {
+                    ProjectCategory projectCategory = projectCategoryMapper.getOne(new ProjectCategory().setId(item.getProjectType()));
+                    item.setCategoryVO(projectCategoryConvert.entity2VO(Optional.ofNullable(projectCategory).orElseGet(ProjectCategory::new)));
+                    User user = userMapper.getOne(new User().setId(item.getUserId()));
+                    item.setSeller(userConvert.user2VO(Optional.ofNullable(user).orElseGet(User::new)));
+                })
+                .collect(Collectors.toList());
+        return new PageVO<>((int)page.getCurrent(), (int)page.getSize(), (int)page.getPages(), page.getTotal(), result);
+    }
+
+    @Override
     public LunchProjectVO getAdminProjectDetail(Integer id) {
 
         if (id == null) {
@@ -318,6 +345,10 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public Void adminProjectAudits(AuditProjectVO auditProjectVO) {
 
+        if (!Arrays.asList(-1, 1).contains(auditProjectVO.getHasAudits())) {
+            throw new BizException("参数错误");
+        }
+
         Project project = projectMapper.getOne(new Project().setId(auditProjectVO.getProjectId()));
         if (project == null) {
             throw new BizException("项目不存在");
@@ -328,6 +359,16 @@ public class ProjectServiceImpl implements ProjectService {
         }
 
         projectMapper.updateByPrimaryKey(new Project().setId(auditProjectVO.getProjectId()).setHasAudits(auditProjectVO.getHasAudits()));
+
+        TMsg msg = new TMsg();
+        msg.setSubjectType(1);
+        msg.setSubjectId(project.getId().toString());
+        msg.setContent(Integer.valueOf(1).equals(auditProjectVO.getHasAudits())
+                ? "恭喜，您发起的项目通过了！" : "抱歉，您的项目未能通过审批！");
+        msg.setHasRead(0);
+        msg.setCreateTime(LocalDateTime.now());
+        msg.setCreateBy(SecurityContext.getCurUser().getUsername());
+        tMsgService.save(msg);
 
         return null;
     }
@@ -371,6 +412,15 @@ public class ProjectServiceImpl implements ProjectService {
         add.setContent(projectProgressVO.getContent());
         projectProgressMapper.insert(add);
 
+        return null;
+    }
+
+    @Override
+    public Void delCfProject(IdsRequest request) {
+        if (CollectionUtil.isEmpty(request.getIds())) {
+            return null;
+        }
+        this.removeByIds(request.getIds());
         return null;
     }
 
