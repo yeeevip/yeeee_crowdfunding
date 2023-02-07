@@ -52,8 +52,8 @@
                                     <input type="text" class="txt" id="ImgCode" name="code" placeholder="请输入验证码">
 
                                     <img class="getCodeBtn" style="cursor: pointer; background:#fff; vertical-align:middle"
-                                         src="/code.jhtml" id="VerifyImage2" title="看不清？点击换一个"
-                                         onclick="javascript:this.src='/code.jhtml;'+new Date().getMilliseconds()">
+                                         src="/general/check-code" id="VerifyImage2" title="看不清？点击换一个"
+                                         onclick="javascript:this.src='/general/check-code?tt=' + new Date().getMilliseconds()">
                                 </li>
 
                                 <li class="remP">
@@ -74,14 +74,14 @@
             </div>
 
 
-
+<!--
             <div class="login_side r">
                 <div class="login_t">其他方式登录</div>
                 <div class="login_con">
                     <div class="otherLogin"><a href="javascript:;" title="qq" class="other_icon"><i class="zczj icon_qq"></i><span>使用腾讯QQ登录</span></a>
                     </div>
                 </div>
-            </div>
+            </div>-->
         </div>
     </div>
 </div>

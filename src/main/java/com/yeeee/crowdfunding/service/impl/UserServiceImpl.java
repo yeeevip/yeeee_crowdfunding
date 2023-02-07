@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.google.common.collect.Lists;
+import com.yeeee.crowdfunding.biz.CommonBiz;
 import com.yeeee.crowdfunding.convert.UserConvert;
 import com.yeeee.crowdfunding.exception.BizException;
 import com.yeeee.crowdfunding.mapper.UserMapper;
@@ -34,13 +35,15 @@ import java.util.stream.Collectors;
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
 
     private final UserMapper userMapper;
-
     private final UserConvert userConvert;
-
     private final UserAuthService userAuthService;
+    private final CommonBiz commonBiz;
 
     @Override
     public Oauth2TokenVo login(UserCheckVO userCheckVO) {
+        if (!commonBiz.checkCode(userCheckVO.getCode())) {
+            throw new BizException("验证码错误");
+        }
         return userAuthService.getUserAccessToken(userCheckVO.getUsername(), userCheckVO.getPassword(), SecurityUserTypeEnum.FRONT_USER.getType());
     }
 
@@ -52,6 +55,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Override
     public Void register(UserCheckVO userCheckVO) {
+        if (!commonBiz.checkCode(userCheckVO.getCode())) {
+            throw new BizException("验证码错误");
+        }
         User user = userMapper.getOne(new User().setUsername(userCheckVO.getUsername()));
         if (user != null) {
             throw new BizException("用户名已经存在！！！");

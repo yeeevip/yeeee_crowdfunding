@@ -17,5 +17,6 @@ public class UserCheckVO {
     private String username;
     @NotBlank(message = "密码不能空")
     private String password;
+    @NotBlank(message = "验证码不能空")
     private String code;
 }

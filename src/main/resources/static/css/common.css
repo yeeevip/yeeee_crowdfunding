@@ -44,7 +44,7 @@ a,li,input {
 }
 
 .l {
-    float: left;
+    /*float: left;*/
 }
 .r {
     float: right;

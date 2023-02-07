@@ -212,6 +212,7 @@
 
 .login_form .login_main, .login_form .login_side {
 	background: rgba(0, 0, 0, 0.4);
+	margin: 0 auto;
 	border-radius: 6px; }
 
 

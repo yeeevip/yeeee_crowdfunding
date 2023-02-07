@@ -5,6 +5,7 @@ import cn.hutool.core.io.IoUtil;
 import cn.hutool.core.util.RandomUtil;
 import com.google.common.collect.Lists;
 import com.yeeee.crowdfunding.api.CommonResult;
+import com.yeeee.crowdfunding.biz.CommonBiz;
 import com.yeeee.crowdfunding.model.entity.ProvinceCityDistrict;
 import com.yeeee.crowdfunding.service.ProvinceCityDistrictService;
 import com.yeeee.crowdfunding.service.UserService;
@@ -32,19 +33,19 @@ import java.util.List;
 @Api(tags = "通用接口")
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("general")
+@RequestMapping("/general")
 public class CommonController {
 
     private final ProvinceCityDistrictService provinceCityDistrictService;
-
     private final UserService userService;
+    private final CommonBiz commonBiz;
 
     @Value("${local.upload.location}")
     private String uploadPath;
 
     @ApiOperation("获取地区")
     @AnonymousAccess
-    @GetMapping("region")
+    @GetMapping("/region")
     public CommonResult<List<ProvinceCityDistrict>> getRegion(Integer pid) {
         return CommonResult.success(provinceCityDistrictService.getList(pid));
     }
@@ -57,7 +58,7 @@ public class CommonController {
 
     @ApiOperation("上传")
     @AnonymousAccess
-    @PostMapping("upload")
+    @PostMapping("/upload")
     public CommonResult<String> upload(@RequestPart List<MultipartFile> file, @RequestParam String path) throws FileNotFoundException {
         List<String> paths = Lists.newArrayList();
         file.forEach(f -> {
@@ -70,6 +71,12 @@ public class CommonController {
             }
         });
         return CommonResult.success(String.join(";", paths));
+    }
+
+    @ApiOperation("获取验证码")
+    @GetMapping(value = "/check-code")
+    public void getCheckCode() throws IOException {
+        commonBiz.getCheckCode();
     }
 
 }

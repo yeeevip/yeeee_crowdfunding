@@ -16,6 +16,8 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import vip.yeee.memo.integrate.common.websecurity.model.Oauth2TokenVo;
 
+import javax.validation.Valid;
+
 /**
  * description......
  *
@@ -31,14 +33,13 @@ public class UserController {
     private final UserService userService;
     private final CfUserBiz cfUserBiz;
 
-
     @ApiOperation("用户登录")
     @ApiImplicitParams({
             @ApiImplicitParam(value = "用户名", name = "username"),
             @ApiImplicitParam(value = "密码", name = "password")
     })
     @PostMapping(value = "/front/user/login")
-    public CommonResult<Oauth2TokenVo> login(UserCheckVO userCheckVO) {
+    public CommonResult<Oauth2TokenVo> login(@Valid UserCheckVO userCheckVO) {
         return CommonResult.success(userService.login(userCheckVO));
     }
 
