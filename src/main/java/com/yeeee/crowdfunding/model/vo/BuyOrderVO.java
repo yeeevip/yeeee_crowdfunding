@@ -30,6 +30,8 @@ public class BuyOrderVO {
     @ApiModelProperty("是否发货")
     private Integer hasSend;
 
+    private Integer hasReceive;
+
     @ApiModelProperty("下单时间")
     @JsonFormat(shape= JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm:ss")
     private Date orderDate;

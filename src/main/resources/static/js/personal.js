@@ -343,7 +343,10 @@ $(document).ready(function(){
 							'<div class="operations">';
 
 						if(Ojson[i].hasPay==1){
-							html = html+'<a href="javascript:;" class="ddLastbtn_A">确认收货</a><a href="javascript:;" class="ddLastbtn_A">我要投诉</a></td></tr>';
+							if(Ojson[i].hasReceive!=1) {
+								html = html + '<a href="javascript:toConfirmReceive('+Ojson[i].id+');" class="ddLastbtn_A">确认收货</a>'
+							}
+							html = html+'<a href="javascript:;" class="ddLastbtn_A">我要投诉</a></td></tr>';
 						}else{
 							html = html+'<a href="javascript:toPay('+Ojson[i].id+');" class="ddLastbtn_A">去支付</a></td></tr>';
 						}
@@ -429,7 +432,10 @@ $(document).ready(function(){
 											'<div class="operations">';
 
 										if(Ojson[i].is_pay==1){
-											html = html+'<a href="javascript:;" class="ddLastbtn_A">确认收货</a><a href="javascript:;" class="ddLastbtn_A">我要投诉</a></td></tr>';
+											if(Ojson[i].hasReceive!=1) {
+												html = html+'<a href="javascript:toConfirmReceive('+Ojson[i].id+');" class="ddLastbtn_A">确认收货</a>'
+											}
+											html = html+'<a href="javascript:;" class="ddLastbtn_A">我要投诉</a></td></tr>';
 										}else{
 											html = html+'<a href="javascript:toPay('+Ojson[i].id+');" class="ddLastbtn_A">去支付</a></td></tr>';
 										}
@@ -1031,4 +1037,34 @@ function confirmMsg(i, msg) {
 	});
 }
 
+function toConfirmReceive(orderId) {
+	layer.confirm('确认收货？', {
+		btn: ['确定', '取消'] //可以无限个按钮
+	}, function(index){
+		let token = localStorage.getItem('crowdfunding-token');
+		$.ajax({
+			url:API_BASE_URL + "/front/order/receive-confirm",
+			headers: {
+				"Authorization": token ? ('Bearer ' + JSON.parse(token).token) : ''
+			},
+			data:JSON.stringify({
+				subjectId: orderId
+			}),
+			contentType: 'application/json;charset=utf-8',
+			type: "POST",
+			dataType:"json",
+			success:function(res){
+				if (res.code == 200) {
+					$("#myOrderShow").trigger('click')
+					layer.close(index);
+				} else {
+					layer.alert(res.message)
+				}
+			}
+		});
+	}, function(index){
+		layer.close(index)
+	});
+
+}
 

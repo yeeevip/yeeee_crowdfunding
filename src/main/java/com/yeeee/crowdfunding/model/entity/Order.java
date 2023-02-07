@@ -55,6 +55,8 @@ public class Order {
      */
     private Date orderDate;
 
+    private Integer hasReceive;
+
     private Integer receiveInformation;
 
     /**

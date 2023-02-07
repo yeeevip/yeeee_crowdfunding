@@ -670,6 +670,7 @@ CREATE TABLE `t_order`  (
   `has_pay` int(1) NULL DEFAULT 0 COMMENT '是否支付',
   `has_send` int(1) NULL DEFAULT 0 COMMENT '是否发货',
   `order_date` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+  `has_receive` tinyint(1) DEFAULT '0',
   `receive_information` int(10) NULL DEFAULT NULL,
   `user_seller` int(10) NULL DEFAULT NULL COMMENT '卖家id',
   `pay_time` datetime(0) NULL DEFAULT NULL COMMENT '支付时间',

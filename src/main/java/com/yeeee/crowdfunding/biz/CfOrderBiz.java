@@ -1,7 +1,9 @@
 package com.yeeee.crowdfunding.biz;
 
 import cn.hutool.core.collection.CollectionUtil;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.google.common.collect.Lists;
 import com.yeeee.crowdfunding.convert.OrderConvert;
 import com.yeeee.crowdfunding.convert.ProjectConvert;
@@ -82,6 +84,18 @@ public class CfOrderBiz {
             return null;
         }
         orderService.removeByIds(request.getIds());
+        return null;
+    }
+
+    public Void frontConfirmReceiveOrder(PayVO payVO) {
+        Order order = orderService.getById(payVO.getSubjectId());
+        if (order == null) {
+            throw new BizException("订单不存在");
+        }
+        LambdaUpdateWrapper<Order> updateWrapper = Wrappers.lambdaUpdate();
+        updateWrapper.eq(Order::getId, payVO.getSubjectId());
+        updateWrapper.set(Order::getHasReceive, 1);
+        orderService.update(updateWrapper);
         return null;
     }
 }
