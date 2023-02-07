@@ -1,5 +1,8 @@
 package com.yeeee.crowdfunding.model.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -7,10 +10,12 @@ import java.util.Date;
 
 @Data
 @Accessors(chain = true)
+@TableName("t_user")
 public class User {
     /**
      * 用户id主键
      */
+    @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
     /**

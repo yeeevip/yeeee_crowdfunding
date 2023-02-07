@@ -1,6 +1,9 @@
 package com.yeeee.crowdfunding.controller;
 
 import com.yeeee.crowdfunding.api.CommonResult;
+import com.yeeee.crowdfunding.biz.UserBiz;
+import com.yeeee.crowdfunding.model.request.CfUserEditRequest;
+import com.yeeee.crowdfunding.model.request.IdsRequest;
 import com.yeeee.crowdfunding.model.vo.*;
 import com.yeeee.crowdfunding.service.UserService;
 import io.swagger.annotations.Api;
@@ -13,8 +16,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import vip.yeee.memo.integrate.common.websecurity.model.Oauth2TokenVo;
 
-import javax.servlet.http.HttpServletRequest;
-
 /**
  * description......
  *
@@ -22,12 +23,13 @@ import javax.servlet.http.HttpServletRequest;
  * @since 2022/4/28 22:53
  */
 @Slf4j
-@Api(tags = "前台用户管理", description = "前台用户管理")
+@Api(tags = "前台用户管理")
 @RequiredArgsConstructor
 @RestController
 public class UserController {
 
     private final UserService userService;
+    private final UserBiz userBiz;
 
 
     @ApiOperation("用户登录")
@@ -68,6 +70,41 @@ public class UserController {
     @PostMapping(value = "admin/user/page")
     public CommonResult<PageVO<UserVO>> userPageList(UserPageReqVO userPageReqVO) {
         return CommonResult.success(userService.userPageList(userPageReqVO));
+    }
+
+    @GetMapping(value = "admin/cf-user/page")
+    public CommonResult<PageVO<UserVO>> cfUserPageList(String query) {
+        return CommonResult.success(userBiz.cfUserPageList(query));
+    }
+
+    @ApiOperation("用户是否存在")
+    @GetMapping(value = "admin/cf-user/exist")
+    public CommonResult<Boolean> cfUserExist(String query) {
+        return CommonResult.success(userBiz.cfUserExist(query));
+    }
+
+    @ApiOperation("创建用户")
+    @PostMapping(value = "admin/cf-user/add")
+    public CommonResult<Void> addCfUser(@Validated(CfUserEditRequest.Add.class) @RequestBody CfUserEditRequest request) {
+        return CommonResult.success(userBiz.addCfUser(request));
+    }
+
+    @ApiOperation("编辑用户")
+    @PostMapping(value = "admin/cf-user/upd")
+    public CommonResult<Void> editCfUser(@Validated(CfUserEditRequest.Edit.class) @RequestBody CfUserEditRequest request) {
+        return CommonResult.success(userBiz.editCfUser(request));
+    }
+
+    @ApiOperation("用户详情")
+    @PostMapping(value = "admin/cf-user/info")
+    public CommonResult<CfUserInfoVO> cfUserInfo(@Validated(CfUserEditRequest.Info.class) @RequestBody CfUserEditRequest request) {
+        return CommonResult.success(userBiz.cfUserInfo(request));
+    }
+
+    @ApiOperation("删除用户")
+    @PostMapping(value = "admin/cf-user/del")
+    public CommonResult<Void> delCfUser(@RequestBody IdsRequest request) {
+        return CommonResult.success(userBiz.delCfUser(request));
     }
 
 }

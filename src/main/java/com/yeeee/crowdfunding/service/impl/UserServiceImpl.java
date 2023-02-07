@@ -1,5 +1,6 @@
 package com.yeeee.crowdfunding.service.impl;
 
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.google.common.collect.Lists;
@@ -17,7 +18,6 @@ import vip.yeee.memo.integrate.common.websecurity.constant.SecurityUserTypeEnum;
 import vip.yeee.memo.integrate.common.websecurity.context.SecurityContext;
 import vip.yeee.memo.integrate.common.websecurity.model.Oauth2TokenVo;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -31,7 +31,7 @@ import java.util.stream.Collectors;
 @Slf4j
 @RequiredArgsConstructor
 @Service
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
 
     private final UserMapper userMapper;
 

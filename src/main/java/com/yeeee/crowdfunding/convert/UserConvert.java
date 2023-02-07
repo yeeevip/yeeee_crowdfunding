@@ -1,8 +1,7 @@
 package com.yeeee.crowdfunding.convert;
 
-import com.yeeee.crowdfunding.model.entity.ProjectRepay;
 import com.yeeee.crowdfunding.model.entity.User;
-import com.yeeee.crowdfunding.model.vo.ProjectRepayVO;
+import com.yeeee.crowdfunding.model.vo.CfUserInfoVO;
 import com.yeeee.crowdfunding.model.vo.UserVO;
 import org.mapstruct.Mapper;
 
@@ -16,6 +15,8 @@ import org.mapstruct.Mapper;
 public interface UserConvert {
 
     UserVO user2VO(User user);
+
+    CfUserInfoVO user2InfoVO(User user);
 
     User vo2Entity(UserVO userVO);
 

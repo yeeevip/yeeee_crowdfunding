@@ -1,9 +1,9 @@
 package com.yeeee.crowdfunding.service;
 
+import com.baomidou.mybatisplus.extension.service.IService;
+import com.yeeee.crowdfunding.model.entity.User;
 import com.yeeee.crowdfunding.model.vo.*;
 import vip.yeee.memo.integrate.common.websecurity.model.Oauth2TokenVo;
-
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * description......
@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
  * @author yeeee
  * @since 2022/4/29 16:18
  */
-public interface UserService {
+public interface UserService extends IService<User> {
 
     Oauth2TokenVo login(UserCheckVO userCheckVO);
 
@@ -26,5 +26,4 @@ public interface UserService {
     UserVO getMyselfInfo();
 
     Void updatePassword(UpdatePasswordVO updatePasswordVO);
-
 }
