@@ -94,6 +94,8 @@ var f_display = function(divId){
 		handleMyMsg();
 	} else if ('myAccount' == divId) {
 		handleMyAccount();
+	} else if ('myPinglun' == divId) {
+		initVuePersonal()
 	}
 
 }

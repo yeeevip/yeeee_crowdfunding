@@ -1,10 +1,12 @@
 package com.yeeee.crowdfunding.service.impl;
 
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.google.common.collect.Lists;
 import com.yeeee.crowdfunding.convert.CommentConvert;
 import com.yeeee.crowdfunding.mapper.CommentMapper;
+import com.yeeee.crowdfunding.model.dto.CommentDto;
 import com.yeeee.crowdfunding.model.entity.Comment;
 import com.yeeee.crowdfunding.model.vo.CommentPageReqVO;
 import com.yeeee.crowdfunding.model.vo.CommentVO;
@@ -28,7 +30,7 @@ import java.util.stream.Collectors;
  */
 @RequiredArgsConstructor
 @Service
-public class CommentServiceImpl implements CommentService {
+public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> implements CommentService {
 
     private final CommentMapper commentMapper;
 
@@ -55,5 +57,10 @@ public class CommentServiceImpl implements CommentService {
                 .map(commentConvert::comment2VO)
                 .collect(Collectors.toList());
         return new PageVO<>(page.getPageNum(), page.getPageSize(), page.getPages(), page.getTotal(), commentVOList);
+    }
+
+    @Override
+    public List<CommentVO> getProjectCommentList(CommentDto query) {
+        return commentMapper.getProjectCommentList(query);
     }
 }

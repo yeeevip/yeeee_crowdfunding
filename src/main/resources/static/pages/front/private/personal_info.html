@@ -13,7 +13,9 @@
 <script type="text/javascript" src="/js/date/calender.js"></script>
 	<script type="text/javascript" src="/js/common.js"></script>
 <script type="text/javascript" src="/js/personal.js"></script>
-
+	<link rel="stylesheet" href="/css/eleui.min.css">
+	<script src="/js/element-ui/vue.min.js"></script>
+	<script src="/js/element-ui/element-ui.min.js"></script>
 
 <script type="text/javascript">
 $(document).ready(function(){
@@ -392,13 +394,52 @@ $(document).ready(function(){
 			<!--个人中心我的评论begin-->
 			<div class="grzx_pinglun c_display"  style="display:none;" id="myPinglun">
 				<ul class="right_box1_ul">
-			    	<li><a href="javascript:;">收到的评论</a></li>
-			        <li><a href="javascript:;">回复他人的评论</a></li>
-			        <li><a href="javascript:;">对项目的评论</a></li>
-			    </ul>
-			    <div class="grzx_pinglunBox">暂无评论
-			    	
-			    </div>
+					<li><a href="javascript:;">我的评论</a></li>
+				</ul>
+				<div id="grzx_pinglunBox" style="padding-left: 20px; padding-right: 20px">
+					<el-tabs v-model="activeName" @tab-click="handleClickTab">
+						<el-tab-pane label="收到的评论" name="first">
+							<el-table :data="dataList" border stripe v-loading="dataListLoading" :max-height="tableHeight" style="width: 100%;">
+								<el-table-column prop="id" label="编号" sortable="custom" header-align="center" align="center"  width="120"></el-table-column>
+								<el-table-column prop="projectTitle" label="项目名称" sortable="custom" header-align="center" align="center" width="250"></el-table-column>
+								<el-table-column prop="content" label="评论内容" sortable="custom" header-align="center" align="center"></el-table-column>
+								<el-table-column prop="time" label="评论时间" sortable="custom" header-align="center" align="center"></el-table-column>
+<!--								<el-table-column label="操作" fixed="right" header-align="center" align="center" width="100">
+									<template slot-scope="scope">
+										<el-button type="text" size="small" @click="infoHandle(scope.row.idStr)" icon="el-icon-document" title="详情"></el-button>
+									</template>
+								</el-table-column>-->
+							</el-table>
+							<el-pagination @size-change="sizeChangeHandle"
+										   @current-change="currentChangeHandle"
+										   :current-page="queryForm.pageNum"
+										   :page-sizes="pageSizes"
+										   :page-size="queryForm.pageSize"
+										   :total="total"
+										   layout="total, sizes, prev, pager, next, jumper">
+							</el-pagination>
+						</el-tab-pane>
+						<el-tab-pane label="我发出的评论" name="second">
+							<el-table :data="dataList2" border stripe v-loading="dataListLoading" :max-height="tableHeight" style="width: 100%;">
+								<el-table-column prop="id" label="编号" sortable="custom" header-align="center" align="center"  width="120"></el-table-column>
+								<el-table-column prop="projectTitle" label="项目名称" sortable="custom" header-align="center" align="center" width="250"></el-table-column>
+								<el-table-column prop="content" label="评论内容" sortable="custom" header-align="center" align="center"></el-table-column>
+								<el-table-column prop="time" label="评论时间" sortable="custom" header-align="center" align="center"></el-table-column>
+							</el-table>
+							<el-pagination @size-change="sizeChangeHandle2"
+										   @current-change="currentChangeHandle2"
+										   :current-page="queryForm2.pageNum"
+										   :page-sizes="pageSizes"
+										   :page-size="queryForm2.pageSize"
+										   :total="total2"
+										   layout="total, sizes, prev, pager, next, jumper">
+							</el-pagination>
+
+						</el-tab-pane>
+
+					</el-tabs>
+
+				</div>
 			</div>
 			<!--个人中心我的评论end-->
 			
@@ -461,4 +502,6 @@ $(document).ready(function(){
 	$("#indexHeader").load("/pages/front/common/header.html");
 	$("#indexFooter").load("/pages/front/common/footer.html");
 </script>
+<script src="/js/element-ui/vue-resource.min.js"></script>
+<script src="/js/vue-personal_info.js"></script>
 </html>

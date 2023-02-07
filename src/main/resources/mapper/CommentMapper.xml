@@ -138,4 +138,23 @@
         </foreach>
     </insert >
 
+    <select id="getProjectCommentList" parameterType="com.yeeee.crowdfunding.model.dto.CommentDto" resultType="com.yeeee.crowdfunding.model.vo.CommentVO">
+        select
+            tc.*,
+            tp.id projectId,
+            tp.title projectTitle
+        from
+            t_comment tc
+        left join t_project tp on tp.id = tc.project
+        <where>
+            <if test="userId != null">
+                and tc.user_id = #{userId}
+            </if>
+            <if test="projectUserId != null">
+                and tp.user_id = #{projectUserId}
+            </if>
+        </where>
+        order by tc.id desc
+    </select>
+
 </mapper>

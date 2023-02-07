@@ -17,9 +17,13 @@ import java.util.Date;
 @Data
 public class CommentVO {
 
+    private Integer id;
+
     @NotNull(message = "projectId不能空", groups = {SaveGroup.class, PageListGroup.class})
     @ApiModelProperty("项目ID")
     private Integer projectId;
+
+    private String projectTitle;
 
     @NotBlank(message = "内容不能空", groups = SaveGroup.class)
     @ApiModelProperty("内容")
