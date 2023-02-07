@@ -57,9 +57,9 @@ var f_display = function(divId){
 \t\t\t                    <input type="text" value="${handleNull(user.realName)}" name="real_name" placeholder="请输入真实姓名" />
 \t\t\t                 </li>
 \t\t\t                 <li>
-\t\t\t                 \t<label><span>*</span>身份证：</label>
-\t\t\t                    <input type="text" value="${handleNull(user.idNumber)}" name="id_number" placeholder="请输入身份证号：" />
-\t\t\t                 </li>
+<!--\t\t\t                 \t<label><span>*</span>身份证：</label>-->
+<!--\t\t\t                    <input type="text" value="${handleNull(user.idNumber)}" name="id_number" placeholder="请输入身份证号：" />-->
+<!--\t\t\t                 </li>-->
 \t\t\t                 <li>
 \t\t\t                 \t<label>生日：</label>
 \t\t\t                    <input id="calender" type="text" value="${handleNull(user.dateOfBirth)}" name="dateOfBirth"/>
@@ -348,7 +348,7 @@ $(document).ready(function(){
 							if(Ojson[i].hasReceive!=1) {
 								html = html + '<a href="javascript:toConfirmReceive('+Ojson[i].id+');" class="ddLastbtn_A">确认收货</a>'
 							}
-							html = html+'<a href="javascript:;" class="ddLastbtn_A">我要投诉</a></td></tr>';
+							html = html+'<a href="/pages/front/public/project.html?id=' + Ojson[i].projectVO.id + '#xq_plBox" target="_blank" class="ddLastbtn_A">我要投诉</a></td></tr>';
 						}else{
 							html = html+'<a href="javascript:toPay('+Ojson[i].id+');" class="ddLastbtn_A">去支付</a></td></tr>';
 						}
@@ -437,7 +437,7 @@ $(document).ready(function(){
 											if(Ojson[i].hasReceive!=1) {
 												html = html+'<a href="javascript:toConfirmReceive('+Ojson[i].id+');" class="ddLastbtn_A">确认收货</a>'
 											}
-											html = html+'<a href="javascript:;" class="ddLastbtn_A">我要投诉</a></td></tr>';
+											html = html+'<a href="/pages/front/public/project.html?id=' + Ojson[i].projectVO.id + '#xq_plBox" target="_blank" class="ddLastbtn_A">我要投诉</a></td></tr>';
 										}else{
 											html = html+'<a href="javascript:toPay('+Ojson[i].id+');" class="ddLastbtn_A">去支付</a></td></tr>';
 										}
