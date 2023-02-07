@@ -1,7 +1,7 @@
 package com.yeeee.crowdfunding.service.impl;
 
-import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.IdUtil;
+import cn.hutool.core.util.NumberUtil;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
@@ -53,6 +53,8 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
     private final ReceiveInformationMapper receiveInformationMapper;
 
     private final ReceiveInfoConvert receiveInfoConvert;
+
+    private final TUserAccountService tUserAccountService;
 
     @Override
     public PageVO<BuyOrderVO> getMyselfBuyOrderList(BuyOrderPageReqVO buyOrderPageReqVO) {
@@ -134,11 +136,19 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
             throw new BizException("项目不存在");
         }
 
+        TUserAccount account = tUserAccountService.getUserAccountByUserId(SecurityContext.getCurUserId());
+        if (account == null
+                || NumberUtil.isGreater(BigDecimal.valueOf(order.getPayPrice()), BigDecimal.valueOf(account.getBalance()))) {
+            throw new BizException("钱包余额不足");
+        }
+
         orderMapper.updateByPrimaryKey(new Order().setId(order.getId()).setHasPay(1).setPayTime(new Date()));
 
         Project updProject = new Project().setId(project.getId());
         updProject.setHasFundRaising(BigDecimal.valueOf(Optional.ofNullable(project.getHasFundRaising()).orElse(0)).add(BigDecimal.valueOf(order.getPayPrice())).intValue());
         projectMapper.updateByPrimaryKey(updProject);
+
+        tUserAccountService.increaseUserBalance(account, BigDecimal.valueOf(order.getPayPrice()).longValue() * (-1));
 
         return null;
     }

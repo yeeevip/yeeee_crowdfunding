@@ -92,6 +92,8 @@ var f_display = function(divId){
 		})
 	} else if ('myLaunch' == divId) {
 		handleMyMsg();
+	} else if ('myAccount' == divId) {
+		handleMyAccount();
 	}
 
 }
@@ -903,6 +905,95 @@ function handleMyMsg() {
 			}
 
 		}
+	});
+}
+
+function handleMyMsg() {
+	let token = localStorage.getItem('crowdfunding-token');
+	$.ajax({
+		url:API_BASE_URL + "/front/msg/list",
+		data:JSON.stringify({
+			pageNum: 1,
+			pageSize: 20
+		}),
+		headers: {
+			"Authorization": token ? ('Bearer ' + JSON.parse(token).token) : ''
+		},
+		async:false,
+		cache:false,
+		contentType: 'application/json;charset=utf-8',
+		type: "POST", //请求方式为POST
+		dataType:"json",
+		success:function(res){
+			if (res.code == 200) {
+				if (res.data.result) {
+					confirmMsg(0, res.data.result)
+				}
+			} else {
+				layer.alert(res.message)
+			}
+
+		}
+	});
+}
+
+function handleMyAccount() {
+	let token = localStorage.getItem('crowdfunding-token');
+	$.ajax({
+		url:API_BASE_URL + "/front/account/my",
+		headers: {
+			"Authorization": token ? ('Bearer ' + JSON.parse(token).token) : ''
+		},
+		type: "GET",
+		dataType:"json",
+		success:function(res){
+			if (res.code == 200) {
+				let data = res.data
+				$("#myAccountInfo input[name = 'balance']").val(data.balance);
+				$("#myAccountInfo input[name = 'createTime']").val(data.createTime);
+				$("#myAccountInfo input[name = 'updateTime']").val(data.updateTime);
+			} else {
+				layer.alert(res.message)
+			}
+		}
+	});
+}
+
+function fillMyAccount() {
+	layer.prompt({
+		title: '充值',
+		formType: 2,
+		area: ['100px', '25px'],
+		btn: ['确定','取消'],
+		maxlength:20
+		},
+		function(reason, index) {
+			if (!Number.parseInt(reason)) {
+				layer.alert("充值数额有误")
+				return
+			}
+			let token = localStorage.getItem('crowdfunding-token');
+			$.ajax({
+				url:API_BASE_URL + "/front/account/fill",
+				headers: {
+					"Authorization": token ? ('Bearer ' + JSON.parse(token).token) : ''
+				},
+				data:JSON.stringify({
+					id: 1,
+					balance: reason
+				}),
+				contentType: 'application/json;charset=utf-8',
+				type: "POST",
+				dataType:"json",
+				success:function(res){
+					if (res.code == 200) {
+						f_display('myAccount')
+						layer.close(index);
+					} else {
+						layer.alert(res.message)
+					}
+				}
+			});
 	});
 }
 

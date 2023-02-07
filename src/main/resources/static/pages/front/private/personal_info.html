@@ -7,6 +7,7 @@
 <link type="text/css" rel="stylesheet" href="/css/common.css">
 <link type="text/css" rel="stylesheet" href="/css/project.css">
 <link type="text/css" rel="stylesheet" href="/css/calender/calender.css">
+	<link type="text/css" rel="stylesheet" href="/css/faqi.css">
 <script type="text/javascript" src="/js/jquery-3.1.1.min.js"></script>
 <script type="text/javascript" src="/js/layer/layer.js"></script>
 <script type="text/javascript" src="/js/date/calender.js"></script>
@@ -46,6 +47,13 @@ $(document).ready(function(){
             	<a>我的关注</a>
             </div>
         </div>
+
+		<div class="personalBox_left_box">
+			<h3>钱包</h3>
+			<div class="personalBox_left_m">
+				<a href="javascript:f_display('myAccount')">我的钱包</a>
+			</div>
+		</div>
         
         <div class="personalBox_left_box">
             <h3>消息</h3>
@@ -254,6 +262,49 @@ $(document).ready(function(){
 			</div>
 			
 			<!--修改密码end-->
+
+		<!--个人中心项目管理begin-->
+		<div class="personalBox_box c_display " style="display:none;" id="myAccount">
+			<ul class="right_box1_ul">
+				<li>
+					<a href="javascript:;">我的钱包</a>
+				</li>
+			</ul>
+			<div class="pj_fq">
+
+				<!--项目信息begin-->
+				<div class="fq_bodyBox" style="min-height:100%">
+					<div class="fq_bodyMainBox" style="width:600px">
+						<!-- 个人begin -->
+						<div class="gerenInfo">
+							<div class="fq_body1_content">
+								<form id="myAccountInfo"  method="post" >
+									<ul class="fq_body_ul">
+										<li>
+											<label>钱包余额</label>
+											<input name="balance" readonly type="text"/>
+										</li>
+										<li>
+											<label>创建时间</label>
+											<input name="createTime" readonly type="text" />
+										</li>
+										<li>
+											<label>最近充值时间</label>
+											<input name="updateTime" readonly type="text" />
+										</li>
+									</ul>
+								</form>
+							</div>
+						</div>
+						<!-- 个人end -->
+					</div>
+					<!--项目信息end-->
+					<div class="fq_footer"  style="width:600px">
+						<a href="javascript:fillMyAccount();" class=" big btn  btn-blue ">立即充值</a>
+					</div>
+				</div>
+			</div>
+		</div>
 			
 			
 			<!--个人中心项目管理begin-->

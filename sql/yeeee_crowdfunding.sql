@@ -4569,21 +4569,6 @@ INSERT INTO `t_user` VALUES (42, NULL, '17855830002', '96e79218965eb72c92a549dd5
 INSERT INTO `t_user` VALUES (43, NULL, '17855830003', '96e79218965eb72c92a549dd5a330112', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- ----------------------------
--- Table structure for t_user_account
--- ----------------------------
-DROP TABLE IF EXISTS `t_user_account`;
-CREATE TABLE `t_user_account`  (
-  `id` int(10) NOT NULL,
-  `user_id` int(10) NOT NULL,
-  `remaining_sum` float NOT NULL DEFAULT 0 COMMENT '余额',
-  PRIMARY KEY (`id`, `user_id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_bin ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of t_user_account
--- ----------------------------
-
--- ----------------------------
 -- Table structure for sys_qrtz_log
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_qrtz_log`;
@@ -4619,5 +4604,14 @@ CREATE TABLE `t_msg` (
  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=utf8mb4;
 
+DROP TABLE IF EXISTS `t_user_account`;
+CREATE TABLE `t_user_account` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `user_id` int(10) NOT NULL,
+  `balance` bigint(20) NOT NULL DEFAULT '0' COMMENT '余额',
+  `create_time` datetime DEFAULT NULL,
+  `update_time` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin ROW_FORMAT=DYNAMIC;
 
 SET FOREIGN_KEY_CHECKS = 1;
