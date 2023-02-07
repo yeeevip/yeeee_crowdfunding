@@ -1,5 +1,7 @@
 package com.yeeee.crowdfunding.service;
 
+import com.baomidou.mybatisplus.extension.service.IService;
+import com.yeeee.crowdfunding.model.entity.Order;
 import com.yeeee.crowdfunding.model.vo.*;
 
 /**
@@ -8,7 +10,7 @@ import com.yeeee.crowdfunding.model.vo.*;
  * @author yeeee
  * @since 2022/4/30 19:34
  */
-public interface OrderService {
+public interface OrderService extends IService<Order> {
 
     PageVO<BuyOrderVO> getMyselfBuyOrderList(BuyOrderPageReqVO buyOrderPageReqVO);
 

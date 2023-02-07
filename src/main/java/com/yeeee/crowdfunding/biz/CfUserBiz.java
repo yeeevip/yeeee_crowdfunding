@@ -30,7 +30,7 @@ import java.util.stream.Collectors;
  * @since 2023/2/6 20:20
  */
 @Component
-public class UserBiz {
+public class CfUserBiz {
 
     @Resource
     private UserService userService;

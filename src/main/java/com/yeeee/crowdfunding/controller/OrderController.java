@@ -1,16 +1,16 @@
 package com.yeeee.crowdfunding.controller;
 
 import com.yeeee.crowdfunding.api.CommonResult;
+import com.yeeee.crowdfunding.biz.CfOrderBiz;
+import com.yeeee.crowdfunding.model.request.CfOrderEditRequest;
+import com.yeeee.crowdfunding.model.request.IdsRequest;
 import com.yeeee.crowdfunding.model.vo.*;
 import com.yeeee.crowdfunding.service.OrderService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * description......
@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class OrderController {
 
     private final OrderService orderService;
+    private final CfOrderBiz cfOrderBiz;
 
     @ApiOperation("我下的订单")
     @PostMapping("front/order/buyer")
@@ -53,6 +54,24 @@ public class OrderController {
     @PostMapping("admin/order/page")
     public CommonResult<PageVO<SellerOrderVO>> getAdminOrderPageList(@RequestBody BuyOrderPageReqVO buyOrderPageReqVO) {
         return CommonResult.success(orderService.getAdminOrderPageList(buyOrderPageReqVO));
+    }
+
+    @ApiOperation("订单分页")
+    @GetMapping(value = "admin/cf-order/page")
+    public CommonResult<PageVO<SellerOrderVO>> cfOrderPageList(String query) {
+        return CommonResult.success(cfOrderBiz.cfUserPageList(query));
+    }
+
+    @ApiOperation("订单详情")
+    @PostMapping(value = "admin/cf-order/info")
+    public CommonResult<SellerOrderVO> cfOrderInfo(@Validated(CfOrderEditRequest.Info.class) @RequestBody CfOrderEditRequest request) {
+        return CommonResult.success(cfOrderBiz.cfUserInfo(request));
+    }
+
+    @ApiOperation("删除订单")
+    @PostMapping(value = "admin/cf-order/del")
+    public CommonResult<Void> cfOrderBiz(@RequestBody IdsRequest request) {
+        return CommonResult.success(cfOrderBiz.delCfUser(request));
     }
 
 }

@@ -1,5 +1,6 @@
 package com.yeeee.crowdfunding.model.entity;
 
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -7,6 +8,7 @@ import java.util.Date;
 
 @Data
 @Accessors(chain = true)
+@TableName("t_order")
 public class Order {
     /**
      * 订单主键
