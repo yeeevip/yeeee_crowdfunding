@@ -14,7 +14,7 @@ $(document).ready(function(){
 		"pageNum": pageNm ? pageNm : 1,
 		"projectVO": {
 		"projectType": projectType,
-		"keyword": getQueryVariable("keyword"),
+		"keyword": decodeURI(getQueryVariable("keyword")),
 	}}
 	$.ajax({
 		type: 'POST',
