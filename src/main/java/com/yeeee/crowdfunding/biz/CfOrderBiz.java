@@ -98,4 +98,16 @@ public class CfOrderBiz {
         orderService.update(updateWrapper);
         return null;
     }
+
+    public Void frontDeliverOrder(PayVO payVO) {
+        Order order = orderService.getById(payVO.getSubjectId());
+        if (order == null) {
+            throw new BizException("订单不存在");
+        }
+        LambdaUpdateWrapper<Order> updateWrapper = Wrappers.lambdaUpdate();
+        updateWrapper.eq(Order::getId, payVO.getSubjectId());
+        updateWrapper.set(Order::getHasSend, 1);
+        orderService.update(updateWrapper);
+        return null;
+    }
 }

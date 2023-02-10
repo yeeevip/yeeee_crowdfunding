@@ -507,7 +507,9 @@ $(document).ready(function(){
 							'<td>'+Ojson[i].receiveInfoVO.address+'</td>'+
 							'<td>'+Ojson[i].receiveInfoVO.phone+'</td>'+
 							'<td>'+payState+'</td>'+
-							'<td><a href="javascript:;" target="" class="search_btn">发货</a></td>'+
+							'<td>' + (
+								!Ojson[i].hasSend ? '<a href="javascript:deliverGoods(' + Ojson[i].id + ');" target="" class="search_btn">发货</a>' : ''
+							) +'</td>'+
 
 							'</tr>');
 					}
@@ -1068,5 +1070,35 @@ function toConfirmReceive(orderId) {
 		layer.close(index)
 	});
 
+}
+
+function deliverGoods(orderId) {
+	layer.confirm('确认发货？', {
+		btn: ['确定', '取消'] //可以无限个按钮
+	}, function(index){
+		let token = localStorage.getItem('crowdfunding-token');
+		$.ajax({
+			url:API_BASE_URL + "/front/order/deliver",
+			headers: {
+				"Authorization": token ? ('Bearer ' + JSON.parse(token).token) : ''
+			},
+			data:JSON.stringify({
+				subjectId: orderId
+			}),
+			contentType: 'application/json;charset=utf-8',
+			type: "POST",
+			dataType:"json",
+			success:function(res){
+				if (res.code == 200) {
+					$("#myProjectShow").trigger('click')
+					layer.close(index);
+				} else {
+					layer.alert(res.message)
+				}
+			}
+		});
+	}, function(index){
+		layer.close(index)
+	});
 }
 

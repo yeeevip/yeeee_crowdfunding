@@ -50,6 +50,12 @@ public class OrderController {
         return CommonResult.success(cfOrderBiz.frontConfirmReceiveOrder(payVO));
     }
 
+    @ApiOperation("发货")
+    @PostMapping("front/order/deliver")
+    public CommonResult<Void> frontDeliverOrder(@Validated @RequestBody PayVO payVO) {
+        return CommonResult.success(cfOrderBiz.frontDeliverOrder(payVO));
+    }
+
     @ApiOperation("已卖出的订单")
     @PostMapping("front/order/seller")
     public CommonResult<PageVO<SellerOrderVO>> getSellerOrderList(@RequestBody BuyOrderPageReqVO buyOrderPageReqVO) {
