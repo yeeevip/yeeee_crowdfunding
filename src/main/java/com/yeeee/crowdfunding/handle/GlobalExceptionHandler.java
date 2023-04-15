@@ -51,8 +51,8 @@ public class GlobalExceptionHandler {
         return CommonResult.failed(e.getResultCode(), e.getMessage());
     }
 
-    @ExceptionHandler(vip.yeee.memo.integrate.common.model.exception.BizException.class)
-    public CommonResult<Object> handleBizException2(vip.yeee.memo.integrate.common.model.exception.BizException e) {
+    @ExceptionHandler(vip.yeee.memo.integrate.base.model.exception.BizException.class)
+    public CommonResult<Object> handleBizException2(vip.yeee.memo.integrate.base.model.exception.BizException e) {
         log.error("code:{}, message:{}", e.getResultCode().getCode(), e.getMessage());
         return CommonResult.failed(e.getMessage());
     }

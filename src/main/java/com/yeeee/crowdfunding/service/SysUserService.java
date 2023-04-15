@@ -3,7 +3,7 @@ package com.yeeee.crowdfunding.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.yeeee.crowdfunding.model.entity.SysUser;
 import com.yeeee.crowdfunding.model.vo.*;
-import vip.yeee.memo.integrate.common.websecurity.model.Oauth2TokenVo;
+import vip.yeee.memo.integrate.base.websecurityoauth2.model.Oauth2TokenVo;
 
 /**
  * description......

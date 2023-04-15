@@ -15,9 +15,9 @@ import com.yeeee.crowdfunding.utils.BusinessUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import vip.yeee.memo.integrate.common.websecurity.constant.SecurityUserTypeEnum;
-import vip.yeee.memo.integrate.common.websecurity.context.SecurityContext;
-import vip.yeee.memo.integrate.common.websecurity.model.Oauth2TokenVo;
+import vip.yeee.memo.integrate.base.websecurityoauth2.constant.SecurityUserTypeEnum;
+import vip.yeee.memo.integrate.base.websecurityoauth2.context.SecurityContext;
+import vip.yeee.memo.integrate.base.websecurityoauth2.model.Oauth2TokenVo;
 
 import java.util.List;
 import java.util.Optional;

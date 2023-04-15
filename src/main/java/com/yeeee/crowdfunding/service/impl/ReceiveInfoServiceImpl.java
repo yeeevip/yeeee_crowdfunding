@@ -15,7 +15,6 @@ import com.yeeee.crowdfunding.utils.BusinessUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import vip.yeee.memo.integrate.common.websecurity.context.SecurityContext;
 
 import java.util.List;
 import java.util.Optional;

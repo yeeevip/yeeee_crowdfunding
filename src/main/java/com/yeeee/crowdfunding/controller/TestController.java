@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import vip.yeee.memo.integrate.common.websecurity.context.SecurityContext;
+import vip.yeee.memo.integrate.base.websecurityoauth2.context.SecurityContext;
 
 import javax.servlet.http.HttpServletRequest;
 

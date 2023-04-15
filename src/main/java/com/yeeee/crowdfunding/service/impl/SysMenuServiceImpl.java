@@ -25,7 +25,6 @@ import com.yeeee.crowdfunding.utils.BusinessUtils;
 import com.yeeee.crowdfunding.utils.wrapper.MyPageWrapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import vip.yeee.memo.integrate.common.websecurity.context.SecurityContext;
 
 import java.util.Collections;
 import java.util.List;

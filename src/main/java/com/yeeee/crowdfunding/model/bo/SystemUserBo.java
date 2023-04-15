@@ -2,7 +2,7 @@ package com.yeeee.crowdfunding.model.bo;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import vip.yeee.memo.integrate.common.websecurity.model.AuthUser;
+import vip.yeee.memo.integrate.base.websecurityoauth2.model.AuthUser;
 
 /**
  * description......

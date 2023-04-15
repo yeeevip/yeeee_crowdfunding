@@ -7,7 +7,7 @@ import com.yeeee.crowdfunding.model.vo.UserVO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
-import vip.yeee.memo.integrate.common.websecurity.model.AuthedUser;
+import vip.yeee.memo.integrate.base.websecurityoauth2.model.AuthedUser;
 
 /**
  * description......

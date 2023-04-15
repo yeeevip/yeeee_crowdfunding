@@ -21,7 +21,7 @@ import com.yeeee.crowdfunding.utils.wrapper.MyPageWrapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import vip.yeee.memo.integrate.common.websecurity.context.SecurityContext;
+import vip.yeee.memo.integrate.base.websecurityoauth2.context.SecurityContext;
 
 import java.util.Collections;
 import java.util.Date;

@@ -1,7 +1,7 @@
 package com.yeeee.crowdfunding.utils;
 
 import cn.hutool.core.util.StrUtil;
-import vip.yeee.memo.integrate.common.websecurity.context.SecurityContext;
+import vip.yeee.memo.integrate.base.websecurityoauth2.context.SecurityContext;
 
 /**
  * description......

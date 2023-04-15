@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import vip.yeee.memo.integrate.common.websecurity.annotation.AnonymousAccess;
+import vip.yeee.memo.integrate.base.websecurityoauth2.annotation.AnonymousAccess;
 
 /**
  * description......

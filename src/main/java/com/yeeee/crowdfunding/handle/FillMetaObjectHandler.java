@@ -3,7 +3,7 @@ package com.yeeee.crowdfunding.handle;
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import org.apache.ibatis.reflection.MetaObject;
 import org.springframework.stereotype.Component;
-import vip.yeee.memo.integrate.common.websecurity.context.SecurityContext;
+import vip.yeee.memo.integrate.base.websecurityoauth2.context.SecurityContext;
 
 import java.util.Date;
 

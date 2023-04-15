@@ -22,7 +22,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import vip.yeee.memo.integrate.common.websecurity.context.SecurityContext;
+import vip.yeee.memo.integrate.base.websecurityoauth2.context.SecurityContext;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;

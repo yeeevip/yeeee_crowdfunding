@@ -10,7 +10,7 @@ import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import vip.yeee.memo.integrate.common.websecurity.annotation.AnonymousAccess;
+import vip.yeee.memo.integrate.base.websecurityoauth2.annotation.AnonymousAccess;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;

@@ -164,39 +164,51 @@
             <version>2.2.5.RELEASE</version>
         </dependency>
         <dependency>
-            <groupId>vip.yeee.memo</groupId>
-            <artifactId>base-web-auth-client</artifactId>
-            <scope>system</scope>
-            <version>2.0.1-SNAPSHOT</version>
-            <systemPath>${project.basedir}/libs/base-web-auth-client.jar</systemPath>
+            <groupId>com.squareup.okhttp3</groupId>
+            <artifactId>okhttp</artifactId>
+            <version>4.9.3</version>
         </dependency>
         <dependency>
             <groupId>vip.yeee.memo</groupId>
-            <artifactId>base-web-auth-server</artifactId>
+            <artifactId>common-httpclient-okhttp</artifactId>
             <scope>system</scope>
-            <version>2.0.1-SNAPSHOT</version>
-            <systemPath>${project.basedir}/libs/base-web-auth-server.jar</systemPath>
+            <version>2.0.3-SNAPSHOT</version>
+            <systemPath>${project.basedir}/libs/common-httpclient-okhttp.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>vip.yeee.memo</groupId>
-            <artifactId>common-websecurity</artifactId>
+            <artifactId>base-web-security-oauth2</artifactId>
             <scope>system</scope>
-            <version>2.0.1-SNAPSHOT</version>
-            <systemPath>${project.basedir}/libs/common-websecurity.jar</systemPath>
+            <version>2.0.3-SNAPSHOT</version>
+            <systemPath>${project.basedir}/libs/base-web-security-oauth2.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>vip.yeee.memo</groupId>
-            <artifactId>common-model</artifactId>
+            <artifactId>common-platform-auth-client</artifactId>
             <scope>system</scope>
-            <version>2.0.1-SNAPSHOT</version>
-            <systemPath>${project.basedir}/libs/common-model.jar</systemPath>
+            <version>2.0.3-SNAPSHOT</version>
+            <systemPath>${project.basedir}/libs/common-platform-auth-client.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>vip.yeee.memo</groupId>
-            <artifactId>common-util</artifactId>
+            <artifactId>common-platform-auth-server</artifactId>
             <scope>system</scope>
-            <version>2.0.1-SNAPSHOT</version>
-            <systemPath>${project.basedir}/libs/common-util.jar</systemPath>
+            <version>2.0.3-SNAPSHOT</version>
+            <systemPath>${project.basedir}/libs/common-platform-auth-server.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>vip.yeee.memo</groupId>
+            <artifactId>base-model</artifactId>
+            <scope>system</scope>
+            <version>2.0.3-SNAPSHOT</version>
+            <systemPath>${project.basedir}/libs/base-model.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>vip.yeee.memo</groupId>
+            <artifactId>base-util</artifactId>
+            <scope>system</scope>
+            <version>2.0.3-SNAPSHOT</version>
+            <systemPath>${project.basedir}/libs/base-util.jar</systemPath>
         </dependency>
     </dependencies>
 

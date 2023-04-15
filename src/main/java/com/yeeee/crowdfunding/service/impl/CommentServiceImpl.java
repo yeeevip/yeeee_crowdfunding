@@ -15,7 +15,7 @@ import com.yeeee.crowdfunding.service.CommentService;
 import com.yeeee.crowdfunding.utils.BusinessUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import vip.yeee.memo.integrate.common.websecurity.context.SecurityContext;
+import vip.yeee.memo.integrate.base.websecurityoauth2.context.SecurityContext;
 
 import java.util.Date;
 import java.util.List;

@@ -14,7 +14,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import vip.yeee.memo.integrate.common.websecurity.model.Oauth2TokenVo;
+import vip.yeee.memo.integrate.base.websecurityoauth2.model.Oauth2TokenVo;
 
 import javax.validation.Valid;
 
