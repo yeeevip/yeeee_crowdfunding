@@ -158,7 +158,7 @@ function initProjectDetail() {
                         </div>
                     </div>
                     <div class="det_Btn_box">
-                    \t<a href="/pages/front/public/orderPage.html?projectId=${data.id}" class="det_btn1" >立即支持</a>
+                    \t<a href="JavaScript:toOrderPage(${data.id}, '${data.leftDays}')" class="det_btn1" >立即支持</a>
                         <div class="det_btn2Box">
                         \t<a href="javascript:;" class="det_btn2">分享</a>
                         </div>
@@ -285,8 +285,14 @@ function showScroll() {
         $(window).scroll(function () {
             var scrollValue = $(window).scrollTop();
             scrollValue > 800 ? $('.xqTab').css("position","fixed").css("top","0") : $('.xqTab').css("position","").css("top","");
-        });
-        
+		});
+}
+function toOrderPage(id, leftDays) {
+	if (leftDays === '0天') {
+		layer.alert("该项目众筹时间已截止！！！")
+		return
+	}
+	window.location.href = "/pages/front/public/orderPage.html?projectId=" + id
 }
 
 
