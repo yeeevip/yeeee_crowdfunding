@@ -51,6 +51,8 @@ public class ProjectVO {
     @ApiModelProperty("项目状态 0：进行中  -1：集资失败 1：成功")
     private Integer hasFinish;
 
+    private Integer hasDown;
+
     @ApiModelProperty("搜索关键字")
     private String keyword;
 

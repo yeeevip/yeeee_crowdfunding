@@ -67,6 +67,8 @@ public class Project {
      */
     private Integer hasFinish;
 
+    private Integer hasDown;
+
     /**
      * -1:审核不通过 0:未审核 1:审核通过
      */

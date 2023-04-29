@@ -36,4 +36,6 @@ public interface ProjectService extends IService<Project> {
     Void updateProjectProgress(ProjectProgressVO projectProgressVO);
 
     Void delCfProject(IdsRequest request);
+
+    Void updateProjectUpOrDown(ProjectUpOrDownVO request);
 }

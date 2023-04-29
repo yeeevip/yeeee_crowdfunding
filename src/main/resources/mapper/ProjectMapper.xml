@@ -44,6 +44,9 @@
             <if test="hasFinish != null">
                 and has_finish = #{hasFinish}
             </if>
+            <if test="hasDown != null">
+                and has_down = #{hasDown}
+            </if>
             <if test="hasAudits != null">
                 and has_audits = #{hasAudits}
             </if>
@@ -78,6 +81,7 @@
             launch_date_raising,
             days_raising,
             has_finish,
+            has_down,
             has_audits,
             has_index,
             shenfen,
@@ -109,7 +113,7 @@
             is_settlement
         FROM
             t_project
-        where has_audits = 1
+        where has_audits = 1 and has_down = 0
         <if test="project.categoryId != '' and project.categoryId != null">
             and category_id = #{project.categoryId}
         </if>
@@ -285,6 +289,9 @@
             </if>
             <if test="hasFinish != '' and hasFinish != null">
                 has_finish = #{hasFinish},
+            </if>
+            <if test="hasDown != null">
+                has_down = #{hasDown},
             </if>
             <if test="hasAudits != '' and hasAudits != null">
                 has_audits = #{hasAudits},

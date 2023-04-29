@@ -4616,3 +4616,6 @@ CREATE TABLE `t_user_account` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin ROW_FORMAT=DYNAMIC;
 
 SET FOREIGN_KEY_CHECKS = 1;
+
+
+alter table t_project add column has_down tinyint(1) default 0 comment '';

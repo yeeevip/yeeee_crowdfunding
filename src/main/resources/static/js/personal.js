@@ -213,7 +213,9 @@ $(document).ready(function(){
 					$("#myProject_tbody_ajax").append('<tr class="trfirst"><td colspan="4"></td></tr>'
 						+'<tr class="ftTr">'
 						+'<td colspan="4">创建时间：'+Ojson[i].launchDateRaising+'</td>'
-						+'<td><a href="javascript:;" class="ftTr_delA" title="删除"></a></td>'
+						+ (Ojson[i].hasDown == 0
+							? `<td><a href="javascript:updProjectDownOrUp(${Ojson[i].id}, 1)" class="ftTr_delA_down" title="下线"></a></td>`
+							: `<td><a href="javascript:updProjectDownOrUp(${Ojson[i].id}, 0)" class="ftTr_delA_up" title="上线"></a></td>`)
 						+'</tr>'
 						+'<tr class="inforTr" project_id="">'
 						+'<td>'
@@ -625,8 +627,9 @@ $(document).ready(function(){
 						$("#myProject_tbody_ajax").append('<tr class="trfirst"><td colspan="4"></td></tr>'
 							+'<tr class="ftTr">'
 							+'<td colspan="4">创建时间：'+Ojson[i].launchDateRaising+'</td>'
-							+'<td><a href="javascript:;" class="ftTr_delA" title="删除"></a></td>'
-							+'</tr>'
+							+ (Ojson[i].hasDown == 0
+								? `<td><a href="javascript:updProjectDownOrUp(${Ojson[i].id}, 1)" class="ftTr_delA_down" title="下线"></a></td>`
+								: `<td><a href="javascript:updProjectDownOrUp(${Ojson[i].id}, 0)" class="ftTr_delA_up" title="上线"></a></td>`)							+'</tr>'
 							+'<tr class="inforTr" project_id="">'
 							+'<td>'
 							+'<div class="ddImgBox"><a href="/pages/front/public/project.html?id=' + Ojson[i].id + '" target="_blank"><img style="width:80px;height:60px;" src="'+Ojson[i].coverPath+'"></a></div>'
@@ -1099,6 +1102,35 @@ function deliverGoods(orderId) {
 		});
 	}, function(index){
 		layer.close(index)
+	});
+}
+
+function updProjectDownOrUp (id, downUp) {
+	let token = localStorage.getItem("crowdfunding-token");
+	$.ajax({
+		type: 'POST',
+		async: false,
+		url: API_BASE_URL + '/front/project/updUpOrDown' ,
+		contentType: "application/json;charset=utf-8",
+		headers: {
+			"Authorization": token ? ('Bearer ' + JSON.parse(token).token) : ''
+		},
+		data:  JSON.stringify({
+			'id': id,
+			'hasDown': downUp
+		}),
+		dataType: 'json',
+		success: function (res) {
+			if (res.code == 401) {
+				layer.alert("登录过期，请重新登录！！！")
+			} else if (res.code == 200) {
+				window.location.href= '/pages/front/private/personal_info.html'
+				// layer.alert("操作成功，请刷新页面！！！")
+			} else {
+				layer.alert(res.message)
+			}
+
+		}
 	});
 }
 

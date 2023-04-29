@@ -148,7 +148,7 @@ public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, Project> impl
                 .setCategoryId(reqVO.getProjectVO().getProjectType());
         }
         query.setHasAudits(1);
-
+        query.setHasDown(0);
         List<Project> projectList = projectMapper.getList(query);
         List<ProjectVO> result = Optional.ofNullable(projectList).orElseGet(Lists::newArrayList)
                 .stream()
@@ -421,6 +421,20 @@ public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, Project> impl
             return null;
         }
         this.removeByIds(request.getIds());
+        return null;
+    }
+
+    @Override
+    public Void updateProjectUpOrDown(ProjectUpOrDownVO request) {
+
+        Project project = projectMapper.getOne(new Project().setId(request.getId()));
+        if (project == null) {
+            throw new BizException("项目不存在");
+        }
+        Project upd = new Project();
+        upd.setId(request.getId());
+        upd.setHasDown(request.getHasDown());
+        projectMapper.updateByPrimaryKey(upd);
         return null;
     }
 

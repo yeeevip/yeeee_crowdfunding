@@ -69,6 +69,12 @@ public class ProjectController {
         return CommonResult.success(projectService.updateProjectProgress(projectProgressVO));
     }
 
+    @ApiOperation("修改项目上线、下线状态")
+    @PostMapping("front/project/updUpOrDown")
+    public CommonResult<Void> updateProjectUpOrDown(@Validated @RequestBody ProjectUpOrDownVO request) {
+        return CommonResult.success(projectService.updateProjectUpOrDown(request));
+    }
+
     @ApiOperation("项目下单预览页")
     @AnonymousAccess
     @GetMapping("front/project/orderPage")

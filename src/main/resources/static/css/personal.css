@@ -426,14 +426,36 @@ div{
     border-top: 1px solid #e4e4e4;
     border-left: 1px solid #e4e4e4;
     border-right: 1px solid #e4e4e4;}
-    .grzx_ddList table tbody .ftTr td  a.ftTr_delA {
-    	width: 18px;
+.grzx_ddList table tbody .ftTr td  a.ftTr_delA {
+    width: 18px;
     height: 18px;
     background: url(/img/v3/grzxBg.png) no-repeat 0px -72px;
     margin: 0px auto;
-        text-decoration: none;
-   display:block;
-    }
+    text-decoration: none;
+    display:block;
+}
+.grzx_ddList table tbody .ftTr td  a.ftTr_delA_up {
+    width: 18px;
+    height: 18px;
+    margin: 0px auto;
+    text-decoration: none;
+    display:block;
+    background-image:url(/img/v3/up.png);
+    background-repeat:no-repeat;
+    background-size:100% 100%;
+    -moz-background-size:100% 100%;
+}
+.grzx_ddList table tbody .ftTr td  a.ftTr_delA_down {
+    width: 18px;
+    height: 18px;
+    margin: 0px auto;
+    text-decoration: none;
+    display:block;
+    background-image:url(/img/v3/down.png);
+    background-repeat:no-repeat;
+    background-size:100% 100%;
+    -moz-background-size:100% 100%;
+}
      .grzx_ddList table tbody .ftTr .ftTr_delA:hover{
          background-position: 0px -90px;
          cursor: pointer;
