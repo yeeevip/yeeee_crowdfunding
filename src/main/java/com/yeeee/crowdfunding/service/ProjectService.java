@@ -6,7 +6,7 @@ import com.yeeee.crowdfunding.model.vo.*;
 /**
  * description......
  *
- * @author yeeee
+ * @author https://www.yeee.vip
  * @since 2022/4/29 21:38
  */
 public interface ProjectService {

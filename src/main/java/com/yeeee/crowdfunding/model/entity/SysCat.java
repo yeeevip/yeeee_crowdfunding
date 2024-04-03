@@ -11,7 +11,7 @@ import java.util.Date;
  * 字典表
  * </p>
  *
- * @author yeeee
+ * @author https://www.yeee.vip
  * @since 2022-05-29
  */
 @Data

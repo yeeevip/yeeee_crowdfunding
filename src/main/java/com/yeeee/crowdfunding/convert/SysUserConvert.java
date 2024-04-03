@@ -12,7 +12,7 @@ import vip.yeee.memo.integrate.common.websecurity.model.AuthedUser;
 /**
  * description......
  *
- * @author yeeee
+ * @author https://www.yeee.vip
  * @since 2022/4/30 20:18
  */
 @Mapper(componentModel = "spring")

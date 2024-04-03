@@ -8,7 +8,7 @@ import com.yeeee.crowdfunding.model.entity.SysUserOprLog;
  *  服务类
  * </p>
  *
- * @author yeeee
+ * @author https://www.yeee.vip
  * @since 2022-05-29
  */
 public interface SysUserOprLogService extends IService<SysUserOprLog> {

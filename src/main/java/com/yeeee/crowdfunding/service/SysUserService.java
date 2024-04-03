@@ -8,7 +8,7 @@ import vip.yeee.memo.integrate.common.websecurity.model.Oauth2TokenVo;
 /**
  * description......
  *
- * @author yeeee
+ * @author https://www.yeee.vip
  * @since 2022/4/30 16:32
  */
 public interface SysUserService extends IService<SysUser> {

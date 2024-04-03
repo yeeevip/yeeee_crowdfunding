@@ -12,7 +12,7 @@ import java.util.List;
  * 字典表 服务类
  * </p>
  *
- * @author yeeee
+ * @author https://www.yeee.vip
  * @since 2022-05-29
  */
 public interface SysCatService extends IService<SysCat> {

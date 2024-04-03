@@ -18,7 +18,7 @@ import vip.yeee.memo.integrate.common.websecurity.annotation.AnonymousAccess;
 /**
  * description......
  *
- * @author yeeee
+ * @author https://www.yeee.vip
  * @since 2022/5/1 10:14
  */
 @RequiredArgsConstructor

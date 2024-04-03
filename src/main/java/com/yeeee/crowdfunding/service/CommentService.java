@@ -7,7 +7,7 @@ import com.yeeee.crowdfunding.model.vo.PageVO;
 /**
  * description......
  *
- * @author yeeee
+ * @author https://www.yeee.vip
  * @since 2022/5/1 10:15
  */
 public interface CommentService {

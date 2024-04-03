@@ -6,7 +6,7 @@ import vip.yeee.memo.integrate.common.websecurity.context.SecurityContext;
 /**
  * description......
  *
- * @author yeeee
+ * @author https://www.yeee.vip
  * @since 2022/11/27 15:55
  */
 public class BusinessUtils {

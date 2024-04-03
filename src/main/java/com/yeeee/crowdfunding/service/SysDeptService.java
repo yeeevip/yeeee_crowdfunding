@@ -11,7 +11,7 @@ import com.yeeee.crowdfunding.model.vo.SysDeptVO;
  * 部门表 服务类
  * </p>
  *
- * @author yeeee
+ * @author https://www.yeee.vip
  * @since 2022-05-29
  */
 public interface SysDeptService extends IService<SysDept> {

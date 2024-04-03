@@ -9,7 +9,7 @@ import com.yeeee.crowdfunding.model.vo.SysRoleVO;
 /**
  * description......
  *
- * @author yeeee
+ * @author https://www.yeee.vip
  * @since 2022/5/28 18:09
  */
 public interface SysRoleService extends IService<SysRole> {

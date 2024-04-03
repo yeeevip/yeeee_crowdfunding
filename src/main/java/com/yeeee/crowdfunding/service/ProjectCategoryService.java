@@ -7,7 +7,7 @@ import com.yeeee.crowdfunding.model.vo.ProjectPageReqVO;
 /**
  * description......
  *
- * @author yeeee
+ * @author https://www.yeee.vip
  * @since 2022/5/8 16:40
  */
 public interface ProjectCategoryService {

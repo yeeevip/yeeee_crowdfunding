@@ -8,7 +8,7 @@ import com.yeeee.crowdfunding.model.entity.SysCat;
  * 字典表 Mapper 接口
  * </p>
  *
- * @author yeeee
+ * @author https://www.yeee.vip
  * @since 2022-05-29
  */
 public interface SysCatMapper extends BaseMapper<SysCat> {

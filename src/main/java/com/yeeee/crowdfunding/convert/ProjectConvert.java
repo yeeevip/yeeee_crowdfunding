@@ -11,7 +11,7 @@ import org.mapstruct.Mappings;
 /**
  * description......
  *
- * @author yeeee
+ * @author https://www.yeee.vip
  * @since 2022/4/29 22:25
  */
 @Mapper(componentModel = "spring")
