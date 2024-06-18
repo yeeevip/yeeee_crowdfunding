@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yeeee.crowdfunding.mapper.CommentMapper">
+
+    <sql id="searchBy">
+        <trim prefix="where" prefixOverrides="and|or">
+            <if test="id != '' and id != null">
+                and id = #{id}
+            </if>
+            <if test="project != '' and project != null">
+                and project = #{project}
+            </if>
+            <if test="userId != '' and userId != null">
+                and user_id = #{userId}
+            </if>
+            <if test="username != '' and username != null">
+                and username = #{username}
+            </if>
+            <if test="content != '' and content != null">
+                and content = #{content}
+            </if>
+            <if test="time != '' and time != null">
+                and time = #{time}
+            </if>
+        </trim>
+    </sql>
+
+    <select id="getList" resultType="com.yeeee.crowdfunding.model.entity.Comment">
+        SELECT
+            id,
+            project,
+            user_id,
+            username,
+            content,
+            time
+        FROM
+            t_comment
+        <include refid="searchBy"/>
+        ORDER BY ID DESC
+    </select>
+
+    <select id="getOne" resultType="com.yeeee.crowdfunding.model.entity.Comment">
+        SELECT
+            id,
+            project,
+            user_id,
+        username,
+            content,
+            time
+        FROM
+            t_comment
+        <include refid="searchBy"/>
+        LIMIT 1
+    </select>
+
+    <insert id="insert" parameterType="com.yeeee.crowdfunding.model.entity.Comment" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO t_comment
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id !='' and id !=null">
+                id,
+            </if>
+            <if test="project !='' and project !=null">
+                project,
+            </if>
+            <if test="userId !='' and userId !=null">
+                user_id,
+            </if>
+            <if test="username !='' and username !=null">
+                username,
+            </if>
+            <if test="content !='' and content !=null">
+                content,
+            </if>
+            <if test="time !=null">
+                time
+            </if>
+        </trim>
+        VALUE
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != '' and id != null">
+                #{id},
+            </if>
+            <if test="project != '' and project != null">
+                #{project},
+            </if>
+            <if test="userId != '' and userId != null">
+                #{userId},
+            </if>
+            <if test="username != '' and username != null">
+                #{username},
+            </if>
+            <if test="content != '' and content != null">
+                #{content},
+            </if>
+            <if test="time != null">
+                #{time}
+            </if>
+        </trim>
+        <selectKey resultType="int" order="AFTER" keyProperty="id">
+            SELECT LAST_INSERT_ID() AS id
+        </selectKey>
+    </insert>
+
+    <update id="updateByPrimaryKey" parameterType="com.yeeee.crowdfunding.model.entity.Comment">
+        UPDATE t_comment
+        <trim prefix="set" suffixOverrides=",">
+            <if test="project != '' and project != null">
+                project = #{project},
+            </if>
+            <if test="userId != '' and userId != null">
+                user_id = #{userId},
+            </if>
+            <if test="username != '' and username != null">
+                username = #{username},
+            </if>
+            <if test="content != '' and content != null">
+                content = #{content},
+            </if>
+            <if test="time != '' and time != null">
+                time = #{time}
+            </if>
+        </trim>
+        WHERE id=#{id}
+    </update>
+
+    <insert id="batchInsert" parameterType="java.util.List">
+        INSERT INTO t_comment
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            id,project,user_id,content,time,
+        </trim>
+        VALUES
+        <foreach collection="list" item="item" index="index" separator=",">
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                #{item.id},#{item.project},#{item.userId},#{item.username},#{item.content},#{item.time},
+            </trim>
+        </foreach>
+    </insert >
+
+    <select id="getProjectCommentList" parameterType="com.yeeee.crowdfunding.model.dto.CommentDto" resultType="com.yeeee.crowdfunding.model.vo.CommentVO">
+        select
+            tc.*,
+            tp.id projectId,
+            tp.title projectTitle
+        from
+            t_comment tc
+        left join t_project tp on tp.id = tc.project
+        <where>
+            <if test="userId != null">
+                and tc.user_id = #{userId}
+            </if>
+            <if test="projectUserId != null">
+                and tp.user_id = #{projectUserId}
+            </if>
+        </where>
+        order by tc.id desc
+    </select>
+
+</mapper>

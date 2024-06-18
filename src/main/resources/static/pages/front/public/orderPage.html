@@ -1,0 +1,106 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+  <head>
+	  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<link type="text/css" rel="stylesheet" href="/css/project.css">
+	<link type="text/css" rel="stylesheet" href="/css/common.css">
+	<script type="text/javascript" src="/js/jquery-3.1.1.min.js"></script>
+	<script type="text/javascript" src="/js/layer/layer.js"></script>
+<script type="text/javascript">
+
+</script>
+<script type="text/javascript" src="/js/common.js"></script>
+<script type="text/javascript" src="/js/orderPage.js"></script>
+  </head>
+  
+  <body>
+   <!-- 引入公共header -->
+   <header id="indexHeader"></header>
+<!--项目详情页begin-->
+<div class="xqPage">
+  <div class="mainXqBox">
+  	<!-- 提交订单begin -->
+  <div class="zhifuInnerBox">
+  	<div class="submitOrderPage">
+  		
+  		<div class="subMinBox">
+  			<div class="ui-view-container">
+  				<div class="slide-container">
+  					<div class="tjddCont">
+  						<a class="tjdd_h3" style="display:none">请选择其他支持项</a>
+  						<h3 class="tjdd_h3">请选择支持项</h3>
+  						<div class="tjdd_list">
+
+  						</div>
+  					</div>
+  				</div>
+  			</div>
+  			
+  			<div class="tjddCont" style="display:none">
+  				<div class="tjdd_QHCont">
+  					<div class="NumBox">
+  						<span>份数</span>
+  						<div class="NumInner">
+  							<a href="javascript:;" class=""></a>
+  							<input name="pay_count" type="text" value="0">
+  							<a href="javascript:;" class="next"></a>
+  						</div>
+  					</div>
+  					<div class="AddressBox">
+  						<div class="shxx_h3">收货信息</div>
+  						<div class="shdzListBox">
+  							<div class="shdzListItem checked"><a href="javascript:newAddressForm();"><i class="flag_i"></i>使用新地址</a></div>
+  						</div>
+
+						<div id="defultReceiveBOX">
+
+						</div>
+
+  						
+						<div id="shdzForm_swBoxBOX">
+
+						</div>
+
+
+  						<div class="shdzForm_xnBox">
+  							<div><p class="zj_valP">支付<span><b>￥</b><span class="ng-binding">0</span></span></p></div>
+  							<div style="height:80px;"><input type="button" class="tjdd_submitBtn" value="提交订单"></div>
+  						</div>
+  						
+  					</div>
+  				</div>
+  			</div>
+  			
+  		</div>
+  		
+  	</div>
+  </div>
+  	<!-- 提交订单 end-->
+  </div>
+</div>
+<!--项目详情页end-->
+<!-- 引入公共footer -->
+   <footer id="indexFooter"></footer>
+
+
+  </body>
+  
+<script type="text/javascript">
+$(document).ready(function(){
+	getProvince(0,$("select[name='province']"));//所有省份
+	$("select[name='province']").change(function(){
+		getProvince($(this).val(),$("select[name='city']"));
+	});
+	
+	$("select[name='city']").change(function(){
+		getProvince($(this).val(),$("select[name='district']"));
+	});
+	
+
+
+})
+
+$("#indexHeader").load("/pages/front/common/header.html");
+$("#indexFooter").load("/pages/front/common/footer.html");
+</script>
+</html>

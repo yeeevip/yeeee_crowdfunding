@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yeeee.crowdfunding.mapper.InitiatorCompanyInfoMapper">
+
+    <sql id="searchBy">
+        <trim prefix="where" prefixOverrides="and|or">
+            <if test="id != '' and id != null">
+                and id = #{id}
+            </if>
+            <if test="projectId != '' and projectId != null">
+                and project_id = #{projectId}
+            </if>
+            <if test="firmName != '' and firmName != null">
+                and firm_name = #{firmName}
+            </if>
+            <if test="businessNumber != '' and businessNumber != null">
+                and business_number = #{businessNumber}
+            </if>
+            <if test="slanderName != '' and slanderName != null">
+                and slander_name = #{slanderName}
+            </if>
+            <if test="address != '' and address != null">
+                and address = #{address}
+            </if>
+            <if test="contactName != '' and contactName != null">
+                and contact_name = #{contactName}
+            </if>
+            <if test="contactPhone != '' and contactPhone != null">
+                and contact_phone = #{contactPhone}
+            </if>
+            <if test="licensePic != '' and licensePic != null">
+                and license_pic = #{licensePic}
+            </if>
+            <if test="registeredNumPic != '' and registeredNumPic != null">
+                and registered_num_pic = #{registeredNumPic}
+            </if>
+            <if test="taxPig != '' and taxPig != null">
+                and tax_pig = #{taxPig}
+            </if>
+        </trim>
+    </sql>
+
+    <select id="getList" resultType="com.yeeee.crowdfunding.model.entity.InitiatorCompanyInfo">
+        SELECT
+            id,
+            project_id,
+            firm_name,
+            business_number,
+            slander_name,
+            address,
+            contact_name,
+            contact_phone,
+            license_pic,
+            registered_num_pic,
+            tax_pig
+        FROM
+            t_initiator_company_info
+        <include refid="searchBy"/>
+    </select>
+
+    <select id="getOne" resultType="com.yeeee.crowdfunding.model.entity.InitiatorCompanyInfo">
+        SELECT
+            id,
+            project_id,
+            firm_name,
+            business_number,
+            slander_name,
+            address,
+            contact_name,
+            contact_phone,
+            license_pic,
+            registered_num_pic,
+            tax_pig
+        FROM
+            t_initiator_company_info
+        <include refid="searchBy"/>
+        LIMIT 1
+    </select>
+
+    <insert id="insert" parameterType="com.yeeee.crowdfunding.model.entity.InitiatorCompanyInfo" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO t_initiator_company_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id !='' and id !=null">
+                id,
+            </if>
+            <if test="projectId !='' and projectId !=null">
+                project_id,
+            </if>
+            <if test="firmName !='' and firmName !=null">
+                firm_name,
+            </if>
+            <if test="businessNumber !='' and businessNumber !=null">
+                business_number,
+            </if>
+            <if test="slanderName !='' and slanderName !=null">
+                slander_name,
+            </if>
+            <if test="address !='' and address !=null">
+                address,
+            </if>
+            <if test="contactName !='' and contactName !=null">
+                contact_name,
+            </if>
+            <if test="contactPhone !='' and contactPhone !=null">
+                contact_phone,
+            </if>
+            <if test="licensePic !='' and licensePic !=null">
+                license_pic,
+            </if>
+            <if test="registeredNumPic !='' and registeredNumPic !=null">
+                registered_num_pic,
+            </if>
+            <if test="taxPig !='' and taxPig !=null">
+                tax_pig
+            </if>
+        </trim>
+        VALUE
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != '' and id != null">
+                #{id},
+            </if>
+            <if test="projectId != '' and projectId != null">
+                #{projectId},
+            </if>
+            <if test="firmName != '' and firmName != null">
+                #{firmName},
+            </if>
+            <if test="businessNumber != '' and businessNumber != null">
+                #{businessNumber},
+            </if>
+            <if test="slanderName != '' and slanderName != null">
+                #{slanderName},
+            </if>
+            <if test="address != '' and address != null">
+                #{address},
+            </if>
+            <if test="contactName != '' and contactName != null">
+                #{contactName},
+            </if>
+            <if test="contactPhone != '' and contactPhone != null">
+                #{contactPhone},
+            </if>
+            <if test="licensePic != '' and licensePic != null">
+                #{licensePic},
+            </if>
+            <if test="registeredNumPic != '' and registeredNumPic != null">
+                #{registeredNumPic},
+            </if>
+            <if test="taxPig != '' and taxPig != null">
+                #{taxPig}
+            </if>
+        </trim>
+        <selectKey resultType="int" order="AFTER" keyProperty="id">
+            SELECT LAST_INSERT_ID() AS id
+        </selectKey>
+    </insert>
+
+    <update id="updateByPrimaryKey" parameterType="com.yeeee.crowdfunding.model.entity.InitiatorCompanyInfo">
+        UPDATE t_initiator_company_info
+        <trim prefix="set" suffixOverrides=",">
+            <if test="projectId != '' and projectId != null">
+                project_id = #{projectId},
+            </if>
+            <if test="firmName != '' and firmName != null">
+                firm_name = #{firmName},
+            </if>
+            <if test="businessNumber != '' and businessNumber != null">
+                business_number = #{businessNumber},
+            </if>
+            <if test="slanderName != '' and slanderName != null">
+                slander_name = #{slanderName},
+            </if>
+            <if test="address != '' and address != null">
+                address = #{address},
+            </if>
+            <if test="contactName != '' and contactName != null">
+                contact_name = #{contactName},
+            </if>
+            <if test="contactPhone != '' and contactPhone != null">
+                contact_phone = #{contactPhone},
+            </if>
+            <if test="licensePic != '' and licensePic != null">
+                license_pic = #{licensePic},
+            </if>
+            <if test="registeredNumPic != '' and registeredNumPic != null">
+                registered_num_pic = #{registeredNumPic},
+            </if>
+            <if test="taxPig != '' and taxPig != null">
+                tax_pig = #{taxPig}
+            </if>
+        </trim>
+        WHERE id=#{id}
+    </update>
+
+    <insert id="batchInsert" parameterType="java.util.List">
+        INSERT INTO t_initiator_company_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            id,project_id,firm_name,business_number,slander_name,address,contact_name,contact_phone,license_pic,registered_num_pic,tax_pig,
+        </trim>
+        VALUES
+        <foreach collection="list" item="item" index="index" separator=",">
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                #{item.id},#{item.projectId},#{item.firmName},#{item.businessNumber},#{item.slanderName},#{item.address},#{item.contactName},#{item.contactPhone},#{item.licensePic},#{item.registeredNumPic},#{item.taxPig},
+            </trim>
+        </foreach>
+    </insert >
+
+</mapper>

@@ -1,0 +1,77 @@
+server:
+  port: 9080
+  servlet:
+    context-path: /
+spring:
+  profiles:
+    active: dev
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/yeeee_crowdfunding?characterEncoding=UTF-8&useUnicode=true&useSSL=false&serverTimezone=Asia/Shanghai
+    username: root
+    password: root
+    druid:
+      initial-size: 5
+      max-active: 100
+      min-idle: 5
+      max-wait: 600000
+      pool-prepared-statements: true
+      max-pool-prepared-statement-per-connection-size: 20
+      validation-query: SELECT 1 FROM DUAL
+      validation-query-timeout: 60000
+  main:
+    allow-bean-definition-overriding: true
+    allow-circular-references: true
+  web:
+    resources:
+      static-locations: classpath:/static/
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+
+# 本地上传文件保存路径
+local:
+  upload:
+    location: C:\
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  mapper-locations: classpath:mapper/*.xml
+# 授权配置
+security:
+  oauth2:
+    resource:
+      token-info-uri: http://127.0.0.1:${server.port}${server.servlet.context-path}/oauth/check_token
+    client:
+      client-id: yeeee-crowdfunding-web
+      client-secret: 1%2#345@6
+      #      grant-type: password
+      access-token-uri: http://127.0.0.1:${server.port}${server.servlet.context-path}/oauth/token
+yeee:
+  auth:
+    resource:
+      exclude:
+        - "/"
+        - "/doc.html"
+        - "/swagger-resources/**"
+        - "/swagger/**"
+        - "/**/v2/api-docs"
+        - "/**/*.js"
+        - "/**/*.css"
+        - "/**/*.png"
+        - "/**/*.jpg"
+        - "/**/*.ico"
+        - "/**/*.html"
+        - "/webjars/springfox-swagger-ui/**"
+        - "/actuator/**"
+        - "/auth/oauth/**"
+        - "/auth/rsa/publicKey"
+        - "/front/user/login"
+        - "/front/user/register"
+        - "/general/check-code"
+        - "/admin/sys-user/login"
+        - "/user/webSocket/**"
+# swagger文档增强功能
+knife4j:
+  enable: true

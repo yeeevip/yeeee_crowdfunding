@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yeeee.crowdfunding.mapper.UserMapper">
+
+    <sql id="searchBy">
+        <trim prefix="where" prefixOverrides="and|or">
+            <if test="id != '' and id != null">
+                and id = #{id}
+            </if>
+            <if test="username != '' and username != null">
+                and username = #{username}
+            </if>
+            <if test="password != '' and password != null">
+                and password = #{password}
+            </if>
+            <if test="realName != '' and realName != null">
+                and real_name = #{realName}
+            </if>
+            <if test="sex != '' and sex != null">
+                and sex = #{sex}
+            </if>
+            <if test="idNumber != '' and idNumber != null">
+                and id_number = #{idNumber}
+            </if>
+            <if test="dateOfBirth != '' and dateOfBirth != null">
+                and date_of_birth = #{dateOfBirth}
+            </if>
+            <if test="dateOfRegistration != '' and dateOfRegistration != null">
+                and date_of_registration = #{dateOfRegistration}
+            </if>
+            <if test="mobile != '' and mobile != null">
+                and mobile = #{mobile}
+            </if>
+            <if test="city != '' and city != null">
+                and city = #{city}
+            </if>
+            <if test="imgPath != '' and imgPath != null">
+                and img_path = #{imgPath}
+            </if>
+            <if test="email != '' and email != null">
+                and email = #{email}
+            </if>
+        </trim>
+    </sql>
+
+    <select id="getList" resultType="com.yeeee.crowdfunding.model.entity.User">
+        SELECT
+            id,
+            username,
+            password,
+            real_name,
+            sex,
+            id_number,
+            date_of_birth,
+            date_of_registration,
+            mobile,
+            city,
+            img_path,
+            email
+        FROM
+            t_user
+        <include refid="searchBy"/>
+        ORDER BY ID DESC
+    </select>
+
+    <select id="getOne" resultType="com.yeeee.crowdfunding.model.entity.User">
+        SELECT
+            id,
+            username,
+            password,
+            real_name,
+            nick_name,
+            sex,
+            id_number,
+            date_of_birth,
+            date_of_registration,
+            mobile,
+            city,
+            img_path,
+            email
+        FROM
+            t_user
+        <include refid="searchBy"/>
+        LIMIT 1
+    </select>
+
+    <insert id="insert" parameterType="com.yeeee.crowdfunding.model.entity.User" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO t_user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id !='' and id !=null">
+                id,
+            </if>
+            <if test="username !='' and username !=null">
+                username,
+            </if>
+            <if test="password !='' and password !=null">
+                password,
+            </if>
+            <if test="realName !='' and realName !=null">
+                real_name,
+            </if>
+            <if test="sex !='' and sex !=null">
+                sex,
+            </if>
+            <if test="idNumber !='' and idNumber !=null">
+                id_number,
+            </if>
+            <if test="dateOfBirth !='' and dateOfBirth !=null">
+                date_of_birth,
+            </if>
+            <if test="dateOfRegistration !='' and dateOfRegistration !=null">
+                date_of_registration,
+            </if>
+            <if test="mobile !='' and mobile !=null">
+                mobile,
+            </if>
+            <if test="city !='' and city !=null">
+                city,
+            </if>
+            <if test="imgPath !='' and imgPath !=null">
+                img_path,
+            </if>
+            <if test="email !='' and email !=null">
+                email
+            </if>
+        </trim>
+        VALUE
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != '' and id != null">
+                #{id},
+            </if>
+            <if test="username != '' and username != null">
+                #{username},
+            </if>
+            <if test="password != '' and password != null">
+                #{password},
+            </if>
+            <if test="realName != '' and realName != null">
+                #{realName},
+            </if>
+            <if test="sex != '' and sex != null">
+                #{sex},
+            </if>
+            <if test="idNumber != '' and idNumber != null">
+                #{idNumber},
+            </if>
+            <if test="dateOfBirth != '' and dateOfBirth != null">
+                #{dateOfBirth},
+            </if>
+            <if test="dateOfRegistration != '' and dateOfRegistration != null">
+                #{dateOfRegistration},
+            </if>
+            <if test="mobile != '' and mobile != null">
+                #{mobile},
+            </if>
+            <if test="city != '' and city != null">
+                #{city},
+            </if>
+            <if test="imgPath != '' and imgPath != null">
+                #{imgPath},
+            </if>
+            <if test="email != '' and email != null">
+                #{email}
+            </if>
+        </trim>
+        <selectKey resultType="int" order="AFTER" keyProperty="id">
+            SELECT LAST_INSERT_ID() AS id
+        </selectKey>
+    </insert>
+
+    <update id="updateByPrimaryKey" parameterType="com.yeeee.crowdfunding.model.entity.User">
+        UPDATE t_user
+        <trim prefix="set" suffixOverrides=",">
+            <if test="username != '' and username != null">
+                username = #{username},
+            </if>
+            <if test="password != '' and password != null">
+                password = #{password},
+            </if>
+            <if test="realName != '' and realName != null">
+                real_name = #{realName},
+            </if>
+            <if test="realName != null">
+                real_name = #{realName},
+            </if>
+            <if test="nickName != null">
+                nick_name = #{nickName},
+            </if>
+            <if test="sex != null">
+                sex = #{sex},
+            </if>
+            <if test="idNumber != '' and idNumber != null">
+                id_number = #{idNumber},
+            </if>
+            <if test="dateOfBirth != null">
+                date_of_birth = #{dateOfBirth},
+            </if>
+            <if test="dateOfRegistration != null">
+                date_of_registration = #{dateOfRegistration},
+            </if>
+            <if test="mobile != '' and mobile != null">
+                mobile = #{mobile},
+            </if>
+            <if test="city != '' and city != null">
+                city = #{city},
+            </if>
+            <if test="imgPath != '' and imgPath != null">
+                img_path = #{imgPath},
+            </if>
+            <if test="email != '' and email != null">
+                email = #{email}
+            </if>
+        </trim>
+        WHERE id=#{id}
+    </update>
+
+    <insert id="batchInsert" parameterType="java.util.List">
+        INSERT INTO t_user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            id,username,password,real_name,sex,id_number,date_of_birth,date_of_registration,mobile,city,img_path,email,
+        </trim>
+        VALUES
+        <foreach collection="list" item="item" index="index" separator=",">
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                #{item.id},#{item.username},#{item.password},#{item.realName},#{item.sex},#{item.idNumber},#{item.dateOfBirth},#{item.dateOfRegistration},#{item.mobile},#{item.city},#{item.imgPath},#{item.email},
+            </trim>
+        </foreach>
+    </insert >
+
+</mapper>
