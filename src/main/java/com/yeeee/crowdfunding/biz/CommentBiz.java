@@ -2,8 +2,6 @@ package com.yeeee.crowdfunding.biz;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
-import com.google.common.collect.Lists;
-import com.yeeee.crowdfunding.convert.CommentConvert;
 import com.yeeee.crowdfunding.model.dto.CommentDto;
 import com.yeeee.crowdfunding.model.entity.Comment;
 import com.yeeee.crowdfunding.model.vo.CommentPageReqVO;
@@ -15,8 +13,6 @@ import vip.yeee.memo.integrate.base.websecurityoauth2.context.SecurityContext;
 
 import javax.annotation.Resource;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 /**
  * description......
@@ -29,8 +25,6 @@ public class CommentBiz {
 
     @Resource
     private CommentService commentService;
-    @Resource
-    private CommentConvert commentConvert;
 
     public PageVO<CommentVO> frontReceiveCommentPageList(CommentPageReqVO pageReqVO) {
         Page<Comment> page = PageHelper.startPage(pageReqVO.getPageNum(), pageReqVO.getPageSize());

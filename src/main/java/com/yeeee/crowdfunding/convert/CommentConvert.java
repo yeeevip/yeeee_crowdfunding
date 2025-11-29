@@ -2,9 +2,6 @@ package com.yeeee.crowdfunding.convert;
 
 import com.yeeee.crowdfunding.model.entity.Comment;
 import com.yeeee.crowdfunding.model.vo.CommentVO;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.Mappings;
 
 /**
  * description......
@@ -12,12 +9,31 @@ import org.mapstruct.Mappings;
  * @author https://www.yeee.vip
  * @since 2022/4/29 22:25
  */
-@Mapper(componentModel = "spring")
-public interface CommentConvert {
+public class CommentConvert {
 
-    CommentVO comment2VO(Comment comment);
+    public static CommentVO comment2VO(Comment comment) {
+        if (comment == null) {
+            return null;
+        }
+        CommentVO vo = new CommentVO();
+        vo.setId(comment.getId());
+        vo.setProjectId(comment.getProject());
+        vo.setContent(comment.getContent());
+        vo.setUsername(comment.getUsername());
+        vo.setTime(comment.getTime());
+        return vo;
+    }
 
-    @Mappings(@Mapping(source = "projectId", target = "project"))
-    Comment vo2Comment(CommentVO commentVO);
+    public static Comment vo2Comment(CommentVO commentVO) {
+        if (commentVO == null) {
+            return null;
+        }
+        Comment comment = new Comment();
+        comment.setProject(commentVO.getProjectId());
+        comment.setContent(commentVO.getContent());
+        comment.setUsername(commentVO.getUsername());
+        comment.setTime(commentVO.getTime());
+        return comment;
+    }
 
 }

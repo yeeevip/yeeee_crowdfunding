@@ -35,7 +35,6 @@ import java.util.stream.Collectors;
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
 
     private final UserMapper userMapper;
-    private final UserConvert userConvert;
     private final UserAuthService userAuthService;
     private final CommonBiz commonBiz;
 
@@ -74,7 +73,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         Page<User> page = PageHelper.startPage(userPageReqVO.getPageNum(), userPageReqVO.getPageSize());
         List<UserVO> userVOList = Optional.ofNullable(userMapper.getList(new User())).orElseGet(Lists::newArrayList)
                 .stream()
-                .map(userConvert::user2VO)
+                .map(UserConvert::user2VO)
                 .collect(Collectors.toList());
         return new PageVO<>(page.getPageNum(), page.getPageSize(), page.getPages(), page.getTotal(), userVOList);
     }
@@ -84,7 +83,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
         Integer currentUserId = BusinessUtils.getCurUserId();
 
-        User user = userConvert.vo2Entity(userVO);
+        User user = UserConvert.vo2Entity(userVO);
         user.setId(currentUserId);
 
         userMapper.updateByPrimaryKey(user);
@@ -103,7 +102,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             throw new BizException("用户不存在");
         }
 
-        return userConvert.user2VO(user);
+        return UserConvert.user2VO(user);
 
     }
 

@@ -32,8 +32,6 @@ public class ReceiveInfoServiceImpl implements ReceiveInfoService {
 
     private final ReceiveInformationMapper receiveInformationMapper;
 
-    private final ReceiveInfoConvert receiveInfoConvert;
-
 
     @Override
     public PageVO<ReceiveInfoVO> getReceivePageList(ReceivePageReqVO receivePageReqVO) {
@@ -43,7 +41,7 @@ public class ReceiveInfoServiceImpl implements ReceiveInfoService {
         List<ReceiveInformation> informationList = receiveInformationMapper.getList(new ReceiveInformation().setUserId(BusinessUtils.getCurUserId()));
         List<ReceiveInfoVO> infoVOList = Optional.ofNullable(informationList).orElseGet(Lists::newArrayList)
                 .stream()
-                .map(receiveInfoConvert::entity2VO)
+                .map(ReceiveInfoConvert::entity2VO)
                 .collect(Collectors.toList());
 
         return new PageVO<>(page.getPageNum(), page.getPageSize(), page.getPages(), page.getTotal(), infoVOList);
@@ -67,7 +65,7 @@ public class ReceiveInfoServiceImpl implements ReceiveInfoService {
 
     @Override
     public Void addReceiveInfo(ReceiveInfoVO receiveInfoVO) {
-        ReceiveInformation save = receiveInfoConvert.vo2Entity(receiveInfoVO);
+        ReceiveInformation save = ReceiveInfoConvert.vo2Entity(receiveInfoVO);
         save.setUserId(BusinessUtils.getCurUserId());
         receiveInformationMapper.insert(save);
         return null;

@@ -44,20 +44,6 @@ public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, Project> impl
 
     private final ProjectMapper projectMapper;
 
-    private final ProjectConvert projectConvert;
-
-    private final InitiatorInfoVOConvert initiatorInfoVOConvert;
-
-    private final ProjectDetailConvert projectDetailConvert;
-
-    private final ProjectRepayConvert projectRepayConvert;
-
-    private final CommentConvert commentConvert;
-
-    private final ProjectProgressConvert projectProgressConvert;
-
-    private final UserConvert userConvert;
-
     private final OrderMapper orderMapper;
 
     private final ProjectDetailMapper projectDetailMapper;
@@ -78,10 +64,6 @@ public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, Project> impl
 
     private final ReceiveInformationMapper receiveInformationMapper;
 
-    private final ReceiveInfoConvert receiveInfoConvert;
-
-    private final ProjectCategoryConvert projectCategoryConvert;
-
     private final TMsgService tMsgService;
 
     @Override
@@ -94,7 +76,7 @@ public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, Project> impl
                 , ImmutableMap.of("orderField", "has_fund_raising", "orderSort", "desc", "limit", 3));
         List<ProjectVO> hotVOList = Optional.ofNullable(hotList).orElseGet(Lists::newArrayList)
                 .stream()
-                .map(projectConvert::project2VO)
+                .map(ProjectConvert::project2VO)
                 .collect(Collectors.toList());
         indexProjectListVO.setHotList(hotVOList);
 
@@ -104,7 +86,7 @@ public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, Project> impl
                 , ImmutableMap.of("orderField", "has_fund_raising", "orderSort", "desc", "limit", 3));
         List<ProjectVO> welfareVOList = Optional.ofNullable(welfareList).orElseGet(Lists::newArrayList)
                 .stream()
-                .map(projectConvert::project2VO)
+                .map(ProjectConvert::project2VO)
                 .collect(Collectors.toList());
         indexProjectListVO.setWelfareList(welfareVOList);
 
@@ -113,7 +95,7 @@ public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, Project> impl
                 , ImmutableMap.of("orderField", "has_fund_raising", "orderSort", "desc", "limit", 3));
         List<ProjectVO> agVOList = Optional.ofNullable(agList).orElseGet(Lists::newArrayList)
                 .stream()
-                .map(projectConvert::project2VO)
+                .map(ProjectConvert::project2VO)
                 .collect(Collectors.toList());
         indexProjectListVO.setAgList(agVOList);
 
@@ -122,7 +104,7 @@ public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, Project> impl
                 , ImmutableMap.of("orderField", "has_fund_raising", "orderSort", "desc", "limit", 3));
         List<ProjectVO> publishVOList = Optional.ofNullable(publishList).orElseGet(Lists::newArrayList)
                 .stream()
-                .map(projectConvert::project2VO)
+                .map(ProjectConvert::project2VO)
                 .collect(Collectors.toList());
         indexProjectListVO.setPublishList(publishVOList);
 
@@ -131,7 +113,7 @@ public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, Project> impl
                 , ImmutableMap.of("orderField", "has_fund_raising", "orderSort", "desc", "limit", 3));
         List<ProjectVO> artVOList = Optional.ofNullable(artList).orElseGet(Lists::newArrayList)
                 .stream()
-                .map(projectConvert::project2VO)
+                .map(ProjectConvert::project2VO)
                 .collect(Collectors.toList());
         indexProjectListVO.setArtList(artVOList);
 
@@ -152,7 +134,7 @@ public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, Project> impl
         List<Project> projectList = projectMapper.getList(query);
         List<ProjectVO> result = Optional.ofNullable(projectList).orElseGet(Lists::newArrayList)
                 .stream()
-                .map(projectConvert::project2VO)
+                .map(ProjectConvert::project2VO)
                 .collect(Collectors.toList());
         return new PageVO<>(page.getPageNum(), page.getPageSize(), page.getPages(), page.getTotal(), result);
     }
@@ -167,7 +149,7 @@ public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, Project> impl
         List<Project> projectList = projectMapper.getList(query);
         List<ProjectVO> result = Optional.ofNullable(projectList).orElseGet(Lists::newArrayList)
                 .stream()
-                .map(projectConvert::project2VO)
+                .map(ProjectConvert::project2VO)
                 .collect(Collectors.toList());
         return new PageVO<>(page.getPageNum(), page.getPageSize(), page.getPages(), page.getTotal(), result);
     }
@@ -184,23 +166,23 @@ public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, Project> impl
             throw new BizException("项目不存在");
         }
 
-        ProjectDetailVO projectDetailVO = projectConvert.project2DetailVO(project);
+        ProjectDetailVO projectDetailVO = ProjectConvert.project2DetailVO(project);
 
         List<ProjectItemVO> projectItemVOS = Optional.ofNullable(projectDetailMapper.getList(new ProjectDetail().setProjectId(project.getId()))).orElseGet(Lists::newArrayList)
                 .stream()
-                .map(projectDetailConvert::detail2VO)
+                .map(ProjectDetailConvert::detail2VO)
                 .collect(Collectors.toList());
         projectDetailVO.setItemVOList(projectItemVOS);
 
         List<ProjectRepayVO> repayVOList = Optional.ofNullable(projectRepayMapper.getList(new ProjectRepay().setProjectId(project.getId()))).orElseGet(Lists::newArrayList)
                 .stream()
-                .map(projectRepayConvert::projectRepay2VO)
+                .map(ProjectRepayConvert::projectRepay2VO)
                 .collect(Collectors.toList());
         projectDetailVO.setRepayVOList(repayVOList);
 
         List<CommentVO> commentVOList = Optional.ofNullable(commentMapper.getList(new Comment().setProject(project.getId()))).orElseGet(Lists::newArrayList)
                 .stream()
-                .map(commentConvert::comment2VO)
+                .map(CommentConvert::comment2VO)
                 .collect(Collectors.toList());
         projectDetailVO.setCommentVOList(commentVOList);
 
@@ -208,13 +190,13 @@ public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, Project> impl
 
         List<ProjectProgressVO> progressVOList = Optional.ofNullable(projectProgressMapper.getList(new ProjectProgress().setProjectId(project.getId()))).orElseGet(Lists::newArrayList)
                 .stream()
-                .map(projectProgressConvert::progress2VO)
+                .map(ProjectProgressConvert::progress2VO)
                 .peek(item -> item.setPublishDateStr(DateConvertUtil.timeToNow(item.getPublishDate())))
                 .collect(Collectors.toList());
         projectDetailVO.setProgressVOList(progressVOList);
 
         User createUser = userMapper.getOne(new User().setId(project.getUserId()));
-        projectDetailVO.setSellerVO(Optional.ofNullable(userConvert.user2VO(createUser)).orElseGet(UserVO::new));
+        projectDetailVO.setSellerVO(Optional.ofNullable(UserConvert.user2VO(createUser)).orElseGet(UserVO::new));
 
         projectDetailVO.setLeftDays(DateConvertUtil.getLeftDays(project.getDaysRaising(), project.getLaunchDateRaising(), new Date()));
 
@@ -225,7 +207,7 @@ public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, Project> impl
     @Override
     public Void lunchProject(LunchProjectVO reqVO) {
 
-        Project project = projectConvert.lunchProjectVOProject(reqVO);
+        Project project = ProjectConvert.lunchProjectVOProject(reqVO);
         project.setLaunchDateRaising(new Date());
         project.setUserId(BusinessUtils.getCurUserId());
         projectMapper.insert(project);
@@ -234,11 +216,11 @@ public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, Project> impl
         }
 
         if ("个人".equals(reqVO.getShenfen())) {
-            InitiatorPersonInfo initiatorPersonInfo = initiatorInfoVOConvert.personInfoVO2Entity(reqVO.getInitiatorPersonInfoVO());
+            InitiatorPersonInfo initiatorPersonInfo = InitiatorInfoVOConvert.personInfoVO2Entity(reqVO.getInitiatorPersonInfoVO());
             initiatorPersonInfo.setProjectId(project.getId());
             initiatorPersonInfoMapper.insert(initiatorPersonInfo);
         } else {
-            InitiatorCompanyInfo initiatorCompanyInfo = initiatorInfoVOConvert.companyInfoVO2Entity(reqVO.getInitiatorCompanyInfoVO());
+            InitiatorCompanyInfo initiatorCompanyInfo = InitiatorInfoVOConvert.companyInfoVO2Entity(reqVO.getInitiatorCompanyInfoVO());
             initiatorCompanyInfo.setProjectId(project.getId());
             initiatorCompanyInfoMapper.insert(initiatorCompanyInfo);
         }
@@ -246,7 +228,7 @@ public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, Project> impl
         if (CollectionUtil.isNotEmpty(reqVO.getItemVOList())) {
             List<ProjectDetail> detailList = reqVO.getItemVOList()
                     .stream()
-                    .map(projectDetailConvert::vo2Entity)
+                    .map(ProjectDetailConvert::vo2Entity)
                     .peek(item -> item.setProjectId(project.getId()))
                     .collect(Collectors.toList());
             projectDetailMapper.batchInsert(detailList);
@@ -255,7 +237,7 @@ public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, Project> impl
         if (CollectionUtil.isNotEmpty(reqVO.getRepayVOList())) {
             List<ProjectRepay> repayList = reqVO.getRepayVOList()
                     .stream()
-                    .map(projectRepayConvert::vo2Entity)
+                    .map(ProjectRepayConvert::vo2Entity)
                     .peek(item -> item.setProjectId(project.getId()))
                     .collect(Collectors.toList());
             projectRepayMapper.batchInsert(repayList);
@@ -277,12 +259,12 @@ public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, Project> impl
         List<Project> projectList = projectMapper.getList(query);
         List<ProjectVO> result = Optional.ofNullable(projectList).orElseGet(Lists::newArrayList)
                 .stream()
-                .map(projectConvert::project2VO)
+                .map(ProjectConvert::project2VO)
                 .peek(item -> {
                     ProjectCategory projectCategory = projectCategoryMapper.getOne(new ProjectCategory().setId(item.getProjectType()));
-                    item.setCategoryVO(projectCategoryConvert.entity2VO(Optional.ofNullable(projectCategory).orElseGet(ProjectCategory::new)));
+                    item.setCategoryVO(ProjectCategoryConvert.entity2VO(Optional.ofNullable(projectCategory).orElseGet(ProjectCategory::new)));
                     User user = userMapper.getOne(new User().setId(item.getUserId()));
-                    item.setSeller(userConvert.user2VO(Optional.ofNullable(user).orElseGet(User::new)));
+                    item.setSeller(UserConvert.user2VO(Optional.ofNullable(user).orElseGet(User::new)));
                 })
                 .collect(Collectors.toList());
         return new PageVO<>(page.getPageNum(), page.getPageSize(), page.getPages(), page.getTotal(), result);
@@ -296,12 +278,12 @@ public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, Project> impl
                 .ofNullable(page.getRecords())
                 .orElseGet(Lists::newArrayList)
                 .stream()
-                .map(projectConvert::project2VO)
+                .map(ProjectConvert::project2VO)
                 .peek(item -> {
                     ProjectCategory projectCategory = projectCategoryMapper.getOne(new ProjectCategory().setId(item.getProjectType()));
-                    item.setCategoryVO(projectCategoryConvert.entity2VO(Optional.ofNullable(projectCategory).orElseGet(ProjectCategory::new)));
+                    item.setCategoryVO(ProjectCategoryConvert.entity2VO(Optional.ofNullable(projectCategory).orElseGet(ProjectCategory::new)));
                     User user = userMapper.getOne(new User().setId(item.getUserId()));
-                    item.setSeller(userConvert.user2VO(Optional.ofNullable(user).orElseGet(User::new)));
+                    item.setSeller(UserConvert.user2VO(Optional.ofNullable(user).orElseGet(User::new)));
                 })
                 .collect(Collectors.toList());
         return new PageVO<>((int)page.getCurrent(), (int)page.getSize(), (int)page.getPages(), page.getTotal(), result);
@@ -319,25 +301,25 @@ public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, Project> impl
             throw new BizException("项目不存在");
         }
 
-        LunchProjectVO lunchProjectVO = projectConvert.project2LunchProjectVO(project);
+        LunchProjectVO lunchProjectVO = ProjectConvert.project2LunchProjectVO(project);
 
         List<ProjectItemVO> projectItemVOS = Optional.ofNullable(projectDetailMapper.getList(new ProjectDetail().setProjectId(project.getId()))).orElseGet(Lists::newArrayList)
                 .stream()
-                .map(projectDetailConvert::detail2VO)
+                .map(ProjectDetailConvert::detail2VO)
                 .collect(Collectors.toList());
         lunchProjectVO.setItemVOList(projectItemVOS);
 
         List<ProjectRepayVO> repayVOList = Optional.ofNullable(projectRepayMapper.getList(new ProjectRepay().setProjectId(project.getId()))).orElseGet(Lists::newArrayList)
                 .stream()
-                .map(projectRepayConvert::projectRepay2VO)
+                .map(ProjectRepayConvert::projectRepay2VO)
                 .collect(Collectors.toList());
         lunchProjectVO.setRepayVOList(repayVOList);
 
         InitiatorPersonInfo initiatorPersonInfo = initiatorPersonInfoMapper.getOne(new InitiatorPersonInfo().setProjectId(project.getId()));
-        lunchProjectVO.setInitiatorPersonInfoVO(Optional.ofNullable(initiatorInfoVOConvert.entity2PersonInfoVO(initiatorPersonInfo)).orElseGet(InitiatorPersonInfoVO::new));
+        lunchProjectVO.setInitiatorPersonInfoVO(Optional.ofNullable(InitiatorInfoVOConvert.entity2PersonInfoVO(initiatorPersonInfo)).orElseGet(InitiatorPersonInfoVO::new));
 
         InitiatorCompanyInfo initiatorCompanyInfo = initiatorCompanyInfoMapper.getOne(new InitiatorCompanyInfo().setProjectId(project.getId()));
-        lunchProjectVO.setInitiatorCompanyInfoVO(Optional.ofNullable(initiatorInfoVOConvert.entity2CompanyInfoVO(initiatorCompanyInfo)).orElseGet(InitiatorCompanyInfoVO::new));
+        lunchProjectVO.setInitiatorCompanyInfoVO(Optional.ofNullable(InitiatorInfoVOConvert.entity2CompanyInfoVO(initiatorCompanyInfo)).orElseGet(InitiatorCompanyInfoVO::new));
 
         return lunchProjectVO;
     }
@@ -384,14 +366,14 @@ public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, Project> impl
 
         List<ProjectRepayVO> repayVOList = Optional.ofNullable(projectRepayMapper.getList(new ProjectRepay().setProjectId(project.getId()))).orElseGet(Lists::newArrayList)
                 .stream()
-                .map(projectRepayConvert::projectRepay2VO)
+                .map(ProjectRepayConvert::projectRepay2VO)
                 .collect(Collectors.toList());
         orderPageVO.setRepayVOList(repayVOList);
 
         Integer currentUserId = BusinessUtils.getCurUserId();
         if (currentUserId != null) {
             ReceiveInformation receiveInformation = receiveInformationMapper.getOne(new ReceiveInformation().setUserId(currentUserId).setSetDefault(1));
-            orderPageVO.setReceiveInfoVO(Optional.ofNullable(receiveInfoConvert.entity2VO(receiveInformation)).orElseGet(ReceiveInfoVO::new));
+            orderPageVO.setReceiveInfoVO(Optional.ofNullable(ReceiveInfoConvert.entity2VO(receiveInformation)).orElseGet(ReceiveInfoVO::new));
         }
 
         return orderPageVO;

@@ -29,8 +29,6 @@ public class ProjectCategoryServiceImpl implements ProjectCategoryService {
 
     private final ProjectCategoryMapper projectCategoryMapper;
 
-    private final ProjectCategoryConvert projectCategoryConvert;
-
     @Override
     public PageVO<ProjectCategoryVO> getAdminProjectCategoryList(ProjectPageReqVO reqVO) {
 
@@ -39,7 +37,7 @@ public class ProjectCategoryServiceImpl implements ProjectCategoryService {
         List<ProjectCategory> categoryList = projectCategoryMapper.getList(new ProjectCategory());
         List<ProjectCategoryVO> categoryVOList = Optional.ofNullable(categoryList).orElseGet(Lists::newArrayList)
                 .stream()
-                .map(projectCategoryConvert::entity2VO)
+                .map(ProjectCategoryConvert::entity2VO)
                 .collect(Collectors.toList());
 
         return new PageVO<>(page.getPageNum(), page.getPageSize(), page.getPages(), page.getTotal(), categoryVOList);

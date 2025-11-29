@@ -41,12 +41,6 @@ public class CfOrderBiz {
     private ProjectService projectService;
     @Resource
     private ReceiveInformationMapper receiveInformationMapper;
-    @Resource
-    private OrderConvert orderConvert;
-    @Resource
-    private ProjectConvert projectConvert;
-    @Resource
-    private ReceiveInfoConvert receiveInfoConvert;
 
     public PageVO<SellerOrderVO> cfUserPageList(String query) {
         MyPageWrapper<Order> wrapper = new MyPageWrapper<>(query);
@@ -55,12 +49,12 @@ public class CfOrderBiz {
                 .ofNullable(page.getRecords())
                 .orElseGet(Lists::newArrayList)
                 .stream()
-                .map(orderConvert::order2SellerVO)
+                .map(OrderConvert::order2SellerVO)
                 .peek(item -> {
                     Project project = projectService.getById(item.getProjectId());
-                    item.setProjectVO(Optional.ofNullable(projectConvert.project2VO(project)).orElseGet(ProjectVO::new));
+                    item.setProjectVO(Optional.ofNullable(ProjectConvert.project2VO(project)).orElseGet(ProjectVO::new));
                     ReceiveInformation receiveInformation = receiveInformationMapper.getOne(new ReceiveInformation().setId(item.getReceiveInformation()));
-                    item.setReceiveInfoVO(Optional.ofNullable(receiveInfoConvert.entity2VO(receiveInformation)).orElseGet(ReceiveInfoVO::new));
+                    item.setReceiveInfoVO(Optional.ofNullable(ReceiveInfoConvert.entity2VO(receiveInformation)).orElseGet(ReceiveInfoVO::new));
                 })
                 .collect(Collectors.toList());
         return new PageVO<>((int)page.getCurrent(), (int)page.getSize(), (int)page.getPages(), page.getTotal(), orderVOList);
@@ -71,11 +65,11 @@ public class CfOrderBiz {
         if (order == null) {
             throw new BizException("订单不存在");
         }
-        SellerOrderVO orderVO = orderConvert.order2SellerVO(order);
+        SellerOrderVO orderVO = OrderConvert.order2SellerVO(order);
         Project project = projectService.getById(orderVO.getProjectId());
-        orderVO.setProjectVO(Optional.ofNullable(projectConvert.project2VO(project)).orElseGet(ProjectVO::new));
+        orderVO.setProjectVO(Optional.ofNullable(ProjectConvert.project2VO(project)).orElseGet(ProjectVO::new));
         ReceiveInformation receiveInformation = receiveInformationMapper.getOne(new ReceiveInformation().setId(orderVO.getReceiveInformation()));
-        orderVO.setReceiveInfoVO(Optional.ofNullable(receiveInfoConvert.entity2VO(receiveInformation)).orElseGet(ReceiveInfoVO::new));
+        orderVO.setReceiveInfoVO(Optional.ofNullable(ReceiveInfoConvert.entity2VO(receiveInformation)).orElseGet(ReceiveInfoVO::new));
         return orderVO;
     }
 

@@ -39,8 +39,6 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
     private final SysUserMapper sysUserMapper;
 
-    private final SysUserConvert sysUserConvert;
-
     private final UserService userService;
 
     private final UserAuthService userAuthService;
@@ -55,7 +53,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         Page<SysUser> page = PageHelper.startPage(sysUserPageReqVO.getPageNum(), sysUserPageReqVO.getPageSize());
         List<UserVO> userVOList = Optional.ofNullable(sysUserMapper.getList(new SysUser())).orElseGet(Lists::newArrayList)
                 .stream()
-                .map(sysUserConvert::sysUser2VO)
+                .map(SysUserConvert::sysUser2VO)
                 .collect(Collectors.toList());
         return new PageVO<>(page.getPageNum(), page.getPageSize(), page.getPages(), page.getTotal(), userVOList);
     }
@@ -66,7 +64,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         IPage<SysUser> page = this.page(pageWrapper.getPage(), pageWrapper.getQueryWrapper());
         List<UserVO> userVOList = page.getRecords()
                 .stream()
-                .map(sysUserConvert::sysUser2VO)
+                .map(SysUserConvert::sysUser2VO)
                 .collect(Collectors.toList());
         return new PageVO<>((int)page.getCurrent(), (int)page.getSize(), (int)page.getPages(), page.getTotal(), userVOList);
     }
@@ -79,14 +77,14 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
     @Override
     public UserVO getUserInfo() {
-        UserVO userVO = sysUserConvert.securityUser2VO(SecurityContext.getCurUser());
+        UserVO userVO = SysUserConvert.securityUser2VO(SecurityContext.getCurUser());
         return userVO;
     }
 
     @Transactional(rollbackFor = Exception.class)
     @Override
     public Void addSysUser(SysUserEditVO editVO) {
-        SysUser sysUser = sysUserConvert.editVO2Entity(editVO);
+        SysUser sysUser = SysUserConvert.editVO2Entity(editVO);
         sysUser.setPassword(userAuthService.encodePassword("111111"));
         this.save(sysUser);
         this.setUserRoles(editVO.getRoleIds(), sysUser.getId());
@@ -102,7 +100,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         if (sysUser == null) {
             throw new BizException("用户不存在");
         }
-        SysUser upd = sysUserConvert.editVO2Entity(editVO);
+        SysUser upd = SysUserConvert.editVO2Entity(editVO);
         this.updateById(upd);
         this.setUserRoles(editVO.getRoleIds(), sysUser.getId());
         this.setUserDepts(editVO.getOrgIds(), sysUser.getId());
@@ -126,7 +124,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         if (sysUser == null) {
             throw new BizException("用户不存在");
         }
-        return sysUserConvert.entity2InfoVO(sysUser);
+        return SysUserConvert.entity2InfoVO(sysUser);
     }
 
     @Override

@@ -2,7 +2,6 @@ package com.yeeee.crowdfunding.convert;
 
 import com.yeeee.crowdfunding.model.entity.ProjectDetail;
 import com.yeeee.crowdfunding.model.vo.ProjectItemVO;
-import org.mapstruct.Mapper;
 
 /**
  * description......
@@ -10,11 +9,26 @@ import org.mapstruct.Mapper;
  * @author https://www.yeee.vip
  * @since 2022/4/29 22:25
  */
-@Mapper(componentModel = "spring")
-public interface ProjectDetailConvert {
+public class ProjectDetailConvert {
 
-    ProjectItemVO detail2VO(ProjectDetail detail);
+    public static ProjectItemVO detail2VO(ProjectDetail detail) {
+        if (detail == null) {
+            return null;
+        }
+        ProjectItemVO vo = new ProjectItemVO();
+        vo.setItemTitle(detail.getItemTitle());
+        vo.setItemContent(detail.getItemContent());
+        return vo;
+    }
 
-    ProjectDetail vo2Entity(ProjectItemVO itemVO);
+    public static ProjectDetail vo2Entity(ProjectItemVO itemVO) {
+        if (itemVO == null) {
+            return null;
+        }
+        ProjectDetail detail = new ProjectDetail();
+        detail.setItemTitle(itemVO.getItemTitle());
+        detail.setItemContent(itemVO.getItemContent());
+        return detail;
+    }
 
 }

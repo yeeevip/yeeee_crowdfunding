@@ -35,8 +35,6 @@ public class CfUserBiz {
     @Resource
     private UserService userService;
     @Resource
-    private UserConvert userConvert;
-    @Resource
     private UserAuthService userAuthService;
 
     public PageVO<UserVO> cfUserPageList(String query) {
@@ -46,7 +44,7 @@ public class CfUserBiz {
                 .ofNullable(page.getRecords())
                 .orElseGet(Lists::newArrayList)
                 .stream()
-                .map(userConvert::user2VO)
+                .map(UserConvert::user2VO)
                 .collect(Collectors.toList());
         return new PageVO<>((int)page.getCurrent(), (int)page.getSize(), (int)page.getPages(), page.getTotal(), userVOList);
     }
@@ -87,7 +85,7 @@ public class CfUserBiz {
         if (user == null) {
             throw new BizException("用户不存在");
         }
-        return userConvert.user2InfoVO(user);
+        return UserConvert.user2InfoVO(user);
     }
 
     public Void delCfUser(IdsRequest request) {

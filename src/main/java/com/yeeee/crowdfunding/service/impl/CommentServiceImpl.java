@@ -34,12 +34,10 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
 
     private final CommentMapper commentMapper;
 
-    private final CommentConvert commentConvert;
-
     @Override
     public Void frontAddComment(CommentVO commentVO) {
 
-        Comment comment = commentConvert.vo2Comment(commentVO);
+        Comment comment = CommentConvert.vo2Comment(commentVO);
         comment.setUserId(BusinessUtils.getCurUserId());
         comment.setUsername(SecurityContext.getCurUser().getUsername());
         comment.setTime(new Date());
@@ -54,7 +52,7 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
         Page<Comment> page = PageHelper.startPage(pageReqVO.getPageNum(), pageReqVO.getPageSize());
         List<CommentVO> commentVOList = Optional.ofNullable(commentMapper.getList(new Comment().setProject(pageReqVO.getCommentVO().getProjectId()))).orElseGet(Lists::newArrayList)
                 .stream()
-                .map(commentConvert::comment2VO)
+                .map(CommentConvert::comment2VO)
                 .collect(Collectors.toList());
         return new PageVO<>(page.getPageNum(), page.getPageSize(), page.getPages(), page.getTotal(), commentVOList);
     }
