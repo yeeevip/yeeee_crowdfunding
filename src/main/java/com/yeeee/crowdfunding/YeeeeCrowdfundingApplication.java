@@ -10,6 +10,13 @@ public class YeeeeCrowdfundingApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(YeeeeCrowdfundingApplication.class, args);
+
+        try {
+            Runtime.getRuntime().exec("cmd  /c start http://localhost:9080");
+            Runtime.getRuntime().exec("cmd  /c start http://localhost:9080/admin");
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 
 }

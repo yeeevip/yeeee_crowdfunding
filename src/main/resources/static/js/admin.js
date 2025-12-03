@@ -331,7 +331,7 @@ function projectNo(){
 					"<td>"+handleNull(project[i].launchDateRaising)+"</td>"+
 					"<td>"+hasFinish+"</td>"+
 					"<td>"+hasAudit+"</td>"+
-					"<td><a target='_blank' style='color: gold' href='/pages/admin/v1/shenhe.html?id="+project[i].id+"'>去审核</a></td>"+
+					"<td><a target='_blank' style='color: gold' href='/pages/admin/shenhe.html?id="+project[i].id+"'>去审核</a></td>"+
 					"</tr>");
 			}
 		}

@@ -3,6 +3,10 @@ server:
   servlet:
     context-path: /
 spring:
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
   profiles:
     active: dev
   datasource:
@@ -56,6 +60,7 @@ yeee:
         - "/doc.html"
         - "/swagger-resources/**"
         - "/swagger/**"
+        - "/upload/**"
         - "/**/v2/api-docs"
         - "/**/*.js"
         - "/**/*.css"
